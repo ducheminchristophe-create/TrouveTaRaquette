@@ -1,0 +1,63 @@
+Marque;Cordage;Type;Puissance;Contrôle;Spin;Confort;Durabilité;Tension recommandée (kg);Prix moyen (€);Profil joueur idéal
+Babolat;RPM Blast;Polyester;6;9;10;5;8;22–26;27;Lifteur puissant, joueur de fond
+Babolat;RPM Rough;Polyester;6;8;10;5;8;22–26;27;Joueur lifté cherchant du grip
+Babolat;RPM Soft;Polyester;7;7;8;7;7;21–25;27;Joueur polyvalent, bras sensible
+Babolat;Xcel;Multifilament;9;6;5;10;5;23–27;22;Joueur loisir ou sensible
+Babolat;Addiction;Multifilament;8;6;5;8;6;23–27;22;Joueur régulier intermédiaire
+Babolat;VS Touch;Boyau naturel;10;8;8;10;7;23–28;40;Joueur exigeant ou hybride haut de gamme
+Wilson;Luxilon ALU Power;Polyester;6;9;9;5;9;22–26;28;Joueur agressif, lifteur
+Wilson;Luxilon Element;Polyester;7;8;8;7;8;22–26;25;Joueur contrôle cherchant confort
+Wilson;Revolve;Polyester;7;8;9;6;7;22–26;22;Joueur moderne polyvalent
+Wilson;NXT;Multifilament;9;6;5;9;6;24–28;22;Joueur loisir / bras sensible
+Wilson;Sensation;Multifilament;8;5;4;8;5;23–27;18;Débutant ou joueur occasionnel
+Wilson;Natural Gut;Boyau naturel;10;8;8;10;7;23–28;40;Joueur axé toucher et confort
+Head;Lynx;Polyester;7;8;8;6;7;22–26;18;Joueur polyvalent
+Head;Lynx Tour;Polyester;6;9;9;5;8;22–26;20;Lifteur recherchant précision
+Head;Hawk / Hawk Touch;Polyester;6;9;8;5;9;22–26;20;Joueur puissant / compétiteur
+Head;Velocity MLT;Multifilament;8;7;6;9;6;23–27;20;Joueur loisir ou intermédiaire
+Head;Reflex MLT;Multifilament;9;6;5;10;5;24–28;22;Joueur cherchant douceur et toucher
+Head;RIP Control;Multifilament (ruban);7;9;6;8;9;23–27;20;Joueur contrôle, bras sensible, recherche longévité
+Tecnifibre;Razor Code / Razor Soft;Polyester;7;9;8;6;8;22–26;23;Joueur compétiteur
+Tecnifibre;Ice Code;Polyester;8;8;8;6;8;22–26;23;Joueur polyvalent
+Tecnifibre;Black Code;Polyester;7;8;9;6;8;22–26;24;Joueur lifté cherchant spin et souplesse
+Tecnifibre;X-One Biphase;Multifilament;10;7;6;10;5;24–28;28;Joueur sensible / polyvalent
+Tecnifibre;NRG²;Multifilament;9;6;6;9;5;24–28;25;Joueur loisir à fort lift
+Tecnifibre;HDMX;Multifilament hybride;8;7;7;8;6;23–26;21;Joueur recherchant équilibre global
+Luxilon;ALU Power / Rough;Polyester;6;9;9;5;9;22–26;28;Joueur agressif
+Luxilon;4G / 4G Soft;Polyester;6;9;8;5;10;22–26;28;Joueur puissance/contrôle
+Luxilon;Element / Smart;Polyester;7;8;8;7;8;22–26;25;Joueur polyvalent
+Yonex;Poly Tour Pro;Polyester;7;8;8;6;8;22–26;20;Joueur régulier
+Yonex;Poly Tour Rev;Polyester;6;8;10;5;8;22–26;20;Lifteur
+Yonex;Poly Tour Fire;Polyester;8;8;8;5;8;22–26;20;Joueur offensif
+Yonex;Poly Tour Air;Polyester;8;7;7;8;7;23–27;22;Joueur sensible ou junior
+Yonex;Rexis Comfort / Speed;Multifilament;9;7;6;9;6;24–28;22;Joueur confort
+Solinco;Hyper-G;Polyester;6;9;10;5;8;22–26;23;Lifteur
+Solinco;Hyper-G Soft;Polyester;7;8;9;7;7;22–26;23;Joueur polyvalent
+Solinco;Confidential;Polyester;6;10;8;5;9;22–26;25;Frappeur à plat / contrôle
+Solinco;Tour Bite;Polyester;6;9;10;5;8;22–26;23;Joueur lifté/agressif
+Signum Pro;Poly Plasma;Polyester;6;9;7;6;9;22–26;20;Joueur régulier
+Signum Pro;Tornado;Polyester;7;8;9;6;8;22–26;20;Joueur lifteur
+Signum Pro;Firestorm;Polyester;8;8;8;6;8;22–26;20;Joueur polyvalent
+Signum Pro;Micronite;Multifilament;9;6;5;9;6;24–28;20;Joueur sensible
+Kirschbaum;Pro Line II;Polyester;7;8;8;6;8;22–26;20;Joueur compétiteur
+Kirschbaum;Max Power;Polyester;6;9;8;5;9;22–26;20;Frappeur fort
+Kirschbaum;Spiky Shark;Polyester;7;8;9;5;8;22–26;20;Joueur lifteur
+Kirschbaum;Touch Multifiber;Multifilament;9;6;5;9;6;24–28;20;Joueur loisir
+MSV;Focus Hex;Polyester;7;8;9;5;8;22–26;20;Lifteur
+MSV;Co-Focus;Polyester;7;9;8;6;8;22–26;20;Joueur contrôle
+MSV;Swift;Polyester;8;7;7;7;7;23–27;20;Joueur loisir/transition
+Prince;Warrior Response;Polyester;7;8;8;6;8;22–26;20;Joueur polyvalent
+Prince;Premier Touch;Multifilament;9;6;5;10;5;24–28;20;Joueur sensible
+Weiss Cannon;Silverstring;Polyester;7;9;8;6;8;22–26;20;Joueur compétiteur
+Weiss Cannon;Ultra Cable;Polyester;6;9;10;4;9;22–26;20;Gros lifteur
+Gosen;AK Pro CX;Multifilament;8;7;6;9;7;24–28;20;Joueur confort/toucher
+Diadem;Solstice Power;Polyester;7;8;10;6;8;22–26;20;Joueur lifté
+Diadem;Evolution;Multifilament;9;7;6;9;6;24–28;20;Joueur loisir
+Tier One;Firewire / Ghost Wire;Polyester;7;8;9;6;8;22–26;20;Joueur moderne
+Toroline;Caviar / Wasabi / Whiteout;Polyester;7;9;9;6;8;22–26;20;Joueur agressif
+Artengo;TA 990 Spin;Polyester;7;8;9;6;8;22–26;17;Lifteur moderne, joueur agressif
+Artengo;TA 990 Power;Polyester;8;7;8;6;7;22–26;17;Joueur offensif
+Artengo;TA 960 Control;Polyester;6;9;8;6;9;22–26;17;Joueur de précision
+Artengo;TA 960 Comfort;Polyester;8;7;7;8;7;22–26;17;Joueur intermédiaire, bras sensible
+Artengo;TA 500 / TA 530;Multifilament;8;6;5;9;6;24–28;15;Joueur loisir, recherche de douceur
+Artengo;TA 100;Synthétique;9;5;4;9;5;24–28;12;Débutant ou junior

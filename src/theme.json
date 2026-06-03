@@ -1,0 +1,65 @@
+{
+  "name": "Athletic Performance Theme",
+  "version": "2.0.0",
+  "tokens": {
+    "colors": {
+      "primary": "#FF6B00",
+      "primaryHover": "#E55A00",
+      "secondary": "#000000",
+      "background": "#FFFFFF",
+      "surface": "#F5F5F5",
+      "surfaceAlt": "#1A1A1A",
+      "textPrimary": "#000000",
+      "textSecondary": "#6B6B6B",
+      "border": "#E0E0E0",
+      "accent": "#FFD60A",
+      "success": "#00D084",
+      "warning": "#FF9F0A",
+      "error": "#FF3B30",
+      "muted": "#999999"
+    },
+    "fonts": {
+      "heading": "'Helvetica Neue', 'Arial Black', system-ui, -apple-system, sans-serif",
+      "body": "'Helvetica Neue', Arial, system-ui, -apple-system, sans-serif",
+      "ui": "'Helvetica Neue', Arial, system-ui, -apple-system, sans-serif"
+    },
+    "fontSizes": {
+      "h1": "48px",
+      "h2": "32px",
+      "h3": "24px",
+      "body": "16px",
+      "small": "14px",
+      "button": "14px"
+    },
+    "lineHeights": {
+      "tight": 1.1,
+      "normal": 1.4,
+      "relaxed": 1.6
+    },
+    "radii": {
+      "none": "0px",
+      "sm": "4px",
+      "md": "8px",
+      "lg": "12px",
+      "xl": "16px",
+      "pill": "50px"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "48px",
+      "section": "80px"
+    },
+    "shadows": {
+      "sm": "0 2px 4px rgba(0,0,0,0.08)",
+      "md": "0 4px 16px rgba(0,0,0,0.12)",
+      "lg": "0 8px 32px rgba(0,0,0,0.16)"
+    },
+    "container": {
+      "maxWidth": "1440px",
+      "gutter": "24px"
+    }
+  }
+}
