@@ -327,7 +327,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   {t('profile.racketBrand')}
                 </label>
                 <select
-                  className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium bg-white"
+                  className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium bg-white"
                   value={formData.racket.brand}
                   onChange={(e) => handleChange('racket.brand', e.target.value)}
                 >
@@ -348,7 +348,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 {formData.racket.brand === 'Autre' && (
                   <input
                     type="text"
-                    className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium mt-2"
+                    className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium mt-2"
                     placeholder={t('profile.enterBrandManually')}
                     onChange={(e) => handleChange('racket.brand', e.target.value)}
                   />
@@ -362,7 +362,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 {formData.racket.brand && formData.racket.brand !== 'Autre' && racketModels[formData.racket.brand] ? (
                   <div className="space-y-2">
                     <select
-                      className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium bg-white"
+                      className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium bg-white"
                       value={formData.racket.model}
                       onChange={(e) => handleChange('racket.model', e.target.value)}
                     >
@@ -376,7 +376,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                     {formData.racket.model === 'Autre' && (
                       <input
                         type="text"
-                        className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium"
+                        className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium"
                         placeholder={t('profile.enterModelManually')}
                         onChange={(e) => handleChange('racket.model', e.target.value)}
                       />
@@ -385,7 +385,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 ) : (
                   <input
                     type="text"
-                    className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium"
+                    className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium"
                     placeholder={formData.racket.brand ? t('profile.enterModelManually') : t('profile.selectBrandFirst')}
                     value={formData.racket.model}
                     onChange={(e) => handleChange('racket.model', e.target.value)}
@@ -400,7 +400,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 </label>
                 <input
                   type="text"
-                  className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:ring-0 transition-colors font-medium"
+                  className="w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 transition-colors font-medium"
                   placeholder={t('profile.detailsPlaceholder')}
                   value={formData.racket.details}
                   onChange={(e) => handleChange('racket.details', e.target.value)}
@@ -414,6 +414,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <button
                     type="button"
+                    aria-pressed={formData.currentStrings.type === ''}
                     className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${
                       formData.currentStrings.type === ''
                         ? 'bg-black text-white'
@@ -425,6 +426,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   </button>
                   <button
                     type="button"
+                    aria-pressed={formData.currentStrings.type === 'mono'}
                     className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${
                       formData.currentStrings.type === 'mono'
                         ? 'bg-black text-white'
@@ -436,6 +438,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   </button>
                   <button
                     type="button"
+                    aria-pressed={formData.currentStrings.type === 'hybrid'}
                     className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${
                       formData.currentStrings.type === 'hybrid'
                         ? 'bg-black text-white'
@@ -590,6 +593,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   <button
                     key={value}
                     type="button"
+                    aria-pressed={formData.playerProfile.playStyle === value}
                     className={`p-4 font-bold text-sm tracking-wide transition-all text-left ${
                       formData.playerProfile.playStyle === value
                         ? 'bg-black text-white'
@@ -618,6 +622,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   <button
                     key={value}
                     type="button"
+                    aria-pressed={formData.playerProfile.grip === value}
                     className={`p-4 font-bold text-sm tracking-wide transition-all ${
                       formData.playerProfile.grip === value
                         ? 'bg-black text-white'
@@ -646,6 +651,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   <button
                     key={value}
                     type="button"
+                    aria-pressed={formData.playerProfile.courtHabits.includes(value)}
                     className={`p-4 font-bold text-sm tracking-wide transition-all ${
                       formData.playerProfile.courtHabits.includes(value)
                         ? 'bg-orange-600 text-white'
@@ -676,6 +682,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
+                  aria-pressed={formData.preferences.alternativeTypes.includes('mono')}
                   className={`p-5 font-bold uppercase text-sm tracking-wide transition-all ${
                     formData.preferences.alternativeTypes.includes('mono')
                       ? 'bg-orange-600 text-white'
@@ -687,6 +694,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                 </button>
                 <button
                   type="button"
+                  aria-pressed={formData.preferences.alternativeTypes.includes('hybrid')}
                   className={`p-5 font-bold uppercase text-sm tracking-wide transition-all ${
                     formData.preferences.alternativeTypes.includes('hybrid')
                       ? 'bg-orange-600 text-white'
@@ -781,6 +789,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   <button
                     key={value}
                     type="button"
+                    aria-pressed={formData.preferences.performancePriorities.includes(value)}
                     className={`p-4 font-bold text-sm tracking-wide transition-all ${
                       formData.preferences.performancePriorities.includes(value)
                         ? 'bg-orange-600 text-white'
@@ -805,6 +814,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                   <button
                     key={brand}
                     type="button"
+                    aria-pressed={formData.preferences.preferredBrands.includes(brand)}
                     className={`p-3 text-sm font-medium transition-all ${
                       formData.preferences.preferredBrands.includes(brand)
                         ? 'bg-orange-600 text-white'

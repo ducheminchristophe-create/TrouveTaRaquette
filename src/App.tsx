@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation, useMatch } from 'react-router-dom';
 import PlayerProfile from './components/PlayerProfile';
 import StringingRecommendations from './components/StringingRecommendations';
 import PadelPage from './pages/PadelPage';
 import BadmintonPage from './pages/BadmintonPage';
+import HomePage from './pages/HomePage';
 import Footer from './components/Footer';
 import { useTheme } from './hooks/useTheme';
 import { useLanguage } from './contexts/LanguageContext';
@@ -45,46 +46,62 @@ export interface PlayerData {
 /* Navigation                                                           */
 /* ------------------------------------------------------------------ */
 
+/** Lien de navigation accessible : applique aria-current="page" sur le <a> lui-même */
+const NavTab: React.FC<{ to: string; end?: boolean; children: React.ReactNode }> = ({ to, end, children }) => {
+  const base = 'px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide transition-colors';
+  const activeClass = `${base} bg-orange-500 text-white`;
+  const inactiveClass = `${base} text-gray-400 hover:text-white`;
+  const isActive = !!useMatch(end ? { path: to, end: true } : { path: to });
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={isActive ? activeClass : inactiveClass}
+      aria-current={isActive ? 'page' : undefined}
+    >
+      {children}
+    </NavLink>
+  );
+};
+
 const Nav: React.FC = () => {
   const { t } = useLanguage();
-  const base = 'px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide transition-colors';
-  const active = `${base} bg-orange-500 text-white`;
-  const inactive = `${base} text-gray-400 hover:text-white`;
+  const location = useLocation();
 
   return (
     <header className="bg-black text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-transparent" />
       <div className="container mx-auto px-6 py-5 relative z-10">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <img src="/TennisTuner.jpeg" alt="Logo" className="h-16 w-16 object-contain rounded-lg" />
-            <div>
-              <h1 className="text-2xl font-black tracking-tight">
+          <NavLink to="/" className="flex items-center space-x-3 shrink-0">
+            <img src="/TennisTuner.jpeg" alt="TrouveTaRaquette" className="h-14 w-14 object-contain rounded-lg" />
+            <div className="hidden sm:block">
+              <p className="text-xl font-black tracking-tight">
                 TrouveTa<span className="text-orange-500">Raquette</span>
-              </h1>
+              </p>
               <p className="text-gray-400 text-xs font-medium tracking-wide uppercase mt-0.5">
                 {t('header.subtitle')}
               </p>
             </div>
-          </div>
+          </NavLink>
 
-          {/* Onglets */}
-          <div className="flex items-center gap-2">
-            <nav className="flex gap-1 bg-gray-900 rounded-full p-1">
-              <NavLink to="/" end className={({ isActive }) => isActive ? active : inactive}>
-                🎾 Cordage Tennis
-              </NavLink>
-              <NavLink to="/padel" className={({ isActive }) => isActive ? active : inactive}>
-                🟢 Padel
-              </NavLink>
-              <NavLink to="/badminton" className={({ isActive }) => isActive ? active : inactive}>
-                🏸 Badminton
-              </NavLink>
+          {/* Onglets — scrollable sur mobile */}
+          <div className="flex items-center gap-2 min-w-0">
+            <nav
+              aria-label="Modules"
+              className="flex gap-1 bg-gray-900 rounded-full p-1 overflow-x-auto scrollbar-none"
+            >
+              <NavTab to="/tennis">🎾 <span className="hidden sm:inline">Cordage </span>Tennis</NavTab>
+              <NavTab to="/padel">🟢 Padel</NavTab>
+              <NavTab to="/badminton">🏸 <span className="hidden sm:inline">Badminton</span><span className="sm:hidden">Badm.</span></NavTab>
             </nav>
-            <div className="ml-3 hidden md:block">
-              <LanguageSelector />
-            </div>
+            {/* Sélecteur de langue : visible uniquement sur la page Tennis (seule page i18n complète) */}
+            {location.pathname === '/tennis' && (
+              <div className="ml-1 hidden md:block shrink-0">
+                <LanguageSelector />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -157,7 +174,8 @@ function App() {
       <Nav />
       <div className="flex-1">
         <Routes>
-          <Route path="/" element={<TennisPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/tennis" element={<TennisPage />} />
           <Route path="/padel" element={<PadelPage />} />
           <Route path="/badminton" element={<BadmintonPage />} />
         </Routes>

@@ -46,9 +46,6 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
       setIsLoading(true);
 
       const response = await aiStringService.getStringRecommendations({ playerData, forceUseRealAPI });
-      console.log('=== RESPONSE COMPLÈTE ===', response);
-      console.log('maintenanceSchedule:', response.maintenanceSchedule);
-      console.log('expertInsights:', response.expertInsights);
 
       setRecommendations(response.recommendations);
       setHybridRecommendations(response.hybridRecommendations || []);

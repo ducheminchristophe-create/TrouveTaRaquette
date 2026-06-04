@@ -1,56 +1,42 @@
 /** @type {import('tailwindcss').Config} */
+// Tokens synchronisés avec src/theme.json
+// Pour changer la couleur principale de tout le site : modifier "brand.primary" ici ET dans theme.json
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: 'var(--color-primary-50, #f0f9ff)',
-          100: 'var(--color-primary-100, #e0f2fe)',
-          200: 'var(--color-primary-200, #bae6fd)',
-          300: 'var(--color-primary-300, #7dd3fc)',
-          400: 'var(--color-primary-400, #38bdf8)',
-          500: 'var(--color-primary-500, #0ea5e9)',
-          600: 'var(--color-primary-600, #0284c7)',
-          700: 'var(--color-primary-700, #0369a1)',
-          800: 'var(--color-primary-800, #075985)',
-          900: 'var(--color-primary-900, #0c4a6e)',
-        },
-        secondary: {
-          50: 'var(--color-secondary-50, #fdf4ff)',
-          100: 'var(--color-secondary-100, #fae8ff)',
-          200: 'var(--color-secondary-200, #f5d0fe)',
-          300: 'var(--color-secondary-300, #f0abfc)',
-          400: 'var(--color-secondary-400, #e879f9)',
-          500: 'var(--color-secondary-500, #d946ef)',
-          600: 'var(--color-secondary-600, #c026d3)',
-          700: 'var(--color-secondary-700, #a21caf)',
-          800: 'var(--color-secondary-800, #86198f)',
-          900: 'var(--color-secondary-900, #701a75)',
-        },
-        accent: {
-          50: 'var(--color-accent-50, #ecfdf5)',
-          100: 'var(--color-accent-100, #d1fae5)',
-          200: 'var(--color-accent-200, #a7f3d0)',
-          300: 'var(--color-accent-300, #6ee7b7)',
-          400: 'var(--color-accent-400, #34d399)',
-          500: 'var(--color-accent-500, #10b981)',
-          600: 'var(--color-accent-600, #059669)',
-          700: 'var(--color-accent-700, #047857)',
-          800: 'var(--color-accent-800, #065f46)',
-          900: 'var(--color-accent-900, #064e3b)',
+        // Tokens marque — source unique de vérité
+        brand: {
+          primary:    '#FF6B00', // orange principal
+          primaryHover: '#E55A00',
+          secondary:  '#000000', // noir
+          bg:         '#FFFFFF',
+          surface:    '#F5F5F5',
+          surfaceAlt: '#1A1A1A',
+          muted:      '#999999',
+          success:    '#00D084',
+          warning:    '#FF9F0A',
+          error:      '#FF3B30',
+          accent:     '#FFD60A',
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans, Inter)', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading, Poppins)', 'sans-serif'],
+        sans: ["'Helvetica Neue'", 'Arial', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ["'Helvetica Neue'", "'Arial Black'", 'system-ui', 'sans-serif'],
       },
       borderRadius: {
-        sm: 'var(--radius-sm, 0.375rem)',
-        md: 'var(--radius-md, 0.5rem)',
-        lg: 'var(--radius-lg, 0.75rem)',
-        xl: 'var(--radius-xl, 1rem)',
-        '2xl': 'var(--radius-2xl, 1.5rem)',
+        sm:  '4px',
+        md:  '8px',
+        lg:  '12px',
+        xl:  '16px',
+        '2xl': '20px',
+        pill: '50px',
+      },
+      boxShadow: {
+        sm: '0 2px 4px rgba(0,0,0,0.08)',
+        md: '0 4px 16px rgba(0,0,0,0.12)',
+        lg: '0 8px 32px rgba(0,0,0,0.16)',
       },
     },
   },
