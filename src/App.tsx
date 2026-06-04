@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import PlayerProfile from './components/PlayerProfile';
 import StringingRecommendations from './components/StringingRecommendations';
-import Header from './components/Header';
+import PadelPage from './pages/PadelPage';
 import Footer from './components/Footer';
 import { useTheme } from './hooks/useTheme';
 import { useLanguage } from './contexts/LanguageContext';
+import LanguageSelector from './components/LanguageSelector';
+import { useState } from 'react';
 
 export interface PlayerData {
   racket: {
@@ -13,7 +16,7 @@ export interface PlayerData {
     details: string;
   };
   currentStrings: {
-    type: string; // 'mono' ou 'hybrid'
+    type: string;
     mono: string;
     monoTension: string;
     hybridMain: string;
@@ -22,30 +25,79 @@ export interface PlayerData {
     hybridCrossTension: string;
   };
   playerProfile: {
-    level: number; // 0-8
-    playStyle: string; // 'baseline' | 'serve-volley' | 'all-court' | 'offensive' | 'defensive' | 'counter-attacker'
-    grip: string; // 'eastern' | 'semi-western' | 'western' | 'continental'
-    courtHabits: string[]; // ['clay', 'hard', 'grass', 'indoor']
+    level: number;
+    playStyle: string;
+    grip: string;
+    courtHabits: string[];
   };
   preferences: {
-    alternativeTypes: string[]; // ['mono', 'hybrid']
+    alternativeTypes: string[];
     monoCount: number;
     hybridCount: number;
     preferredBrands: string[];
-    performancePriorities: string[]; // ['power', 'control', 'spin', 'comfort', 'durability']
-    priceRange: [number, number]; // [min, max] in €
+    performancePriorities: string[];
+    priceRange: [number, number];
   };
 }
 
-function App() {
+/* ------------------------------------------------------------------ */
+/* Navigation                                                           */
+/* ------------------------------------------------------------------ */
+
+const Nav: React.FC = () => {
+  const { t } = useLanguage();
+  const base = 'px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide transition-colors';
+  const active = `${base} bg-orange-500 text-white`;
+  const inactive = `${base} text-gray-400 hover:text-white`;
+
+  return (
+    <header className="bg-black text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-transparent" />
+      <div className="container mx-auto px-6 py-5 relative z-10">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-4">
+            <img src="/TennisTuner.jpeg" alt="Logo" className="h-16 w-16 object-contain rounded-lg" />
+            <div>
+              <h1 className="text-2xl font-black tracking-tight">
+                TrouveTa<span className="text-orange-500">Raquette</span>
+              </h1>
+              <p className="text-gray-400 text-xs font-medium tracking-wide uppercase mt-0.5">
+                {t('header.subtitle')}
+              </p>
+            </div>
+          </div>
+
+          {/* Onglets */}
+          <div className="flex items-center gap-2">
+            <nav className="flex gap-1 bg-gray-900 rounded-full p-1">
+              <NavLink to="/" end className={({ isActive }) => isActive ? active : inactive}>
+                🎾 Cordage Tennis
+              </NavLink>
+              <NavLink to="/padel" className={({ isActive }) => isActive ? active : inactive}>
+                🟢 Raquette Padel
+              </NavLink>
+            </nav>
+            <div className="ml-3 hidden md:block">
+              <LanguageSelector />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="h-1 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600" />
+    </header>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/* Page Tennis (ancienne App)                                          */
+/* ------------------------------------------------------------------ */
+
+const TennisPage: React.FC = () => {
   useTheme();
   const { t } = useLanguage();
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [showRecommendations, setShowRecommendations] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const handleProfileSubmit = (data: PlayerData) => {
     setPlayerData(data);
@@ -60,32 +112,51 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
-
-      <main className="container mx-auto px-6 py-12 max-w-6xl">
-        {!showRecommendations ? (
-          <div className="space-y-12">
-            <div className="text-center mb-16">
-              <h1 className="text-5xl md:text-6xl font-black uppercase text-black mb-6 tracking-tight">
-                {t('app.title')}
-              </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
-                {t('app.subtitle')}
-              </p>
-            </div>
-
-            <PlayerProfile onSubmit={handleProfileSubmit} />
+    <main className="container mx-auto px-6 py-12 max-w-6xl">
+      {!showRecommendations ? (
+        <div className="space-y-12">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-6xl font-black uppercase text-black mb-6 tracking-tight">
+              {t('app.title')}
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              {t('app.subtitle')}
+            </p>
           </div>
-        ) : (
-          <StringingRecommendations
-            playerData={playerData!}
-            onReset={handleReset}
-            forceUseRealAPI={true}
-          />
-        )}
-      </main>
+          <PlayerProfile onSubmit={handleProfileSubmit} />
+        </div>
+      ) : (
+        <StringingRecommendations
+          playerData={playerData!}
+          onReset={handleReset}
+          forceUseRealAPI={true}
+        />
+      )}
+    </main>
+  );
+};
 
+/* ------------------------------------------------------------------ */
+/* App principale avec routing                                          */
+/* ------------------------------------------------------------------ */
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+function App() {
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      <ScrollToTop />
+      <Nav />
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<TennisPage />} />
+          <Route path="/padel" element={<PadelPage />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

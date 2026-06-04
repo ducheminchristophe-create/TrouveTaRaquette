@@ -1,0 +1,90 @@
+{
+  "sport": "padel",
+  "version": 1,
+  "dimensions": ["power", "control", "maneuverability", "comfort", "spin"],
+  "_doc": "Chaque option applique des effets sur le profil de l'utilisateur. targetDelta = ajuste le profil cible (base 50/dimension). weightMul = ajuste l'importance d'une dimension dans le calcul de distance. set = fixe une variable moteur utilisee pour les filtres (userLevelOrdinal, maxPrice, requireComfortMin, preferWeightMax).",
+  "questions": [
+    {
+      "id": "level",
+      "type": "single",
+      "required": true,
+      "label": "Quel est ton niveau au padel ?",
+      "options": [
+        { "id": "beginner", "label": "Débutant (je découvre)", "effects": { "targetDelta": { "control": 15, "comfort": 15, "power": -10, "maneuverability": 5 }, "weightMul": { "control": 1.3, "comfort": 1.3, "power": 0.7 }, "set": { "userLevelOrdinal": 0 } } },
+        { "id": "intermediate", "label": "Intermédiaire (je joue régulièrement)", "effects": { "set": { "userLevelOrdinal": 1 } } },
+        { "id": "advanced", "label": "Confirmé", "effects": { "targetDelta": { "power": 8, "control": -3 }, "weightMul": { "power": 1.1 }, "set": { "userLevelOrdinal": 2 } } },
+        { "id": "competition", "label": "Compétition", "effects": { "targetDelta": { "power": 12, "control": -5 }, "weightMul": { "power": 1.2, "spin": 1.1 }, "set": { "userLevelOrdinal": 3 } } }
+      ]
+    },
+    {
+      "id": "style",
+      "type": "single",
+      "required": true,
+      "label": "Quel est ton style de jeu ?",
+      "options": [
+        { "id": "defensive", "label": "Défensif / placement (je renvoie, je construis)", "effects": { "targetDelta": { "control": 20, "maneuverability": 12, "power": -18 }, "weightMul": { "control": 1.3, "maneuverability": 1.1 } } },
+        { "id": "polyvalent", "label": "Polyvalent (un peu des deux)", "effects": {} },
+        { "id": "offensive", "label": "Offensif (je cherche à conclure, smash/vibora)", "effects": { "targetDelta": { "power": 22, "control": -12, "spin": 5 }, "weightMul": { "power": 1.3, "spin": 1.1 } } }
+      ]
+    },
+    {
+      "id": "priority",
+      "type": "single",
+      "required": true,
+      "label": "Si tu devais choisir UNE priorité ?",
+      "options": [
+        { "id": "control", "label": "Le contrôle / la précision", "effects": { "targetDelta": { "control": 10 }, "weightMul": { "control": 1.6 } } },
+        { "id": "power", "label": "La puissance", "effects": { "targetDelta": { "power": 10 }, "weightMul": { "power": 1.6 } } },
+        { "id": "maneuverability", "label": "La maniabilité / vitesse en main", "effects": { "targetDelta": { "maneuverability": 10 }, "weightMul": { "maneuverability": 1.6 } } },
+        { "id": "comfort", "label": "Le confort / la tolérance", "effects": { "targetDelta": { "comfort": 10 }, "weightMul": { "comfort": 1.6 } } },
+        { "id": "polyvalence", "label": "Un équilibre général", "effects": { "weightMul": { "control": 1.15, "power": 1.15 } } }
+      ]
+    },
+    {
+      "id": "arm",
+      "type": "single",
+      "required": true,
+      "label": "As-tu déjà eu des douleurs au coude ou au bras (épicondylite / tennis elbow) ?",
+      "_doc": "Critère décisif : oriente vers mousse soft + fibre de verre, et impose un seuil de confort minimal.",
+      "options": [
+        { "id": "often", "label": "Oui, c'est un vrai sujet pour moi", "effects": { "targetDelta": { "comfort": 30 }, "weightMul": { "comfort": 2.0, "power": 0.7 }, "set": { "requireComfortMin": 62 } } },
+        { "id": "sometimes", "label": "Parfois / je préfère prévenir", "effects": { "targetDelta": { "comfort": 15 }, "weightMul": { "comfort": 1.4 } } },
+        { "id": "never", "label": "Non, aucun souci", "effects": {} }
+      ]
+    },
+    {
+      "id": "physique",
+      "type": "single",
+      "required": true,
+      "label": "Comment décrirais-tu ta force / ton gabarit pour frapper ?",
+      "options": [
+        { "id": "light", "label": "Plutôt léger / peu de force dans le bras", "effects": { "targetDelta": { "maneuverability": 12, "power": -8 }, "weightMul": { "maneuverability": 1.2 }, "set": { "preferWeightMax": 360 } } },
+        { "id": "medium", "label": "Moyen", "effects": {} },
+        { "id": "strong", "label": "Costaud / bonne vitesse de bras", "effects": { "targetDelta": { "power": 10 }, "weightMul": { "power": 1.1 } } }
+      ]
+    },
+    {
+      "id": "budget",
+      "type": "single",
+      "required": true,
+      "label": "Quel est ton budget maximum ?",
+      "options": [
+        { "id": "u60", "label": "Jusqu'à 60 €", "effects": { "set": { "maxPrice": 60 } } },
+        { "id": "u120", "label": "Jusqu'à 120 €", "effects": { "set": { "maxPrice": 120 } } },
+        { "id": "u200", "label": "Jusqu'à 200 €", "effects": { "set": { "maxPrice": 200 } } },
+        { "id": "nolimit", "label": "Pas de limite", "effects": {} }
+      ]
+    },
+    {
+      "id": "position",
+      "type": "single",
+      "required": false,
+      "label": "Sur quel côté joues-tu le plus souvent ? (optionnel)",
+      "options": [
+        { "id": "right", "label": "Côté droit (jeu de placement)", "effects": {} },
+        { "id": "backhand", "label": "Côté gauche / revers (jeu plus offensif)", "effects": { "targetDelta": { "power": 8, "spin": 3 } } },
+        { "id": "any", "label": "Peu importe", "effects": {} }
+      ]
+    }
+  ]
+}
