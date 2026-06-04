@@ -16,7 +16,7 @@
     "sources": ["https://www.decathlon.fr/p/raquette-de-padel-adulte-kuikma-pr-open-rouge/_/R-p-327586"],
     "priceCheckedAt": "2026-06-04",
     "priceSource": "Decathlon",
-    "productUrl": "https://www.decathlon.fr/p/raquette-de-padel-adulte-kuikma-pr-open-rouge/_/R-p-327586"
+    "productUrl": "https://www.decathlon.fr/p/raquette-de-padel-adulte-kuikma-pr-open-rouge/327586/c14m8881922"
   },
   {
     "id": "kuikma-pr-comfort-soft",
@@ -54,7 +54,7 @@
     "sources": ["https://www.decathlon.fr/p/raquette-de-padel-kuikma-pr-comfort/_/R-p-352005"],
     "priceCheckedAt": "2026-06-04",
     "priceSource": "Decathlon",
-    "productUrl": "https://www.decathlon.fr/p/raquette-de-padel-kuikma-pr-comfort/_/R-p-352005"
+    "productUrl": "https://www.decathlon.fr/p/raquette-de-padel-kuikma-comfort/_/R-p-352005"
   },
   {
     "id": "babolat-contact",
@@ -252,7 +252,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Decathlon",
-    "productUrl": "https://www.decathlon.fr/p/raquette-de-padel-adulte-kuikma-pr-990-precision-soft/_/R-p-300397"
+    "productUrl": null
   },
   {
     "id": "kuikma-pr990-hybrid-soft",
@@ -294,7 +294,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Kombat Padel",
-    "productUrl": "https://kombatpadel.com/en/rackets/kombat-delta-force-18k"
+    "productUrl": "https://kombatpadel.com/en/rackets/kombat-delta-force-18k-228.html"
   },
   {
     "id": "babolat-counter-vertuo",
@@ -399,7 +399,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-head-radical-motion-2024"
+    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-head-radical-motion-2026"
   },
   {
     "id": "head-speed-motion",
@@ -441,7 +441,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-head-gravity-motion"
+    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-head-gravity-motion-2024"
   },
   {
     "id": "nox-at-pro-cup",
@@ -462,7 +462,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-nox-at-pro-cup-hard-2025"
+    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-nox-at-pro-cup-hard-2026"
   },
   {
     "id": "nox-mm2",
@@ -483,7 +483,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Hangar Padel",
-    "productUrl": "https://www.hangarpadel.re/products/nox-mm2-hybrid-pro"
+    "productUrl": "https://www.tradeinn.com/smashinn/en/nox-mm2-pro-padel-racket/139355544/p"
   },
   {
     "id": "nox-equation-wpt",
@@ -504,7 +504,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Padel Nuestro",
-    "productUrl": "https://www.padelnuestro.com/int/nox-equation-wpt-advanced-series-23-woman-p-32396.html"
+    "productUrl": "https://www.tradeinn.com/smashinn/en/nox-equation-wpt-advanced-series-padel-racket/139414589/p"
   },
   {
     "id": "starvie-basalto-pro",
@@ -525,7 +525,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Padelmania",
-    "productUrl": "https://padelmania.com/es/palas-de-padel/21904-starvie-basalto-pro-2024-star-vie-8436612940069.html"
+    "productUrl": "https://www.padelnuestro.com/starvie-basalto-pro-2025-114813-p"
   },
   {
     "id": "starvie-metheora",
@@ -546,7 +546,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Deportes Total",
-    "productUrl": "https://deportestotal.shop/es/palas-padel-starvie/pala-de-padel-starvie-metheora-pro-touch-2025-1001"
+    "productUrl": null
   },
   {
     "id": "babolat-counter-veron",
@@ -588,7 +588,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-wilson-bela-elite-v2-5"
+    "productUrl": null
   },
   {
     "id": "wilson-blade-v3",
@@ -672,7 +672,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Padel Nuestro",
-    "productUrl": "https://www.padelnuestro.com/int/siux-trilogy-control-special-edition-p-25219.html"
+    "productUrl": null
   },
   {
     "id": "volt-700",
@@ -693,7 +693,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Volt Padel",
-    "productUrl": "https://www.voltpadel.com/shop/products/p/volt-700-v4"
+    "productUrl": "https://www.voltpadel.com/shop/products/p/volt-700-v5"
   },
   {
     "id": "oxdog-hyper-pro-20",
@@ -714,7 +714,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-oxdog-hyper-pro-2-0"
+    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-oxdog-hyper-pro-2-0-2026"
   },
   {
     "id": "starvie-triton-pro-2025",
@@ -736,7 +736,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-starvie-triton-pro-2025"
+    "productUrl": null
   },
   {
     "id": "stiga-axe-3",
@@ -800,7 +800,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Idealo",
-    "productUrl": "https://www.idealo.fr/prix/203918044/bullpadel-hack-03-padel-racket-24.html"
+    "productUrl": "https://www.tradeinn.com/smashinn/en/bullpadel-hack-03-2024-padel-racket/140427880/p"
   },
   {
     "id": "nox-at10-12k-luxury-genius",
@@ -865,7 +865,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Tennis-Point",
-    "productUrl": "https://global.tennis-point.com/adidas-metalbone-carbon-3.3-0050660016000000.html"
+    "productUrl": "https://www.padelnuestro.com/int/adidas-metalbone-carbon-3-3-2024-110142-p"
   },
   {
     "id": "head-extreme-pro",
@@ -886,7 +886,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Idealo",
-    "productUrl": "https://www.idealo.es/precios/203380707/head-extreme-pro-padel-racket-2023.html"
+    "productUrl": "https://esprit-padel-shop.com/products/raquette-de-padel-head-extreme-pro-2023"
   },
   {
     "id": "head-delta-pro",
@@ -907,7 +907,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Padel-Point",
-    "productUrl": "https://www.padel-point.com/head-delta-pro-0060580406300000.html"
+    "productUrl": "https://www.tradeinn.com/smashinn/en/head-delta-pro-2022-padel-racket/138534296/p"
   },
   {
     "id": "babolat-technical-veron",
@@ -949,7 +949,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Tennis Warehouse Europe",
-    "productUrl": "https://www.tenniswarehouse-europe.com/Raquette_de_padel_Starvie_Triton_Pro/descpageRC-SPRTRIPRO25-EN.html"
+    "productUrl": null
   },
   {
     "id": "siux-fenix-pro-4",
@@ -970,7 +970,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Padel Nuestro",
-    "productUrl": "https://www.padelnuestro.com/int/siux-fenix-pro-4-109479-p"
+    "productUrl": null
   },
   {
     "id": "wilson-bela-pro-v25",
@@ -1033,7 +1033,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Esprit Padel Shop",
-    "productUrl": "https://esprit-padel-shop.com/en-us/products/raquette-de-padel-adidas-adipower-3-2-2023"
+    "productUrl": null
   },
   {
     "id": "head-speed-pro",
@@ -1054,7 +1054,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Tennispro",
-    "productUrl": "https://www.tennispro.eu/head-speed-pro-2023-padel-racquet-592957.html"
+    "productUrl": "https://www.padelnuestro.com/int/head-speed-pro-2023-32509-p"
   },
   {
     "id": "nox-ml10-pro-cup-luxury",
@@ -1096,7 +1096,7 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Sportlet Store",
-    "productUrl": "https://sportlet.store/en/starvie-astrum-eris-black-limited-edition-2023"
+    "productUrl": "https://www.ongoal.com/products/starvie-astrum-eris-black-limited-edition-2023"
   },
   {
     "id": "babolat-technical-viper",
@@ -1223,6 +1223,6 @@
     ],
     "priceCheckedAt": "2026-06-02",
     "priceSource": "Varlion",
-    "productUrl": "https://eur.varlion.com/gb/rebajas/912-bourne-summum-prisma-w-8401008200164.html"
+    "productUrl": null
   }
 ]
