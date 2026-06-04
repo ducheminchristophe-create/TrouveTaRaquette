@@ -21,11 +21,19 @@ export interface PlayerData {
     hybridMainTension: string;
     hybridCrossTension: string;
   };
+  playerProfile: {
+    level: number; // 0-8
+    playStyle: string; // 'baseline' | 'serve-volley' | 'all-court' | 'offensive' | 'defensive' | 'counter-attacker'
+    grip: string; // 'eastern' | 'semi-western' | 'western' | 'continental'
+    courtHabits: string[]; // ['clay', 'hard', 'grass', 'indoor']
+  };
   preferences: {
     alternativeTypes: string[]; // ['mono', 'hybrid']
     monoCount: number;
     hybridCount: number;
     preferredBrands: string[];
+    performancePriorities: string[]; // ['power', 'control', 'spin', 'comfort', 'durability']
+    priceRange: [number, number]; // [min, max] in €
   };
 }
 

@@ -7,6 +7,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import ComboBox from './ComboBox';
 import TensionWheel from './TensionWheel';
 import TennisCourtAnimation from './TennisCourtAnimation';
+import NiveauDeJeu from './NiveauDeJeu';
+import PriceRangeSlider from './PriceRangeSlider';
 
 interface PlayerProfileProps {
   onSubmit: (data: PlayerData) => void;
@@ -25,11 +27,19 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
       hybridMainTension: '',
       hybridCrossTension: ''
     },
+    playerProfile: {
+      level: 2,
+      playStyle: '',
+      grip: '',
+      courtHabits: []
+    },
     preferences: {
       alternativeTypes: ['mono', 'hybrid'],
       monoCount: 3,
       hybridCount: 3,
-      preferredBrands: []
+      preferredBrands: [],
+      performancePriorities: [],
+      priceRange: [10, 20] as [number, number]
     }
   });
 
@@ -182,6 +192,18 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
     });
   };
 
+  const toggleCourtHabit = (surface: string) => {
+    setFormData(prev => {
+      const habits = prev.playerProfile.courtHabits.includes(surface)
+        ? prev.playerProfile.courtHabits.filter(s => s !== surface)
+        : [...prev.playerProfile.courtHabits, surface];
+      return {
+        ...prev,
+        playerProfile: { ...prev.playerProfile, courtHabits: habits }
+      };
+    });
+  };
+
   const toggleBrand = (brand: string) => {
     setFormData(prev => {
       const brands = prev.preferences.preferredBrands.includes(brand)
@@ -194,24 +216,27 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
     });
   };
 
+  const togglePerformancePriority = (priority: string) => {
+    setFormData(prev => {
+      const priorities = prev.preferences.performancePriorities.includes(priority)
+        ? prev.preferences.performancePriorities.filter(p => p !== priority)
+        : [...prev.preferences.performancePriorities, priority];
+      return {
+        ...prev,
+        preferences: { ...prev.preferences, performancePriorities: priorities }
+      };
+    });
+  };
+
   const validateStep = (step: number): boolean => {
     const newErrors: string[] = [];
 
     if (step === 1) {
       if (!formData.racket.brand || formData.racket.brand.trim() === '') newErrors.push('Marque de raquette requise');
       if (!formData.racket.model.trim()) newErrors.push('Modèle de raquette requis');
-      if (!formData.currentStrings.type) newErrors.push('Type de cordage requis');
-
-      if (formData.currentStrings.type === 'mono') {
-        if (!formData.currentStrings.mono.trim()) newErrors.push('Nom du cordage requis');
-        if (!formData.currentStrings.monoTension.trim()) newErrors.push('Tension du cordage requise');
-      } else if (formData.currentStrings.type === 'hybrid') {
-        if (!formData.currentStrings.hybridMain.trim()) newErrors.push('Cordage montants requis');
-        if (!formData.currentStrings.hybridCross.trim()) newErrors.push('Cordage travers requis');
-        if (!formData.currentStrings.hybridMainTension.trim()) newErrors.push('Tension montants requise');
-        if (!formData.currentStrings.hybridCrossTension.trim()) newErrors.push('Tension travers requise');
-      }
     } else if (step === 2) {
+      // niveau, style, prise sont optionnels — pas de validation bloquante
+    } else if (step === 3) {
       if (formData.preferences.alternativeTypes.length === 0) {
         newErrors.push('Sélectionnez au moins un type d\'alternative');
       }
@@ -234,7 +259,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    if (currentStep === 3 && !setupAnalysis && !loadingAnalysis) {
+    if (currentStep === 4 && !setupAnalysis && !loadingAnalysis) {
       const analyzeSetup = async () => {
         setLoadingAnalysis(true);
         try {
@@ -264,19 +289,19 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateStep(3)) {
+    if (validateStep(4)) {
       onSubmit(formData);
     }
   };
 
-  const progressPercentage = (currentStep / 3) * 100;
+  const progressPercentage = (currentStep / 4) * 100;
 
   return (
     <div className="bg-white shadow-2xl max-w-4xl mx-auto overflow-hidden">
       <div className="bg-black text-white p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-black uppercase tracking-tight">
-            {t('profile.step')} {currentStep} {t('profile.of')} 3
+            {t('profile.step')} {currentStep} {t('profile.of')} 4
           </h2>
           <span className="text-orange-500 font-bold text-xl">{Math.round(progressPercentage)}%</span>
         </div>
@@ -384,9 +409,20 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
 
               <div>
                 <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
-                  {t('profile.currentStrings')}
+                  {t('profile.currentStrings')} <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
                 </label>
-                <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <button
+                    type="button"
+                    className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${
+                      formData.currentStrings.type === ''
+                        ? 'bg-black text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                    onClick={() => handleChange('currentStrings.type', '')}
+                  >
+                    Non renseigné
+                  </button>
                   <button
                     type="button"
                     className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${
@@ -430,14 +466,19 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                       placeholder={t('profile.stringNamePlaceholder')}
                       allowCustom={true}
                     />
-                    <TensionWheel
-                      value={formData.currentStrings.monoTension}
-                      onChange={(value) => handleChange('currentStrings.monoTension', value)}
-                      min={15}
-                      max={32}
-                      step={0.5}
-                      label={t('profile.tensionPlaceholder')}
-                    />
+                    <div>
+                      <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                        Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+                      </label>
+                      <TensionWheel
+                        value={formData.currentStrings.monoTension}
+                        onChange={(value) => handleChange('currentStrings.monoTension', value)}
+                        min={15}
+                        max={32}
+                        step={0.5}
+                        label={t('profile.tensionPlaceholder')}
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -462,13 +503,18 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                         placeholder={t('profile.mainStringPlaceholder')}
                         allowCustom={true}
                       />
-                      <TensionWheel
-                        value={formData.currentStrings.hybridMainTension}
-                        onChange={(value) => handleChange('currentStrings.hybridMainTension', value)}
-                        min={15}
-                        max={32}
-                        step={0.5}
-                      />
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                          Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+                        </label>
+                        <TensionWheel
+                          value={formData.currentStrings.hybridMainTension}
+                          onChange={(value) => handleChange('currentStrings.hybridMainTension', value)}
+                          min={15}
+                          max={32}
+                          step={0.5}
+                        />
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs font-bold text-gray-600 uppercase">{t('profile.crosses')}</label>
@@ -489,13 +535,18 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
                         placeholder={t('profile.crossStringPlaceholder')}
                         allowCustom={true}
                       />
-                      <TensionWheel
-                        value={formData.currentStrings.hybridCrossTension}
-                        onChange={(value) => handleChange('currentStrings.hybridCrossTension', value)}
-                        min={15}
-                        max={32}
-                        step={0.5}
-                      />
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                          Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+                        </label>
+                        <TensionWheel
+                          value={formData.currentStrings.hybridCrossTension}
+                          onChange={(value) => handleChange('currentStrings.hybridCrossTension', value)}
+                          min={15}
+                          max={32}
+                          step={0.5}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -505,6 +556,112 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
         )}
 
         {currentStep === 2 && (
+          <div className="space-y-8">
+            <div className="border-l-4 border-orange-600 pl-4">
+              <h3 className="text-2xl font-black uppercase mb-2">Votre Profil de Joueur</h3>
+              <p className="text-gray-600">Renseignez votre niveau de jeu, votre style de jeu, votre prise de raquette et vos habitudes sur le court</p>
+            </div>
+
+            {/* Niveau de jeu */}
+            <div>
+              <label className="block text-sm font-bold text-gray-900 mb-4 uppercase tracking-wide">
+                Niveau de jeu
+              </label>
+              <NiveauDeJeu
+                value={formData.playerProfile.level}
+                onChange={(v) => setFormData(prev => ({ ...prev, playerProfile: { ...prev.playerProfile, level: v } }))}
+              />
+            </div>
+
+            {/* Style de jeu */}
+            <div>
+              <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                Style de jeu <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: 'baseline', label: 'Joueur de fond de court' },
+                  { value: 'serve-volley', label: 'Montée au filet' },
+                  { value: 'all-court', label: 'Complet (all-court)' },
+                  { value: 'offensive', label: 'Offensif' },
+                  { value: 'defensive', label: 'Défensif' },
+                  { value: 'counter-attacker', label: 'Contre-attaquant' },
+                ].map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`p-4 font-bold text-sm tracking-wide transition-all text-left ${
+                      formData.playerProfile.playStyle === value
+                        ? 'bg-black text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                    onClick={() => setFormData(prev => ({ ...prev, playerProfile: { ...prev.playerProfile, playStyle: prev.playerProfile.playStyle === value ? '' : value } }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Prise de raquette */}
+            <div>
+              <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                Prise de raquette <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: 'eastern', label: 'Eastern' },
+                  { value: 'semi-western', label: 'Semi-western' },
+                  { value: 'western', label: 'Western' },
+                  { value: 'continental', label: 'Continentale' },
+                ].map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`p-4 font-bold text-sm tracking-wide transition-all ${
+                      formData.playerProfile.grip === value
+                        ? 'bg-black text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                    onClick={() => setFormData(prev => ({ ...prev, playerProfile: { ...prev.playerProfile, grip: prev.playerProfile.grip === value ? '' : value } }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Surfaces de jeu */}
+            <div>
+              <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                Surfaces pratiquées <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: 'clay', label: 'Terre battue' },
+                  { value: 'hard', label: 'Dur' },
+                  { value: 'grass', label: 'Gazon' },
+                  { value: 'indoor', label: 'Indoor (moquette / parquet)' },
+                ].map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`p-4 font-bold text-sm tracking-wide transition-all ${
+                      formData.playerProfile.courtHabits.includes(value)
+                        ? 'bg-orange-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                    onClick={() => toggleCourtHabit(value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 3 && (
           <div className="space-y-6">
             <div className="border-l-4 border-orange-600 pl-4">
               <h3 className="text-2xl font-black uppercase mb-2">Vos Préférences d'Alternatives</h3>
@@ -592,6 +749,51 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
               </div>
             )}
 
+            {/* Fourchette de prix */}
+            <div>
+              <PriceRangeSlider
+                min={5}
+                max={50}
+                step={1}
+                value={formData.preferences.priceRange}
+                onChange={(range) => setFormData(prev => ({
+                  ...prev,
+                  preferences: { ...prev.preferences, priceRange: range }
+                }))}
+                currency="€"
+              />
+            </div>
+
+            {/* Priorités de performance */}
+            <div>
+              <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                Priorités de performance <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+              </label>
+              <p className="text-sm text-gray-600 mb-3">Sélectionnez les qualités que vous souhaitez prioriser dans votre cordage</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {[
+                  { value: 'power', label: 'Puissance' },
+                  { value: 'control', label: 'Contrôle' },
+                  { value: 'spin', label: 'Spin' },
+                  { value: 'comfort', label: 'Confort' },
+                  { value: 'durability', label: 'Durabilité' },
+                ].map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`p-4 font-bold text-sm tracking-wide transition-all ${
+                      formData.preferences.performancePriorities.includes(value)
+                        ? 'bg-orange-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                    onClick={() => togglePerformancePriority(value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Marques préférées */}
             <div>
               <label className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
@@ -618,7 +820,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
           </div>
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <div className="space-y-8">
             {loadingAnalysis && (
               <TennisCourtAnimation />
@@ -670,7 +872,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ onSubmit }) => {
             </button>
           )}
 
-          {currentStep < 3 ? (
+          {currentStep < 4 ? (
             <button
               type="button"
               onClick={handleNext}
