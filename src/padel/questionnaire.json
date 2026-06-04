@@ -69,9 +69,9 @@
       "required": true,
       "label": "Quel est ton budget maximum ?",
       "options": [
-        { "id": "u60", "label": "Jusqu'à 60 €", "effects": { "set": { "maxPrice": 60 } } },
-        { "id": "u120", "label": "Jusqu'à 120 €", "effects": { "set": { "maxPrice": 120 } } },
-        { "id": "u200", "label": "Jusqu'à 200 €", "effects": { "set": { "maxPrice": 200 } } },
+        { "id": "u100", "label": "Moins de 100 €", "effects": { "set": { "maxPrice": 100 } } },
+        { "id": "u150", "label": "Jusqu'à 150 €", "effects": { "set": { "maxPrice": 150 } } },
+        { "id": "u250", "label": "Jusqu'à 250 €", "effects": { "set": { "maxPrice": 250 } } },
         { "id": "nolimit", "label": "Pas de limite", "effects": {} }
       ]
     },

@@ -3,6 +3,7 @@ import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import PlayerProfile from './components/PlayerProfile';
 import StringingRecommendations from './components/StringingRecommendations';
 import PadelPage from './pages/PadelPage';
+import BadmintonPage from './pages/BadmintonPage';
 import Footer from './components/Footer';
 import { useTheme } from './hooks/useTheme';
 import { useLanguage } from './contexts/LanguageContext';
@@ -75,7 +76,10 @@ const Nav: React.FC = () => {
                 🎾 Cordage Tennis
               </NavLink>
               <NavLink to="/padel" className={({ isActive }) => isActive ? active : inactive}>
-                🟢 Raquette Padel
+                🟢 Padel
+              </NavLink>
+              <NavLink to="/badminton" className={({ isActive }) => isActive ? active : inactive}>
+                🏸 Badminton
               </NavLink>
             </nav>
             <div className="ml-3 hidden md:block">
@@ -155,6 +159,7 @@ function App() {
         <Routes>
           <Route path="/" element={<TennisPage />} />
           <Route path="/padel" element={<PadelPage />} />
+          <Route path="/badminton" element={<BadmintonPage />} />
         </Routes>
       </div>
       <Footer />
