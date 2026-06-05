@@ -160,6 +160,3 @@ const StepProfile: React.FC<Props> = ({
 };
 
 export default StepProfile;
-
-
-export default StepProfile
