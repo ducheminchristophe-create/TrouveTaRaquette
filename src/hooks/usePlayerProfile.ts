@@ -40,7 +40,7 @@ export function usePlayerProfile(onSubmit: (data: PlayerData) => void) {
       hybridMain: '', hybridCross: '',
       hybridMainTension: '', hybridCrossTension: '',
     },
-    playerProfile: { level: 2, playStyle: '', grip: '', courtHabits: [] },
+    playerProfile: { level: 2, playStyle: '', grip: '', courtHabits: [], injuries: '' },
     preferences: {
       alternativeTypes: ['mono', 'hybrid'],
       monoCount: 3, hybridCount: 3,
