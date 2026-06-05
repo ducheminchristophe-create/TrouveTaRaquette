@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * RacketCard — carte résultat partagée entre Padel et Badminton.
  * Affiche nom, prix, score, barres de dimensions, raisons et CTA.

@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * StepSummary — Étape 4 : animation de chargement + analyse IA du setup actuel.
  */

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import frTranslations from '../locales/fr.json';
 import enTranslations from '../locales/en.json';

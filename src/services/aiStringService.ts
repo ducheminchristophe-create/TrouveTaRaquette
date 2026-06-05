@@ -1,5 +1,5 @@
 import stringDatabase, { MonoString, HybridString } from './stringDatabase';
-import { PlayerData } from '../App';
+import { PlayerData } from '@/src/types/player';
 
 interface SetupAnalysisRequest {
   racket: {
@@ -16,6 +16,13 @@ interface SetupAnalysisRequest {
     hybridMainTension?: string;
     hybridCrossTension?: string;
   };
+  // Champs optionnels utilisés dans les prompts IA
+  level?: string;
+  playStyle?: string;
+  priority?: string;
+  injuries?: string;
+  playFrequency?: string;
+  [key: string]: unknown;
 }
 
 interface SetupAnalysis {
@@ -63,7 +70,7 @@ interface AIStringRecommendation {
 interface AIResponse {
   recommendations: AIStringRecommendation[];
   hybridRecommendations: any[];
-  isUsingRealAPI: boolean;
+  isUsingRealAPI?: boolean;
   maintenanceSchedule: {
     frequency: string;
     signs: string[];
@@ -78,20 +85,13 @@ class AIStringService {
   private baseUrl: string;
 
   constructor() {
-    this.apiKey = import.meta.env.VITE_AI_API_KEY || 'demo-key';
-    this.baseUrl = import.meta.env.VITE_AI_API_URL || 'https://api.openai.com/v1';
+    this.apiKey = process.env.NEXT_PUBLIC_AI_API_KEY || 'demo-key';
+    this.baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'https://api.openai.com/v1';
   }
 
   async getStringRecommendations(request: StringingRequest): Promise<AIResponse> {
     try {
-      console.log('=== DIAGNOSTIC API ===');
-      console.log('Raw API Key from env:', import.meta.env.VITE_AI_API_KEY);
-      console.log('Raw Base URL from env:', import.meta.env.VITE_AI_API_URL);
-      console.log('API Key exists:', !!this.apiKey);
-      console.log('API Key length:', this.apiKey?.length);
-      console.log('API Key starts with sk-:', this.apiKey?.startsWith('sk-'));
-      console.log('Base URL exists:', !!this.baseUrl);
-      console.log('Base URL is not default:', this.baseUrl !== 'https://your-api-endpoint.com/v1');
+      console.log('Raw Base URL from env:', process.env.NEXT_PUBLIC_AI_API_URL);
       
       // Vérifier si on a une vraie API configurée
       const hasRealAPI = this.apiKey &&
@@ -103,18 +103,6 @@ class AIStringService {
                         this.baseUrl &&
                         this.baseUrl !== 'https://your-api-endpoint.com/v1';
 
-      console.log('=== RÉSULTAT DÉTECTION ===');
-      console.log('Has Real API:', hasRealAPI);
-      console.log('Raisons du rejet:');
-      if (!this.apiKey) console.log('- Pas de clé API');
-      if (this.apiKey === 'demo-key') console.log('- Clé = demo-key');
-      if (this.apiKey === 'your_real_api_key_here') console.log('- Clé = placeholder 1');
-      if (this.apiKey === 'your_ai_api_key_here') console.log('- Clé = placeholder 2');
-      if (this.apiKey === 'sk-proj-votre_vraie_cle_openai_ici') console.log('- Clé = placeholder 3');
-      if (!this.apiKey?.startsWith('sk-')) console.log('- Clé ne commence pas par sk-');
-      if (!this.baseUrl) console.log('- Pas d\'URL de base');
-      if (this.baseUrl === 'https://your-api-endpoint.com/v1') console.log('- URL = placeholder');
-      console.log('========================');
 
       if (hasRealAPI) {
         try {
@@ -123,7 +111,6 @@ class AIStringService {
           response.isUsingRealAPI = true;
           return response;
         } catch (error) {
-          console.warn('API OpenAI inaccessible, basculement vers mode démo:', error);
           // Fallback vers mode démo si l'API réelle échoue
           const response = await this.simulateAICall(request);
           response.isUsingRealAPI = false;
@@ -137,7 +124,6 @@ class AIStringService {
         return response;
       }
     } catch (error) {
-      console.error('Erreur API IA:', error);
       // Fallback vers recommandations locales
       const fallback = this.getFallbackRecommendations(request);
       fallback.isUsingRealAPI = false;
@@ -177,12 +163,6 @@ class AIStringService {
 
     const prompt = this.buildTennisStringPrompt(playerData, monoStrings, hybridStrings);
 
-    console.log('=== APPEL API OPENAI ===');
-    console.log('URL complète:', `${this.baseUrl}/chat/completions`);
-    console.log('Headers:', {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.apiKey.substring(0, 10)}...`
-    });
 
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
@@ -207,18 +187,14 @@ class AIStringService {
       })
     });
 
-    console.log('=== RÉPONSE API ===');
     console.log('Status:', response.status);
-    console.log('Status Text:', response.statusText);
     
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Erreur API détaillée:', errorText);
       throw new Error(`OpenAI API Error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('Données reçues:', data);
     const aiResponse = data.choices[0].message.content;
     
     try {
@@ -231,12 +207,6 @@ class AIStringService {
       const parsedResponse = JSON.parse(cleanedResponse);
       return this.adaptOpenAIResponse(parsedResponse, playerData.preferences);
     } catch (parseError) {
-      console.error('Erreur parsing réponse OpenAI:', parseError);
-      console.error('Réponse brute:', aiResponse);
-      console.error('Réponse nettoyée tentée:', aiResponse
-        .replace(/```json\s*/g, '')
-        .replace(/```\s*$/g, '')
-        .trim());
       throw new Error('Format de réponse OpenAI invalide');
     }
   }
@@ -1568,7 +1538,6 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
           const analysis = await this.callOpenAISetupAnalysis(request);
           return { ...analysis, isUsingRealAPI: true };
         } catch (error) {
-          console.warn('API OpenAI inaccessible, basculement vers analyse simulée:', error);
           const analysis = this.simulateSetupAnalysis(request);
           return { ...analysis, isUsingRealAPI: false };
         }

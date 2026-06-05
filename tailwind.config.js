@@ -2,7 +2,9 @@
 // Tokens synchronisés avec src/theme.json
 // Pour changer la couleur principale de tout le site : modifier "brand.primary" ici ET dans theme.json
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     extend: {
       colors: {

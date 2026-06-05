@@ -1,8 +1,10 @@
+'use client'
+
 /**
  * StepEquipment — Étape 1 : raquette + cordage actuel.
  */
 import React from 'react';
-import { PlayerData } from '../../App';
+import { PlayerData } from '@/src/types/player';
 import { RACKET_MODELS } from '../../hooks/usePlayerProfile';
 import ComboBox from '../ComboBox';
 import TensionWheel from '../TensionWheel';

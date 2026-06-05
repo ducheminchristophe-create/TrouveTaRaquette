@@ -1,9 +1,11 @@
+'use client'
+
 /**
  * usePlayerProfile — toute la logique d'état du formulaire 4 étapes.
  * Extrait de PlayerProfile.tsx pour rendre le composant testable et lisible.
  */
 import { useState, useEffect } from 'react';
-import { PlayerData } from '../App';
+import { PlayerData } from '@/src/types/player';
 import aiStringService from '../services/aiStringService';
 import stringDatabase from '../services/stringDatabase';
 
