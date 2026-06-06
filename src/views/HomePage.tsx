@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const MODULES = [
   {
@@ -66,7 +66,7 @@ const HomePage: React.FC = () => (
               <p className="text-sm text-gray-500 leading-relaxed">{m.desc}</p>
             </div>
             <Link
-              to={m.to}
+              href={m.to}
               className="mt-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-black hover:bg-gray-800 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
               aria-label={`${m.cta} — ${m.name}`}
             >

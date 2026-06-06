@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * QuestionnaireFlow — composant générique partagé entre Padel et Badminton.
  * Gère le questionnaire pas-à-pas, la barre de progression et l'appel au moteur.

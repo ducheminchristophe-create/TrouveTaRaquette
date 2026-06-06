@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react';
 import { ArrowLeft, Zap, Shield, Target, Calendar, DollarSign, Clock, TrendingUp, Brain, Star, TrendingDown, Loader } from 'lucide-react';
-import { PlayerData } from '../App';
+import { PlayerData } from '@/src/types/player';
 import aiStringService from '../services/aiStringService';
 import { useLanguage } from '../contexts/LanguageContext';
 import TennisCourtAnimation from './TennisCourtAnimation';
@@ -28,6 +30,12 @@ interface AIStringRecommendation {
   marketPrice: number;
   availability: 'high' | 'medium' | 'low';
   professionalRating: number;
+  // Caractéristiques optionnelles (renvoyées par l'IA)
+  power?: number;
+  control?: number;
+  spin?: number;
+  comfort?: number;
+  durability?: number;
 }
 
 const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ playerData, onReset, forceUseRealAPI = false }) => {
@@ -51,7 +59,7 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
       setHybridRecommendations(response.hybridRecommendations || []);
       setMaintenanceSchedule(response.maintenanceSchedule);
       setExpertInsights(response.expertInsights);
-      setIsUsingRealAPI(response.isUsingRealAPI);
+      setIsUsingRealAPI(response.isUsingRealAPI ?? false);
 
       // Afficher l'erreur API si présente
       if (response.errorMessage) {
@@ -312,7 +320,7 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
           🎯 Meilleures Alternatives pour Améliorer Votre Setup
         </h2>
         <p className="text-center text-gray-600 mb-2 text-lg">
-          L'IA a analysé votre setup actuel et vous propose ces alternatives optimisées
+          L&apos;IA a analysé votre setup actuel et vous propose ces alternatives optimisées
         </p>
       </div>
 

@@ -1,10 +1,12 @@
+'use client'
+
 /**
  * PlayerProfile — orchestrateur 4 étapes.
  * Délègue l'état à usePlayerProfile, le rendu à StepEquipment/StepProfile/StepPreferences/StepSummary.
  */
 import React from 'react';
 import { ChevronRight, AlertCircle } from 'lucide-react';
-import { PlayerData } from '../App';
+import { PlayerData } from '@/src/types/player';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
 import { useLanguage } from '../contexts/LanguageContext';
 import StepEquipment from './steps/StepEquipment';

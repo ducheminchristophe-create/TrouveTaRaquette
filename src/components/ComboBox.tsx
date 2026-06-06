@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
@@ -153,7 +155,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
         <div className="absolute z-50 w-full mt-1 bg-white border-2 border-gray-300 shadow-lg">
           <div className="p-3 text-gray-500 text-sm">
             {allowCustom ? (
-              <span>Appuyez sur Entrée pour utiliser "{searchTerm}"</span>
+              <span>Appuyez sur Entrée pour utiliser &quot;{searchTerm}&quot;</span>
             ) : (
               <span>Aucun résultat trouvé</span>
             )}

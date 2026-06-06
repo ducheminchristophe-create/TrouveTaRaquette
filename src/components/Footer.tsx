@@ -11,7 +11,7 @@ const Footer: React.FC = () => (
           </div>
           <h3 className="font-black text-base uppercase mb-1">Moteur à règles</h3>
           <p className="text-gray-400 text-sm">
-            Chaque recommandation s'explique. Aucune boîte noire, aucun algorithme opaque.
+            Chaque recommandation s&apos;explique. Aucune boîte noire, aucun algorithme opaque.
           </p>
         </div>
         <div className="text-center">
@@ -35,7 +35,7 @@ const Footer: React.FC = () => (
       </div>
       <div className="border-t border-gray-800 pt-6 text-center">
         <p className="text-gray-500 text-sm uppercase tracking-wider">
-          &copy; 2025 TrouveTaRaquette. Tous droits réservés.
+          &copy; {new Date().getFullYear()} TrouveTaRaquette. Tous droits réservés.
         </p>
       </div>
     </div>

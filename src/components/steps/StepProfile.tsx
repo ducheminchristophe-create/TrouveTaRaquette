@@ -1,8 +1,10 @@
+'use client'
+
 /**
  * StepProfile — Étape 2 : niveau, style de jeu, prise, surfaces.
  */
 import React from 'react';
-import { PlayerData } from '../../App';
+import { PlayerData } from '@/src/types/player';
 import NiveauDeJeu from '../NiveauDeJeu';
 
 interface Props {
