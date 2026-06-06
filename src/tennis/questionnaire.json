@@ -1,0 +1,60 @@
+{
+  "sport": "tennis-strings",
+  "version": 1,
+  "_doc": "Questionnaire cordage tennis — style quiz Padel/Badminton. Logique à règles, résultats de la BDD JSON.",
+  "questions": [
+    {
+      "id": "level",
+      "required": true,
+      "label": "Quel est ton niveau au tennis ?",
+      "options": [
+        { "id": "beginner",     "label": "Débutant / loisir",             "effects": { "set": { "levelOrdinal": 0, "maxTension": 22 } } },
+        { "id": "intermediate", "label": "Intermédiaire (club régulier)", "effects": { "set": { "levelOrdinal": 1 } } },
+        { "id": "advanced",     "label": "Confirmé / compétition",        "effects": { "set": { "levelOrdinal": 2, "minTension": 23 } } }
+      ]
+    },
+    {
+      "id": "style",
+      "required": true,
+      "label": "Quel est ton style de jeu ?",
+      "options": [
+        { "id": "topspin",   "label": "Lifteur / topspin",              "effects": { "targetDelta": { "spin": 20, "control": 5 }, "weightMul": { "spin": 1.5 } } },
+        { "id": "flat",      "label": "Jeu à plat / frappeur",          "effects": { "targetDelta": { "power": 15, "control": 5 }, "weightMul": { "power": 1.3 } } },
+        { "id": "allround",  "label": "Polyvalent",                     "effects": {} },
+        { "id": "defensive", "label": "Défensif / placement",           "effects": { "targetDelta": { "comfort": 10, "control": 15 }, "weightMul": { "control": 1.3 } } }
+      ]
+    },
+    {
+      "id": "priority",
+      "required": true,
+      "label": "Ta priorité principale ?",
+      "options": [
+        { "id": "control",    "label": "Le contrôle et la précision",   "effects": { "targetDelta": { "control": 15 }, "weightMul": { "control": 1.6 } } },
+        { "id": "power",      "label": "La puissance",                  "effects": { "targetDelta": { "power": 15 }, "weightMul": { "power": 1.6 } } },
+        { "id": "spin",       "label": "Le spin / le lift",             "effects": { "targetDelta": { "spin": 15 }, "weightMul": { "spin": 1.6 } } },
+        { "id": "comfort",    "label": "Le confort / protection bras",  "effects": { "targetDelta": { "comfort": 20 }, "weightMul": { "comfort": 2.0 }, "set": { "requireComfortMin": 7 } } },
+        { "id": "durability", "label": "La durabilité",                 "effects": { "targetDelta": { "durability": 20 }, "weightMul": { "durability": 1.5 } } }
+      ]
+    },
+    {
+      "id": "arm",
+      "required": true,
+      "label": "As-tu des douleurs au coude ou à l'épaule (tennis elbow) ?",
+      "options": [
+        { "id": "often",     "label": "Oui, c'est un vrai sujet",         "effects": { "targetDelta": { "comfort": 25 }, "weightMul": { "comfort": 2.5 }, "set": { "requireComfortMin": 8, "polyesterForbidden": true } } },
+        { "id": "sometimes", "label": "Parfois / je préfère prévenir",    "effects": { "targetDelta": { "comfort": 12 }, "weightMul": { "comfort": 1.6 }, "set": { "requireComfortMin": 7 } } },
+        { "id": "never",     "label": "Non, aucun problème",              "effects": {} }
+      ]
+    },
+    {
+      "id": "budget",
+      "required": true,
+      "label": "Quel est ton budget pour le cordage ?",
+      "options": [
+        { "id": "u20",     "label": "Jusqu'à 20 €",  "effects": { "set": { "maxPrice": 20 } } },
+        { "id": "u30",     "label": "Jusqu'à 30 €",  "effects": { "set": { "maxPrice": 30 } } },
+        { "id": "nolimit", "label": "Pas de limite",  "effects": {} }
+      ]
+    }
+  ]
+}
