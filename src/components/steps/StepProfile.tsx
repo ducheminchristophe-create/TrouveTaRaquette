@@ -127,6 +127,36 @@ const StepProfile: React.FC<Props> = ({
           ))}
         </div>
       </div>
+      {/* Blessures / douleurs */}
+      <div>
+        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+          Blessures ou douleurs{' '}
+          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+        </p>
+        <div className="relative">
+          <textarea
+            value={formData.playerProfile.injuries}
+            onChange={e => {
+              const words = e.target.value.trim() === '' ? [] : e.target.value.trim().split(/\s+/);
+              if (words.length <= 15) {
+                setFormData(prev => ({
+                  ...prev,
+                  playerProfile: { ...prev.playerProfile, injuries: e.target.value },
+                }));
+              }
+            }}
+            placeholder="ex : tennis elbow droit, douleur épaule..."
+            rows={3}
+            className={`w-full border-2 border-gray-200 p-3 text-sm resize-none transition-colors ${FOCUS} hover:border-gray-300 placeholder-gray-400`}
+          />
+          <span className="absolute bottom-2 right-3 text-xs text-gray-400 select-none">
+            {formData.playerProfile.injuries.trim() === ''
+              ? 0
+              : formData.playerProfile.injuries.trim().split(/\s+/).length}
+            /15 mots
+          </span>
+        </div>
+      </div>
     </fieldset>
   );
 };
