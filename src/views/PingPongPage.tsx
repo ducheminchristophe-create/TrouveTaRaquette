@@ -23,6 +23,11 @@ const DIM_LABELS: Record<string, string> = {
   speed: 'Vitesse', spin: 'Effet', control: 'Contrôle',
 };
 
+/** Corrige l'élision française dans les phrases du moteur ("de effet" → "d'effet") sans toucher à scoring.js */
+function fixElision(s: string): string {
+  return s.replace(/\bde (effet|a|e|i|o|u|é|è|ê|h)/gi, (_m, w) => `d'${w}`);
+}
+
 function buildSpecLine(b: Bat): string {
   return [
     STYLE_LABELS[b.style] ?? b.style,
@@ -43,8 +48,8 @@ const PingPongPage: React.FC = () => {
       racket: r.bat as unknown as RacketResult['racket'],
       score: r.score,
       scores: r.scores,
-      reasons: r.reasons,
-      warnings: r.warnings,
+      reasons: r.reasons.map(fixElision),
+      warnings: r.warnings.map(fixElision),
     }));
     setResults(mapped);
     window.scrollTo(0, 0);
