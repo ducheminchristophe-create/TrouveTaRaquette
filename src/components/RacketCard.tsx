@@ -5,6 +5,7 @@
  * Affiche nom, prix, score, barres de dimensions, raisons et CTA.
  */
 import React from 'react';
+import { buildAffiliateUrl, AFFILIATE_REL } from '@/src/lib/affiliate';
 
 export interface RacketResult {
   racket: {
@@ -33,7 +34,7 @@ interface Props {
 
 const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels }) => {
   const { racket, score, scores, reasons, warnings } = result;
-  const url = racket.affiliateLinks?.[0]?.url ?? racket.productUrl ?? null;
+  const url = buildAffiliateUrl(racket.affiliateLinks?.[0]?.url ?? racket.productUrl);
 
   return (
     <article
@@ -97,7 +98,7 @@ const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels }
         <a
           href={url as string}
           target="_blank"
-          rel="noopener noreferrer"
+          rel={AFFILIATE_REL}
           className="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-black hover:bg-gray-800 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           aria-label={`Voir ${racket.brand} ${racket.model} sur le site du vendeur (nouvel onglet)`}
         >

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ShieldCheck, Zap, BookOpen } from 'lucide-react';
 
 const Footer: React.FC = () => (
@@ -33,8 +34,20 @@ const Footer: React.FC = () => (
           </p>
         </div>
       </div>
-      <div className="border-t border-gray-800 pt-6 text-center">
-        <p className="text-gray-500 text-sm uppercase tracking-wider">
+      <div className="border-t border-gray-800 pt-6 text-center space-y-3">
+        <nav aria-label="Liens légaux" className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+          {[
+            { href: '/mentions-legales',          label: 'Mentions légales' },
+            { href: '/politique-confidentialite',  label: 'Confidentialité' },
+            { href: '/cgu',                        label: 'CGU' },
+            { href: '/cookies',                    label: 'Cookies' },
+          ].map(l => (
+            <Link key={l.href} href={l.href} className="text-gray-500 text-xs hover:text-gray-300 transition-colors">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+        <p className="text-gray-600 text-xs uppercase tracking-wider">
           &copy; {new Date().getFullYear()} TrouveTaRaquette. Tous droits réservés.
         </p>
       </div>

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useLanguage } from '@/src/contexts/LanguageContext'
-import LanguageSelector from '@/src/components/LanguageSelector'
 
 const TABS = [
   { href: '/tennis', label: '🎾', short: 'Tennis',    full: 'Cordage Tennis' },
@@ -68,12 +67,7 @@ export default function Nav() {
               })}
             </nav>
 
-            {/* Langue uniquement sur /tennis (seule page i18n complète) */}
-            {pathname?.startsWith('/tennis') && (
-              <div className="ml-1 hidden md:block shrink-0">
-                <LanguageSelector />
-              </div>
-            )}
+            {/* Sélecteur de langue retiré — i18n EN à finir en P3 */}
           </div>
 
         </div>

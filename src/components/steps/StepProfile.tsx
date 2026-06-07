@@ -135,7 +135,7 @@ const StepProfile: React.FC<Props> = ({
         </p>
         <div className="relative">
           <textarea
-            value={formData.playerProfile.injuries}
+            value={formData.playerProfile.injuries ?? ''}
             onChange={e => {
               const words = e.target.value.trim() === '' ? [] : e.target.value.trim().split(/\s+/);
               if (words.length <= 15) {
@@ -150,9 +150,9 @@ const StepProfile: React.FC<Props> = ({
             className={`w-full border-2 border-gray-200 p-3 text-sm resize-none transition-colors ${FOCUS} hover:border-gray-300 placeholder-gray-400`}
           />
           <span className="absolute bottom-2 right-3 text-xs text-gray-400 select-none">
-            {formData.playerProfile.injuries.trim() === ''
+            {(formData.playerProfile.injuries ?? '').trim() === ''
               ? 0
-              : formData.playerProfile.injuries.trim().split(/\s+/).length}
+              : (formData.playerProfile.injuries ?? '').trim().split(/\s+/).length}
             /15 mots
           </span>
         </div>

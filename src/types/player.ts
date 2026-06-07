@@ -18,6 +18,7 @@ export interface PlayerData {
     playStyle: string
     grip: string
     courtHabits: string[]
+    injuries?: string
   }
   preferences: {
     alternativeTypes: string[]

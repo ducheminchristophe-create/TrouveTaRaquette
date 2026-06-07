@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import QuestionnaireFlow, { type Answers } from '../components/QuestionnaireFlow';
 import RacketCard, { type RacketResult } from '../components/RacketCard';
+import EmailCapture from '../components/EmailCapture';
 import { recommend, type Racket } from '../badminton/scoring';
 import type { Questionnaire } from '../badminton/scoring';
 import rawRackets from '../badminton/rackets.json';
@@ -109,6 +110,8 @@ const ResultsView: React.FC<{ results: RacketResult[]; onRestart: () => void }> 
           </li>
         ))}
       </ol>
+
+      <EmailCapture sport="badminton" />
 
       <button
         onClick={onRestart}
