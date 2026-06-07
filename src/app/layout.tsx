@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Providers } from './providers'
 import Nav from '@/src/components/Nav'
@@ -12,6 +12,14 @@ export const metadata: Metadata = {
   description:
     'Recommandation de raquettes de padel, badminton et de cordages tennis en 2 minutes. Moteur à règles 100 % transparent, indépendant et gratuit.',
   metadataBase: new URL('https://trouvetaraquette.com'),
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     siteName: 'TrouveTaRaquette',
     locale: 'fr_FR',
@@ -21,6 +29,10 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#F97316',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -28,9 +40,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-      </head>
       <body className="min-h-screen flex flex-col bg-gray-50">
         <Providers>
           <Nav />

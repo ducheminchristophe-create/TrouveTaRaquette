@@ -10,8 +10,8 @@ export default {
       colors: {
         // Tokens marque — source unique de vérité
         brand: {
-          primary:    '#FF6B00', // orange principal
-          primaryHover: '#E55A00',
+          primary:    '#F97316', // orange principal (= orange-500 Tailwind, couleur du logo)
+          primaryHover: '#EA580C', // orange-600
           secondary:  '#000000', // noir
           bg:         '#FFFFFF',
           surface:    '#F5F5F5',

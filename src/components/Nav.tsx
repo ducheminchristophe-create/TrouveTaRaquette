@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useLanguage } from '@/src/contexts/LanguageContext'
 
 const TABS = [
   { href: '/tennis', label: '🎾', short: 'Tennis',    full: 'Cordage Tennis' },
@@ -17,7 +16,6 @@ const ACTIVE   = `${BASE} bg-orange-500 text-white`
 const INACTIVE = `${BASE} text-gray-400 hover:text-white`
 
 export default function Nav() {
-  const { t } = useLanguage()
   const pathname = usePathname()
 
   return (
@@ -26,23 +24,28 @@ export default function Nav() {
       <div className="container mx-auto px-4 sm:px-6 py-4 relative z-10">
         <div className="flex items-center justify-between gap-3">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+          {/* Logo : lockup complet sur fond sombre (≥ sm), icône seule en mobile */}
+          <Link href="/" className="shrink-0" aria-label="TrouveTaRaquette — accueil">
+            {/* Lockup (icône + wordmark) — fond sombre */}
             <Image
-              src="/TennisTuner.jpeg"
+              src="/logo-dark.svg"
               alt="TrouveTaRaquette"
-              width={56}
-              height={56}
-              className="h-12 w-12 sm:h-14 sm:w-14 object-contain rounded-lg"
+              width={344}
+              height={76}
+              priority
+              unoptimized
+              className="hidden sm:block h-10 w-auto"
             />
-            <div className="hidden sm:block">
-              <p className="text-lg sm:text-xl font-black tracking-tight leading-none">
-                TrouveTa<span className="text-orange-500">Raquette</span>
-              </p>
-              <p className="text-gray-400 text-xs font-medium tracking-wide uppercase mt-0.5">
-                {t('header.subtitle')}
-              </p>
-            </div>
+            {/* Icône seule — mobile */}
+            <Image
+              src="/logo-icon.svg"
+              alt="TrouveTaRaquette"
+              width={64}
+              height={64}
+              priority
+              unoptimized
+              className="sm:hidden h-10 w-10"
+            />
           </Link>
 
           {/* Onglets + langue */}
