@@ -13,6 +13,7 @@ export interface RacketResult {
     brand: string;
     model: string;
     price: number;
+    priceIndicative?: boolean;
     productUrl?: string | null;
     affiliateLinks?: { url: string }[];
     [key: string]: unknown;
@@ -30,9 +31,11 @@ interface Props {
   specLine: string;
   /** Labels humains pour chaque dimension. ex: { power: "Puissance", control: "Contrôle" } */
   dimensionLabels: Record<string, string>;
+  /** Texte du bouton d'action. Défaut: "Voir la raquette →" */
+  ctaLabel?: string;
 }
 
-const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels }) => {
+const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, ctaLabel = 'Voir la raquette →' }) => {
   const { racket, score, scores, reasons, warnings } = result;
   const url = buildAffiliateUrl(racket.affiliateLinks?.[0]?.url ?? racket.productUrl);
 
@@ -59,6 +62,9 @@ const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels }
         <div className="text-right shrink-0">
           <ScoreRing score={score} />
           <p className="text-xl font-black text-black mt-1">{racket.price} €</p>
+          {racket.priceIndicative && (
+            <p className="text-[10px] text-gray-400 leading-none">prix indicatif</p>
+          )}
         </div>
       </div>
 
@@ -102,7 +108,7 @@ const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels }
           className="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-black hover:bg-gray-800 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           aria-label={`Voir ${racket.brand} ${racket.model} sur le site du vendeur (nouvel onglet)`}
         >
-          Voir la raquette →
+          {ctaLabel}
         </a>
       )}
     </article>

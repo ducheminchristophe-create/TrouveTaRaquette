@@ -9,6 +9,7 @@ const TABS = [
   { href: '/tennis', label: '🎾', short: 'Tennis',    full: 'Cordage Tennis' },
   { href: '/padel',  label: '🟢', short: 'Padel',     full: 'Padel' },
   { href: '/badminton', label: '🏸', short: 'Badm.', full: 'Badminton' },
+  { href: '/ping-pong', label: '🏓', short: 'Ping', full: 'Ping-Pong' },
 ]
 
 const BASE  = 'px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wide transition-colors whitespace-nowrap'

@@ -1,0 +1,80 @@
+{
+  "sport": "table-tennis",
+  "phase": 1,
+  "scope": "pre-assembled",
+  "version": 1,
+  "dimensions": ["speed", "spin", "control"],
+  "_doc": "Phase 1 = raquettes complètes prêtes à jouer. Mêmes 3 leviers que le module padel : targetDelta (profil cible, base 50), weightMul (importance d'un axe), set (variables de filtre : userLevelOrdinal, maxPrice, requireIttf, requireHandle).",
+  "questions": [
+    {
+      "id": "level",
+      "type": "single",
+      "required": true,
+      "label": "Où en es-tu au ping-pong ?",
+      "options": [
+        { "id": "beginner", "label": "Je débute / jeu de loisir en famille", "effects": { "targetDelta": { "control": 25, "speed": -15, "spin": -10 }, "weightMul": { "control": 1.5, "speed": 0.7 }, "set": { "userLevelOrdinal": 0 } } },
+        { "id": "improver", "label": "Je progresse, je joue régulièrement", "effects": { "targetDelta": { "spin": 8 }, "set": { "userLevelOrdinal": 1 } } },
+        { "id": "club", "label": "Je joue en club", "effects": { "targetDelta": { "speed": 8, "spin": 10, "control": -5 }, "weightMul": { "spin": 1.2 }, "set": { "userLevelOrdinal": 2 } } },
+        { "id": "competition", "label": "Compétition", "effects": { "targetDelta": { "speed": 14, "spin": 12, "control": -8 }, "weightMul": { "speed": 1.2, "spin": 1.2 }, "set": { "userLevelOrdinal": 3 } } }
+      ]
+    },
+    {
+      "id": "style",
+      "type": "single",
+      "required": true,
+      "label": "Quel style de jeu te ressemble ?",
+      "options": [
+        { "id": "defensive", "label": "Défensif (je remets, je coupe, je laisse l'adversaire se tromper)", "effects": { "targetDelta": { "control": 22, "speed": -18 }, "weightMul": { "control": 1.3 } } },
+        { "id": "allround", "label": "Polyvalent (un peu de tout)", "effects": {} },
+        { "id": "offensive", "label": "Offensif (j'attaque, je cherche le topspin et la vitesse)", "effects": { "targetDelta": { "speed": 22, "spin": 15, "control": -12 }, "weightMul": { "speed": 1.3, "spin": 1.2 } } }
+      ]
+    },
+    {
+      "id": "priority",
+      "type": "single",
+      "required": true,
+      "label": "Ta priorité numéro un ?",
+      "options": [
+        { "id": "control", "label": "Le contrôle (placer la balle où je veux)", "effects": { "targetDelta": { "control": 12 }, "weightMul": { "control": 1.6 } } },
+        { "id": "spin", "label": "L'effet (lift, topspin, services coupés)", "effects": { "targetDelta": { "spin": 12 }, "weightMul": { "spin": 1.6 } } },
+        { "id": "speed", "label": "La vitesse / la puissance", "effects": { "targetDelta": { "speed": 12 }, "weightMul": { "speed": 1.6 } } },
+        { "id": "balance", "label": "Un bon équilibre des trois", "effects": { "weightMul": { "control": 1.15, "spin": 1.15, "speed": 1.15 } } }
+      ]
+    },
+    {
+      "id": "grip",
+      "type": "single",
+      "required": true,
+      "label": "Comment tiens-tu ta raquette ?",
+      "_doc": "La prise porte-plume (penhold) limite fortement le choix : peu de raquettes pré-assemblées ont ce manche. requireHandle filtre en dur.",
+      "options": [
+        { "id": "classic", "label": "Prise classique (la main entoure le manche)", "effects": {} },
+        { "id": "penhold", "label": "Prise porte-plume (comme un stylo)", "effects": { "set": { "requireHandle": "penhold" } } },
+        { "id": "unknown", "label": "Je ne sais pas / peu importe", "effects": {} }
+      ]
+    },
+    {
+      "id": "official",
+      "type": "single",
+      "required": false,
+      "label": "Joues-tu (ou comptes-tu jouer) en compétition officielle ? (optionnel)",
+      "_doc": "Oui => filtre sur les raquettes homologuées ITTF (revêtements aux normes).",
+      "options": [
+        { "id": "yes", "label": "Oui, il me faut du matériel homologué ITTF", "effects": { "set": { "requireIttf": true } } },
+        { "id": "no", "label": "Non, je joue pour le plaisir", "effects": {} }
+      ]
+    },
+    {
+      "id": "budget",
+      "type": "single",
+      "required": true,
+      "label": "Ton budget maximum ?",
+      "options": [
+        { "id": "u25", "label": "Jusqu'à 25 €", "effects": { "set": { "maxPrice": 25 } } },
+        { "id": "u50", "label": "Jusqu'à 50 €", "effects": { "set": { "maxPrice": 50 } } },
+        { "id": "u90", "label": "Jusqu'à 90 €", "effects": { "set": { "maxPrice": 90 } } },
+        { "id": "nolimit", "label": "Pas de limite", "effects": {} }
+      ]
+    }
+  ]
+}
