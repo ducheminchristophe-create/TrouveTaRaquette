@@ -69,6 +69,18 @@ export interface RecommendationResult {
   warnings: string[]
 }
 
+export type WildcardType = 'value'
+
+export interface Wildcard extends RecommendationResult {
+  wildcardType: WildcardType
+  label: string
+}
+
+export interface RecommendOutput {
+  topFits: RecommendationResult[]
+  wildcard: Wildcard | null
+}
+
 export function deriveScores(bat: Bat): Record<Dimension, number>
 export function buildProfile(
   answers: Record<string, string>,
@@ -79,9 +91,14 @@ export function matchScore(
   weights: Record<Dimension, number>,
   scores: Record<Dimension, number>
 ): number
+export function pickWildcard(
+  candidates: RecommendationResult[],
+  topFits: RecommendationResult[],
+  type?: WildcardType
+): Wildcard | null
 export function recommend(
   bats: Bat[],
   answers: Record<string, string>,
   questionnaire: Questionnaire,
-  options?: { limit?: number }
-): RecommendationResult[]
+  options?: { limit?: number; wildcard?: WildcardType }
+): RecommendOutput

@@ -98,13 +98,44 @@ function explain(target, weights, scores) {
 }
 
 /**
+ * Choisit le coup de cœur parmi les candidats qui passent les filtres durs
+ * mais ne sont pas déjà dans topFits.
+ * - "value" : meilleur rapport qualité-prix = score / √prix (le sqrt évite que la moins chère gagne toujours).
+ *   On exige score >= 55 (un coup de cœur reste un bon choix). Renvoie null si rien ne qualifie.
+ * Le switch sur `type` permet de brancher d'autres saveurs plus tard ("upgrade", "accessory"…).
+ */
+function pickWildcard(candidates, topFits, type = "value") {
+  const topIds = new Set(topFits.map((r) => r.bat.id));
+  const pool = candidates.filter((r) => !topIds.has(r.bat.id) && r.score >= 55);
+  if (pool.length === 0) return null;
+
+  switch (type) {
+    case "value":
+    default: {
+      let best = null;
+      let bestValue = -Infinity;
+      for (const r of pool) {
+        const value = r.score / Math.sqrt(Math.max(r.bat.price, 1));
+        if (value > bestValue || (value === bestValue && best && r.score > best.score)) {
+          bestValue = value;
+          best = r;
+        }
+      }
+      if (!best) return null;
+      return { ...best, wildcardType: "value", label: "Le meilleur rapport qualité-prix de la sélection" };
+    }
+  }
+}
+
+/**
  * bats : tableau conforme à bat-schema.json
  * answers : { [questionId]: optionId }
  * questionnaire : questionnaire.json
- * options : { limit = 5 }
+ * options : { limit = 3, wildcard = "value" }
+ * -> { topFits: [...max 3], wildcard: {bat, score, scores, reasons, warnings, wildcardType, label} | null }
  */
 function recommend(bats, answers, questionnaire, options = {}) {
-  const { limit = 5 } = options;
+  const { limit = 3, wildcard = "value" } = options;
   const { target, weights, filters } = buildProfile(answers, questionnaire);
 
   const results = [];
@@ -120,10 +151,11 @@ function recommend(bats, answers, questionnaire, options = {}) {
     results.push({ bat, score, scores, reasons, warnings });
   }
   results.sort((a, b) => b.score - a.score);
-  return results.slice(0, limit);
+  const topFits = results.slice(0, limit);
+  return { topFits, wildcard: pickWildcard(results, topFits, wildcard) };
 }
 
 if (typeof window !== "undefined") {
-  window.PingPongEngine = { DIMENSIONS, deriveScores, buildProfile, matchScore, recommend };
+  window.PingPongEngine = { DIMENSIONS, deriveScores, buildProfile, matchScore, pickWildcard, recommend };
 }
-export { DIMENSIONS, deriveScores, buildProfile, matchScore, recommend };
+export { DIMENSIONS, deriveScores, buildProfile, matchScore, pickWildcard, recommend };

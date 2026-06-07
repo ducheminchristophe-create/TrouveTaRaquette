@@ -33,9 +33,11 @@ interface Props {
   dimensionLabels: Record<string, string>;
   /** Texte du bouton d'action. Défaut: "Voir la raquette →" */
   ctaLabel?: string;
+  /** Badge personnalisé (ex. coup de cœur). Remplace le badge "Meilleur choix" du rang 1. */
+  badge?: string;
 }
 
-const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, ctaLabel = 'Voir la raquette →' }) => {
+const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, ctaLabel = 'Voir la raquette →', badge }) => {
   const { racket, score, scores, reasons, warnings } = result;
   const url = buildAffiliateUrl(racket.affiliateLinks?.[0]?.url ?? racket.productUrl);
 
@@ -49,7 +51,11 @@ const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, 
       {/* En-tête */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          {rank === 1 && (
+          {badge ? (
+            <span className="inline-block text-xs font-bold bg-orange-100 text-orange-600 px-2.5 py-0.5 rounded-full mb-2">
+              {badge}
+            </span>
+          ) : rank === 1 && (
             <span className="inline-block text-xs font-bold bg-orange-100 text-orange-600 px-2.5 py-0.5 rounded-full mb-2">
               ⭐ Meilleur choix
             </span>

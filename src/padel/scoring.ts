@@ -78,6 +78,19 @@ export interface RecommendationResult {
   warnings: string[];
 }
 
+/** Saveurs de coup de cœur. Seul "value" est implémenté ; structure prête pour "upgrade", "accessory"… */
+export type WildcardType = 'value';
+
+export interface Wildcard extends RecommendationResult {
+  wildcardType: WildcardType;
+  label: string;
+}
+
+export interface RecommendOutput {
+  topFits: RecommendationResult[];
+  wildcard: Wildcard | null;
+}
+
 /* ------------------------------------------------------------------ */
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, v));
@@ -216,13 +229,51 @@ function explain(
   return { reasons: reasons.slice(0, 3), warnings: warnings.slice(0, 2) };
 }
 
+/**
+ * Choisit le coup de cœur parmi les candidats qui passent les filtres durs
+ * mais ne sont pas déjà dans topFits.
+ * - "value" : meilleur rapport qualité-prix = score / √prix (le sqrt évite que la moins chère gagne toujours).
+ *   On exige score >= 55 (un coup de cœur reste un bon choix, pas un lot de consolation).
+ * Renvoie null si aucun candidat ne qualifie.
+ */
+export function pickWildcard(
+  candidates: RecommendationResult[],
+  topFits: RecommendationResult[],
+  type: WildcardType = 'value'
+): Wildcard | null {
+  const topIds = new Set(topFits.map(r => r.racket.id));
+  const pool = candidates.filter(r => !topIds.has(r.racket.id) && r.score >= 55);
+  if (pool.length === 0) return null;
+
+  switch (type) {
+    case 'value':
+    default: {
+      let best: RecommendationResult | null = null;
+      let bestValue = -Infinity;
+      for (const r of pool) {
+        const value = r.score / Math.sqrt(Math.max(r.racket.price, 1));
+        if (value > bestValue || (value === bestValue && best !== null && r.score > best.score)) {
+          bestValue = value;
+          best = r;
+        }
+      }
+      if (!best) return null;
+      return {
+        ...best,
+        wildcardType: 'value',
+        label: 'Le meilleur rapport qualité-prix de la sélection',
+      };
+    }
+  }
+}
+
 export function recommend(
   rackets: Racket[],
   answers: Record<string, string>,
   questionnaire: Questionnaire,
-  options: { limit?: number; softWeightPenalty?: number } = {}
-): RecommendationResult[] {
-  const { limit = 5, softWeightPenalty = 0.15 } = options;
+  options: { limit?: number; softWeightPenalty?: number; wildcard?: WildcardType } = {}
+): RecommendOutput {
+  const { limit = 3, softWeightPenalty = 0.15, wildcard = 'value' } = options;
   const { target, weights, filters } = buildProfile(answers, questionnaire);
 
   const results: RecommendationResult[] = [];
@@ -245,5 +296,7 @@ export function recommend(
     results.push({ racket, score, scores, reasons, warnings });
   }
 
-  return results.sort((a, b) => b.score - a.score).slice(0, limit);
+  const sorted = results.sort((a, b) => b.score - a.score);
+  const topFits = sorted.slice(0, limit);
+  return { topFits, wildcard: pickWildcard(sorted, topFits, wildcard) };
 }
