@@ -1,7 +1,8 @@
 'use client'
 
 /**
- * StepProfile — Étape 2 : niveau, style de jeu, prise, surfaces.
+ * StepProfile — Étape 2 : niveau, style de jeu, prise, surfaces, blessures.
+ * UI alignée sur le quiz Padel/Badminton.
  */
 import React from 'react';
 import { PlayerData } from '@/src/types/player';
@@ -17,11 +18,15 @@ interface Props {
 
 const FOCUS = 'focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1';
 
-const BTN_BASE = `p-4 font-bold text-sm tracking-wide transition-all ${FOCUS}`;
-const btnClass = (active: boolean) =>
-  `${BTN_BASE} ${active ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`;
-const btnOrange = (active: boolean) =>
-  `${BTN_BASE} ${active ? 'bg-orange-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`;
+/** Bouton-pill doux (style quiz) */
+const pill = (active: boolean, extra = '') =>
+  `px-4 py-3 rounded-xl border-2 font-medium text-sm transition-all ${FOCUS} ${extra} ${
+    active
+      ? 'border-orange-400 bg-orange-50 text-orange-700'
+      : 'border-gray-200 text-gray-700 hover:border-orange-400 hover:bg-orange-50'
+  }`;
+
+const LABEL = 'block text-sm font-bold text-gray-800 mb-3';
 
 const PLAY_STYLES = [
   { value: 'baseline',       label: 'Joueur de fond de court' },
@@ -49,22 +54,21 @@ const SURFACES = [
 const StepProfile: React.FC<Props> = ({
   formData, setFormData, togglePlayStyle, toggleGrip, toggleCourtHabit,
 }) => {
-  const { level, playStyle, grip, courtHabits } = formData.playerProfile;
+  const { level, playStyle, grip, courtHabits, injuries } = formData.playerProfile;
+  const injuriesText = injuries ?? '';
 
   return (
-    <fieldset className="space-y-8 border-none p-0 m-0">
-      <legend className="border-l-4 border-orange-600 pl-4 mb-2">
-        <h3 className="text-2xl font-black uppercase mb-1">Votre Profil de Joueur</h3>
-        <p className="text-gray-600 text-sm">
-          Renseignez votre niveau de jeu, votre style, votre prise et vos habitudes sur le court
+    <fieldset className="space-y-7 border-none p-0 m-0">
+      <legend className="mb-2 p-0">
+        <h3 className="text-xl font-black text-gray-900">Ton profil de joueur</h3>
+        <p className="text-gray-500 text-sm mt-0.5">
+          Niveau, style, prise et habitudes sur le court
         </p>
       </legend>
 
       {/* Niveau de jeu */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-4 uppercase tracking-wide">
-          Niveau de jeu
-        </p>
+        <p className={LABEL}>Niveau de jeu</p>
         <NiveauDeJeu
           value={level}
           onChange={v => setFormData(prev => ({ ...prev, playerProfile: { ...prev.playerProfile, level: v } }))}
@@ -73,15 +77,15 @@ const StepProfile: React.FC<Props> = ({
 
       {/* Style de jeu */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+        <p className={LABEL}>
           Style de jeu{' '}
-          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+          <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
         <div className="grid grid-cols-2 gap-3" role="group" aria-label="Style de jeu">
           {PLAY_STYLES.map(({ value, label }) => (
             <button key={value} type="button"
               aria-pressed={playStyle === value}
-              className={`${btnClass(playStyle === value)} text-left`}
+              className={pill(playStyle === value, 'text-left')}
               onClick={() => togglePlayStyle(value)}
             >
               {label}
@@ -92,15 +96,15 @@ const StepProfile: React.FC<Props> = ({
 
       {/* Prise */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+        <p className={LABEL}>
           Prise de raquette{' '}
-          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+          <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
         <div className="grid grid-cols-2 gap-3" role="group" aria-label="Prise de raquette">
           {GRIPS.map(({ value, label }) => (
             <button key={value} type="button"
               aria-pressed={grip === value}
-              className={btnClass(grip === value)}
+              className={pill(grip === value)}
               onClick={() => toggleGrip(value)}
             >
               {label}
@@ -111,15 +115,15 @@ const StepProfile: React.FC<Props> = ({
 
       {/* Surfaces */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+        <p className={LABEL}>
           Surfaces pratiquées{' '}
-          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+          <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
         <div className="grid grid-cols-2 gap-3" role="group" aria-label="Surfaces pratiquées">
           {SURFACES.map(({ value, label }) => (
             <button key={value} type="button"
               aria-pressed={courtHabits.includes(value)}
-              className={btnOrange(courtHabits.includes(value))}
+              className={pill(courtHabits.includes(value))}
               onClick={() => toggleCourtHabit(value)}
             >
               {label}
@@ -127,15 +131,16 @@ const StepProfile: React.FC<Props> = ({
           ))}
         </div>
       </div>
+
       {/* Blessures / douleurs */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">
+        <p className={LABEL}>
           Blessures ou douleurs{' '}
-          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+          <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
         <div className="relative">
           <textarea
-            value={formData.playerProfile.injuries ?? ''}
+            value={injuriesText}
             onChange={e => {
               const words = e.target.value.trim() === '' ? [] : e.target.value.trim().split(/\s+/);
               if (words.length <= 15) {
@@ -147,13 +152,10 @@ const StepProfile: React.FC<Props> = ({
             }}
             placeholder="ex : tennis elbow droit, douleur épaule..."
             rows={3}
-            className={`w-full border-2 border-gray-200 p-3 text-sm resize-none transition-colors ${FOCUS} hover:border-gray-300 placeholder-gray-400`}
+            className={`w-full rounded-xl border-2 border-gray-200 p-3 text-sm resize-none transition-colors ${FOCUS} hover:border-orange-400 focus:border-orange-500 placeholder-gray-400`}
           />
           <span className="absolute bottom-2 right-3 text-xs text-gray-400 select-none">
-            {(formData.playerProfile.injuries ?? '').trim() === ''
-              ? 0
-              : (formData.playerProfile.injuries ?? '').trim().split(/\s+/).length}
-            /15 mots
+            {injuriesText.trim() === '' ? 0 : injuriesText.trim().split(/\s+/).length}/15 mots
           </span>
         </div>
       </div>

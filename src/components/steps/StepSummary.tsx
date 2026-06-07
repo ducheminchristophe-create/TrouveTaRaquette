@@ -48,20 +48,20 @@ const StepSummary: React.FC<Props> = ({ loadingAnalysis, setupAnalysis }) => {
 
   return (
     <div
-      className="bg-gradient-to-br from-orange-50 to-yellow-50 p-6 border-l-4 border-orange-600"
+      className="bg-orange-50 rounded-2xl p-6 border border-orange-200"
       aria-label="Analyse de ton setup actuel"
     >
       <div className="flex items-center space-x-3 mb-4">
-        <Target className="h-6 w-6 text-orange-600" aria-hidden="true" />
-        <h3 className="text-xl font-black uppercase">{t('profile.currentSetupAnalysis')}</h3>
+        <Target className="h-6 w-6 text-orange-500" aria-hidden="true" />
+        <h3 className="text-xl font-black text-gray-900">{t('profile.currentSetupAnalysis')}</h3>
       </div>
 
-      <p className="text-gray-800 mb-5 font-medium italic">{setupAnalysis.analysis}</p>
+      <p className="text-gray-700 mb-5 text-sm italic">{setupAnalysis.analysis}</p>
 
       <dl className="grid grid-cols-5 gap-2 text-center text-sm">
         {STATS.map(({ key, label, value }) => (
-          <div key={key} className="bg-white p-3">
-            <dt className="font-bold text-xs text-gray-600 uppercase">{label}</dt>
+          <div key={key} className="bg-white rounded-xl p-3">
+            <dt className="font-bold text-xs text-gray-500">{label}</dt>
             <dd className={`text-2xl font-black ${STAT_COLOR(value)}`}>{value}</dd>
           </div>
         ))}

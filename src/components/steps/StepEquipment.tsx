@@ -2,6 +2,7 @@
 
 /**
  * StepEquipment — Étape 1 : raquette + cordage actuel.
+ * UI alignée sur le quiz Padel/Badminton.
  */
 import React from 'react';
 import { PlayerData } from '@/src/types/player';
@@ -26,7 +27,16 @@ interface Props {
 }
 
 const FOCUS = 'focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1';
-const INPUT = `w-full p-4 border-2 border-gray-300 hover:border-orange-500 focus:border-orange-600 ${FOCUS} transition-colors font-medium`;
+const INPUT = `w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-orange-400 focus:border-orange-500 ${FOCUS} transition-colors text-sm`;
+const LABEL = 'block text-sm font-bold text-gray-800 mb-2';
+
+/** Boutons-pills doux (style quiz) */
+const pill = (active: boolean) =>
+  `px-4 py-3 rounded-xl border-2 font-medium text-sm transition-all ${FOCUS} ${
+    active
+      ? 'border-orange-400 bg-orange-50 text-orange-700'
+      : 'border-gray-200 text-gray-700 hover:border-orange-400 hover:bg-orange-50'
+  }`;
 
 const StepEquipment: React.FC<Props> = ({
   formData,
@@ -44,16 +54,14 @@ const StepEquipment: React.FC<Props> = ({
 
   return (
     <fieldset className="space-y-6 border-none p-0 m-0">
-      <legend className="border-l-4 border-orange-600 pl-4 mb-2">
-        <h3 className="text-2xl font-black uppercase mb-1">{t('profile.yourEquipment')}</h3>
-        <p className="text-gray-600 text-sm">{t('profile.equipmentDesc')}</p>
+      <legend className="mb-2 p-0">
+        <h3 className="text-xl font-black text-gray-900">{t('profile.yourEquipment')}</h3>
+        <p className="text-gray-500 text-sm mt-0.5">{t('profile.equipmentDesc')}</p>
       </legend>
 
       {/* Marque */}
       <div>
-        <label htmlFor="racket-brand" className="block text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
-          {t('profile.racketBrand')}
-        </label>
+        <label htmlFor="racket-brand" className={LABEL}>{t('profile.racketBrand')}</label>
         <select
           id="racket-brand"
           className={`${INPUT} bg-white`}
@@ -76,9 +84,7 @@ const StepEquipment: React.FC<Props> = ({
 
       {/* Modèle */}
       <div>
-        <label htmlFor="racket-model" className="block text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
-          {t('profile.racketModel')}
-        </label>
+        <label htmlFor="racket-model" className={LABEL}>{t('profile.racketModel')}</label>
         {hasBrandList ? (
           <div className="space-y-2">
             <select
@@ -111,9 +117,7 @@ const StepEquipment: React.FC<Props> = ({
 
       {/* Détails */}
       <div>
-        <label htmlFor="racket-details" className="block text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
-          {t('profile.additionalDetails')}
-        </label>
+        <label htmlFor="racket-details" className={LABEL}>{t('profile.additionalDetails')}</label>
         <input id="racket-details" type="text" className={INPUT}
           placeholder={t('profile.detailsPlaceholder')}
           value={details}
@@ -122,9 +126,9 @@ const StepEquipment: React.FC<Props> = ({
 
       {/* Cordage actuel */}
       <div>
-        <p className="block text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide" id="strings-label">
+        <p className={LABEL} id="strings-label">
           {t('profile.currentStrings')}{' '}
-          <span className="text-gray-400 font-normal normal-case text-xs">(optionnel)</span>
+          <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
         <div className="grid grid-cols-3 gap-3 mb-4" role="group" aria-labelledby="strings-label">
           {[
@@ -136,9 +140,7 @@ const StepEquipment: React.FC<Props> = ({
               key={val}
               type="button"
               aria-pressed={strings.type === val}
-              className={`p-4 font-bold uppercase text-sm tracking-wide transition-all ${FOCUS} ${
-                strings.type === val ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              className={pill(strings.type === val)}
               onClick={() => handleChange('currentStrings.type', val)}
             >
               {label}
@@ -155,8 +157,8 @@ const StepEquipment: React.FC<Props> = ({
               onChange={v => handleChange('currentStrings.mono', v)}
               options={stringModels} placeholder={t('profile.stringNamePlaceholder')} allowCustom />
             <div>
-              <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
-                Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+              <label className="block text-xs font-bold text-gray-600 mb-1">
+                Tension <span className="text-gray-400 font-normal">(optionnel)</span>
               </label>
               <TensionWheel value={strings.monoTension}
                 onChange={v => handleChange('currentStrings.monoTension', v)}
@@ -169,7 +171,7 @@ const StepEquipment: React.FC<Props> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Montants */}
             <div className="space-y-2">
-              <p className="text-xs font-bold text-gray-600 uppercase">{t('profile.mains')}</p>
+              <p className="text-xs font-bold text-gray-600">{t('profile.mains')}</p>
               <ComboBox value={selectedMainBrand}
                 onChange={v => { setSelectedMainBrand(v); handleChange('currentStrings.hybridMain', ''); }}
                 options={stringBrands} placeholder="Marque montants (ex: Luxilon...)" allowCustom />
@@ -177,8 +179,8 @@ const StepEquipment: React.FC<Props> = ({
                 onChange={v => handleChange('currentStrings.hybridMain', v)}
                 options={mainStringModels} placeholder={t('profile.mainStringPlaceholder')} allowCustom />
               <div>
-                <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
-                  Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+                <label className="block text-xs font-bold text-gray-600 mb-1">
+                  Tension <span className="text-gray-400 font-normal">(optionnel)</span>
                 </label>
                 <TensionWheel value={strings.hybridMainTension}
                   onChange={v => handleChange('currentStrings.hybridMainTension', v)}
@@ -187,7 +189,7 @@ const StepEquipment: React.FC<Props> = ({
             </div>
             {/* Travers */}
             <div className="space-y-2">
-              <p className="text-xs font-bold text-gray-600 uppercase">{t('profile.crosses')}</p>
+              <p className="text-xs font-bold text-gray-600">{t('profile.crosses')}</p>
               <ComboBox value={selectedCrossBrand}
                 onChange={v => { setSelectedCrossBrand(v); handleChange('currentStrings.hybridCross', ''); }}
                 options={stringBrands} placeholder="Marque travers (ex: Wilson...)" allowCustom />
@@ -195,8 +197,8 @@ const StepEquipment: React.FC<Props> = ({
                 onChange={v => handleChange('currentStrings.hybridCross', v)}
                 options={crossStringModels} placeholder={t('profile.crossStringPlaceholder')} allowCustom />
               <div>
-                <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
-                  Tension <span className="text-gray-400 font-normal normal-case">(optionnel)</span>
+                <label className="block text-xs font-bold text-gray-600 mb-1">
+                  Tension <span className="text-gray-400 font-normal">(optionnel)</span>
                 </label>
                 <TensionWheel value={strings.hybridCrossTension}
                   onChange={v => handleChange('currentStrings.hybridCrossTension', v)}

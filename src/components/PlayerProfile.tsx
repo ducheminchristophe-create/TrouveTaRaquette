@@ -3,9 +3,10 @@
 /**
  * PlayerProfile — orchestrateur 4 étapes.
  * Délègue l'état à usePlayerProfile, le rendu à StepEquipment/StepProfile/StepPreferences/StepSummary.
+ * UI alignée sur le quiz Padel/Badminton : carte blanche arrondie, barre claire, boutons doux.
  */
 import React from 'react';
-import { ChevronRight, AlertCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, AlertCircle } from 'lucide-react';
 import { PlayerData } from '@/src/types/player';
 import { usePlayerProfile } from '../hooks/usePlayerProfile';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -18,50 +19,55 @@ interface Props {
   onSubmit: (data: PlayerData) => void;
 }
 
+const STEP_TITLES = [
+  'Ton équipement',
+  'Ton profil de joueur',
+  'Tes préférences',
+  'Ton analyse',
+];
+
 const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
   const { t } = useLanguage();
   const p = usePlayerProfile(onSubmit);
-
-  const stepTitles = [
-    t('profile.yourEquipment'),
-    'Profil de joueur',
-    "Préférences d'alternatives",
-    'Récapitulatif',
-  ];
+  const progress = Math.round((p.currentStep / 4) * 100);
 
   return (
-    <div className="bg-white shadow-2xl max-w-4xl mx-auto overflow-hidden">
-      {/* En-tête avec barre de progression */}
-      <header className="bg-black text-white p-6">
-        <div className="flex justify-between items-center mb-1">
-          <h2 className="text-2xl font-black uppercase tracking-tight">
-            {t('profile.step')} {p.currentStep} {t('profile.of')} 4
-          </h2>
-          <span className="text-orange-500 font-bold text-xl" aria-live="polite">
-            {Math.round(p.progressPercentage)}%
-          </span>
+    <div className="max-w-2xl mx-auto px-6 py-12">
+      {/* Titre */}
+      <h2 className="text-3xl font-black uppercase text-black tracking-tight mb-1">
+        Trouve ton <span className="text-orange-500">cordage</span> tennis
+      </h2>
+      <p className="text-gray-500 text-sm mb-8">
+        4 étapes · Recommandation personnalisée par IA
+      </p>
+
+      {/* Barre de progression claire */}
+      <div
+        className="mb-8"
+        role="progressbar"
+        aria-valuenow={progress}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Progression du questionnaire"
+      >
+        <div className="flex justify-between text-xs text-gray-400 mb-2">
+          <span>Étape {p.currentStep} / 4 · {STEP_TITLES[p.currentStep - 1]}</span>
+          <span>{progress}%</span>
         </div>
-        <p className="text-gray-400 text-sm mb-4">{stepTitles[p.currentStep - 1]}</p>
-        <div
-          className="w-full bg-gray-800 h-2 rounded-full overflow-hidden"
-          role="progressbar"
-          aria-valuenow={Math.round(p.progressPercentage)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label="Progression du formulaire"
-        >
+        <div className="w-full bg-gray-100 rounded-full h-1.5">
           <div
-            className="bg-gradient-to-r from-orange-600 to-orange-500 h-2 transition-all duration-500 ease-out"
-            style={{ width: `${p.progressPercentage}%` }}
+            className="bg-orange-500 h-1.5 rounded-full transition-all duration-500"
+            style={{ width: `${progress}%` }}
           />
         </div>
-      </header>
+      </div>
 
       <form onSubmit={p.handleSubmit} noValidate>
-        <div className="p-8">
+        {/* Carte blanche douce */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
           {/* Messages d'erreur */}
           {p.errors.length > 0 && (
-            <div role="alert" className="mb-6 flex gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div role="alert" className="mb-6 flex gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
               <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" aria-hidden="true" />
               <ul className="text-sm text-red-700 space-y-1">
                 {p.errors.map((e, i) => <li key={i}>{e}</li>)}
@@ -69,7 +75,6 @@ const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
             </div>
           )}
 
-          {/* Contenu de l'étape courante */}
           {p.currentStep === 1 && (
             <StepEquipment
               formData={p.formData}
@@ -117,18 +122,19 @@ const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
           )}
         </div>
 
-        {/* Navigation */}
-        <div className="flex justify-between px-8 py-5 border-t-2 border-gray-200 bg-gray-50">
+        {/* Navigation douce */}
+        <div className="flex justify-between gap-3 mt-6">
           {p.currentStep > 1 ? (
             <button
               type="button"
               onClick={p.handlePrevious}
-              className="px-8 py-4 bg-gray-200 text-gray-900 font-bold uppercase text-sm hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="px-6 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-bold text-sm hover:border-orange-400 hover:text-orange-600 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
-              {t('profile.backButton')}
+              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              Précédent
             </button>
           ) : (
-            <span /> /* Placeholder pour garder le bouton "Suivant" à droite */
+            <span />
           )}
 
           {p.currentStep < 4 ? (
@@ -136,7 +142,7 @@ const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
               type="button"
               onClick={p.handleNext}
               disabled={p.loadingAnalysis}
-              className="px-8 py-4 bg-black text-white font-bold uppercase text-sm hover:bg-gray-900 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="px-6 py-3 rounded-xl bg-black text-white font-bold text-sm hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               {p.loadingAnalysis ? (
                 <>
@@ -145,12 +151,12 @@ const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
                     <path className="opacity-75" fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  <span>{t('profile.analyzing')}</span>
+                  <span>Analyse…</span>
                 </>
               ) : (
                 <>
-                  <span>{t('profile.next')}</span>
-                  <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                  <span>Suivant</span>
+                  <ChevronRight className="h-4 w-4" aria-hidden="true" />
                 </>
               )}
             </button>
@@ -158,10 +164,10 @@ const PlayerProfile: React.FC<Props> = ({ onSubmit }) => {
             <button
               type="submit"
               disabled={p.loadingAnalysis}
-              className="px-8 py-4 bg-orange-600 text-white font-black uppercase text-sm hover:bg-orange-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
-              <span>{t('profile.getRecommendations')}</span>
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              <span>Voir mes recommandations</span>
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </button>
           )}
         </div>
