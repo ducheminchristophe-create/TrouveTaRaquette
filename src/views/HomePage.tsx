@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { FAQ } from '@/src/lib/faq';
 
 const MODULES = [
   {
@@ -102,6 +103,21 @@ const HomePage: React.FC = () => (
         <p>résultats immédiats, sans compte</p>
       </div>
     </div>
+
+    {/* FAQ (contenu rendu côté serveur, utile au SEO et aux IA) */}
+    <section className="mt-16 border-t border-gray-100 pt-12" aria-labelledby="faq-title">
+      <h2 id="faq-title" className="text-2xl font-black uppercase text-black tracking-tight mb-6 text-center">
+        Questions fréquentes
+      </h2>
+      <dl className="max-w-2xl mx-auto divide-y divide-gray-100">
+        {FAQ.map(({ q, a }) => (
+          <div key={q} className="py-4">
+            <dt className="font-bold text-gray-900">{q}</dt>
+            <dd className="mt-1 text-gray-500 text-sm leading-relaxed">{a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   </main>
 );
 
