@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "ttr-dev", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000 }
+    { "name": "ttr-dev", "runtimeExecutable": "npx", "runtimeArgs": ["next", "dev", "--webpack"], "port": 3000 }
   ]
 }
