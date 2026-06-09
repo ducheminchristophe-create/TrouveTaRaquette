@@ -10,6 +10,8 @@
  *   <a href={buildAffiliateUrl(productUrl)} rel="sponsored noopener" target="_blank">
  */
 
+import { affiliateConsentGiven } from './consent'
+
 /** Paramètres de tracking par domaine (injectés depuis les variables d'env) */
 const MERCHANT_PARAMS: Record<string, Record<string, string>> = {
   'decathlon.fr': {
@@ -66,8 +68,10 @@ export function buildAffiliateUrl(rawUrl: string | null | undefined): string | n
     const url = new URL(rawUrl)
     const hostname = url.hostname.replace(/^www\./, '')
 
+    // Les paramètres de tracking d'affiliation ne sont ajoutés QUE si l'utilisateur
+    // a accepté la catégorie « affiliation/marketing ». Sinon, lien nu (fonctionnel).
     const params = MERCHANT_PARAMS[hostname]
-    if (params) {
+    if (params && affiliateConsentGiven()) {
       Object.entries(params).forEach(([key, value]) => {
         if (value) url.searchParams.set(key, value)
       })

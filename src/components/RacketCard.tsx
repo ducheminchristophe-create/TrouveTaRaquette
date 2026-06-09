@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import { buildAffiliateUrl, AFFILIATE_REL } from '@/src/lib/affiliate';
+import { track } from '@/src/lib/analytics';
 
 export interface RacketResult {
   racket: {
@@ -35,11 +36,17 @@ interface Props {
   ctaLabel?: string;
   /** Badge personnalisé (ex. coup de cœur). Remplace le badge "Meilleur choix" du rang 1. */
   badge?: string;
+  /** Sport, transmis à l'événement affiliate_click. */
+  sport?: string;
 }
 
-const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, ctaLabel = 'Voir la raquette →', badge }) => {
+const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, ctaLabel = 'Voir la raquette →', badge, sport }) => {
   const { racket, score, scores, reasons, warnings } = result;
   const url = buildAffiliateUrl(racket.affiliateLinks?.[0]?.url ?? racket.productUrl);
+
+  // Événement clic sortant (sport + marque + modèle, aucune donnée personnelle)
+  const onAffiliateClick = () =>
+    track('affiliate_click', { sport: sport ?? 'unknown', brand: racket.brand, model: racket.model });
 
   return (
     <article
@@ -111,6 +118,7 @@ const RacketCard: React.FC<Props> = ({ result, rank, specLine, dimensionLabels, 
           href={url as string}
           target="_blank"
           rel={AFFILIATE_REL}
+          onClick={onAffiliateClick}
           className="mt-4 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-black hover:bg-gray-800 text-white font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           aria-label={`Voir ${racket.brand} ${racket.model} sur le site du vendeur (nouvel onglet)`}
         >

@@ -4,7 +4,8 @@
  * QuestionnaireFlow — composant générique partagé entre Padel et Badminton.
  * Gère le questionnaire pas-à-pas, la barre de progression et l'appel au moteur.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { track } from '@/src/lib/analytics';
 
 export interface Option {
   id: string;
@@ -42,6 +43,11 @@ const QuestionnaireFlow: React.FC<Props> = ({
   const [step, setStep] = useState(0);
   const [animating, setAnimating] = useState(false);
 
+  // Événement : début du quiz (gelé tant que pas de consentement analytics)
+  useEffect(() => {
+    track('quiz_start', { sport });
+  }, [sport]);
+
   const questions = questionnaire.questions;
   const currentQ = questions[step];
   const progress = Math.round(((step + 1) / questions.length) * 100);
@@ -51,6 +57,7 @@ const QuestionnaireFlow: React.FC<Props> = ({
     setTimeout(() => {
       setAnimating(false);
       if (step === questions.length - 1) {
+        track('quiz_complete', { sport });
         onComplete(currentAnswers);
       } else {
         setStep(s => s + 1);

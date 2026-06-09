@@ -109,6 +109,7 @@ const ResultsView: React.FC<{ results: RecommendOutput; onRestart: () => void }>
               rank={i + 1}
               specLine={buildSpecLine(r.racket as unknown as Racket)}
               dimensionLabels={DIM_LABELS}
+              sport="padel"
             />
           </li>
         ))}
@@ -125,6 +126,7 @@ const ResultsView: React.FC<{ results: RecommendOutput; onRestart: () => void }>
             rank={0}
             specLine={buildSpecLine(wildcard.racket as unknown as Racket)}
             dimensionLabels={DIM_LABELS}
+              sport="padel"
             badge={`💛 ${wildcard.label}`}
           />
         </div>

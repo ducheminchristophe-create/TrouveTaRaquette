@@ -137,6 +137,7 @@ const ResultsView: React.FC<{ results: MappedOutput; onRestart: () => void }> = 
               rank={i + 1}
               specLine={buildSpecLine(r.racket as unknown as Bat)}
               dimensionLabels={DIM_LABELS}
+              sport="ping-pong"
               ctaLabel="Voir / Acheter →"
             />
           </li>
@@ -154,6 +155,7 @@ const ResultsView: React.FC<{ results: MappedOutput; onRestart: () => void }> = 
             rank={0}
             specLine={buildSpecLine(wildcard.racket as unknown as Bat)}
             dimensionLabels={DIM_LABELS}
+              sport="ping-pong"
             ctaLabel="Voir / Acheter →"
             badge={`💛 ${wildcard.label}`}
           />
