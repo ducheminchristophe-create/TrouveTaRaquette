@@ -132,7 +132,7 @@ const ResultsView: React.FC<{ results: RecommendOutput; onRestart: () => void }>
         </div>
       )}
 
-      <EmailCapture sport="padel" />
+      <EmailCapture sport="padel" rackets={topFits.map(r => `${(r.racket as unknown as Racket).brand} ${(r.racket as unknown as Racket).model}`)} />
 
       <button
         onClick={onRestart}

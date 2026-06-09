@@ -6,6 +6,7 @@ import { PlayerData } from '@/src/types/player';
 import aiStringService from '../services/aiStringService';
 import { useLanguage } from '../contexts/LanguageContext';
 import TennisCourtAnimation from './TennisCourtAnimation';
+import EmailCapture from './EmailCapture';
 
 interface StringingRecommendationsProps {
   playerData: PlayerData;
@@ -424,6 +425,14 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
           <HybridCard hybrid={coupHybrid} index={0} badge="💛 Le meilleur rapport qualité-prix" />
         </div>
       )}
+
+      {/* Capture e-mail optionnelle */}
+      <div className="max-w-2xl mx-auto">
+        <EmailCapture
+          sport="cordage tennis"
+          rackets={topMono.slice(0, 3).map(s => `${s.brand} ${s.name}`)}
+        />
+      </div>
     </div>
   );
 };

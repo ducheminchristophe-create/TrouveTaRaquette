@@ -162,7 +162,7 @@ const ResultsView: React.FC<{ results: MappedOutput; onRestart: () => void }> = 
         </div>
       )}
 
-      <EmailCapture sport="ping-pong" />
+      <EmailCapture sport="ping-pong" rackets={topFits.map(r => `${(r.racket as unknown as Bat).brand} ${(r.racket as unknown as Bat).model}`)} />
 
       <button
         onClick={onRestart}
