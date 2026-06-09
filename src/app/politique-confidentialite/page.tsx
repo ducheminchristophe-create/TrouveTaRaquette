@@ -20,19 +20,23 @@ export default function PolitiqueConfidentialite() {
           questionnaire de recommandation. Aucun compte n&apos;est requis.
         </p>
         <p className="text-gray-600 text-sm leading-relaxed mt-2">
-          Si tu choisis de renseigner ton adresse e-mail (formulaire de capture optionnel),
-          elle est transmise à notre prestataire d&apos;emailing
-          [Brevo / Mailchimp / autre — <em>À préciser</em>] et utilisée uniquement pour
-          t&apos;envoyer les informations demandées.
+          Si tu choisis de renseigner ton adresse e-mail (formulaire optionnel sur la page de
+          résultats), elle est transmise à <strong>Brevo (ex-Sendinblue)</strong>, notre prestataire
+          d&apos;emailing établi dans l&apos;<strong>Union européenne (France)</strong>, agissant comme
+          sous-traitant. Sont transmis : ton e-mail, le sport concerné et les raquettes
+          recommandées, <strong>uniquement</strong> pour t&apos;envoyer ta sélection et des conseils.
+          Désinscription à tout moment via le lien présent dans chaque e-mail.
         </p>
       </section>
 
       <section className="mb-8">
         <h2 className="text-lg font-bold text-black mb-3">Cookies et traceurs</h2>
         <p className="text-gray-600 text-sm leading-relaxed">
-          Ce site n&apos;utilise <strong>aucun cookie publicitaire</strong>. Si des analytics
-          sont activés, ils sont configurés en mode sans cookie et conformes au RGPD
-          (voir notre <a href="/cookies" className="underline">politique cookies</a>).
+          Ce site n&apos;utilise <strong>aucun cookie publicitaire</strong>. La mesure d&apos;audience
+          se fait via <strong>Vercel Web Analytics</strong> (sans cookie), activée{' '}
+          <strong>uniquement avec ton consentement</strong>. Des paramètres de suivi d&apos;affiliation
+          peuvent être ajoutés aux liens sortants, là aussi <strong>uniquement si tu y consens</strong>.
+          Détails dans notre <a href="/cookies" className="underline">politique cookies</a>.
         </p>
       </section>
 
@@ -40,7 +44,8 @@ export default function PolitiqueConfidentialite() {
         <h2 className="text-lg font-bold text-black mb-3">Tes droits (RGPD)</h2>
         <p className="text-gray-600 text-sm leading-relaxed">
           Conformément au RGPD, tu disposes d&apos;un droit d&apos;accès, de rectification et
-          de suppression de tes données. Pour l&apos;exercer : [adresse e-mail — À compléter].
+          de suppression de tes données. Pour l&apos;exercer, écris-nous à{' '}
+          <a href="mailto:trouvetaraquette@outlook.com" className="underline">trouvetaraquette@outlook.com</a>.
         </p>
       </section>
 

@@ -18,7 +18,7 @@ export default function MentionsLegales() {
           <strong>Forme juridique :</strong> [À compléter]<br />
           <strong>SIRET :</strong> [À compléter]<br />
           <strong>Adresse :</strong> [À compléter]<br />
-          <strong>E-mail :</strong> [À compléter]<br />
+          <strong>E-mail :</strong> trouvetaraquette@outlook.com<br />
           <strong>Directeur de la publication :</strong> [À compléter]
         </p>
       </section>
