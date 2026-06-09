@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShieldCheck, Zap, BookOpen } from 'lucide-react';
+import ManageCookiesButton from './ManageCookiesButton';
 
 const Footer: React.FC = () => (
   <footer className="bg-black text-white py-12 mt-16 border-t-4 border-orange-600">
@@ -51,6 +52,7 @@ const Footer: React.FC = () => (
               {l.label}
             </Link>
           ))}
+          <ManageCookiesButton />
         </nav>
         <p className="text-gray-600 text-xs uppercase tracking-wider">
           &copy; {new Date().getFullYear()} TrouveTaRaquette. Tous droits réservés.
