@@ -1,0 +1,255 @@
+{
+  "sport": "tennis-racket",
+  "version": 1,
+  "questions": [
+    {
+      "id": "experience",
+      "section": "Profil du joueur",
+      "required": true,
+      "label": "As-tu déjà pratiqué le tennis ?",
+      "options": [
+        { "id": "never",        "label": "Jamais",        "effects": { "set": { "levelOrdinal": 0, "targetForgiveness": 90, "targetManeuverability": 88 } } },
+        { "id": "beginner",     "label": "Débutant",      "effects": { "set": { "levelOrdinal": 0, "targetForgiveness": 88, "targetManeuverability": 85 } } },
+        { "id": "intermediate", "label": "Intermédiaire", "effects": { "set": { "levelOrdinal": 2 } } },
+        { "id": "advanced",     "label": "Confirmé",      "effects": { "set": { "levelOrdinal": 3, "targetControl": 82, "targetPrecision": 80 } } },
+        { "id": "competitor",   "label": "Compétiteur",   "effects": { "set": { "levelOrdinal": 3, "targetControl": 88, "targetPrecision": 85, "targetStability": 85 } } }
+      ]
+    },
+    {
+      "id": "frequency",
+      "section": "Fréquence de jeu",
+      "required": true,
+      "label": "Combien de fois joues-tu par semaine ?",
+      "options": [
+        { "id": "rarely",    "label": "Moins d'1 fois",  "effects": { "weightMul": { "forgiveness": 1.3, "comfort": 1.2 } } },
+        { "id": "weekly",    "label": "1 à 2 fois",      "effects": {} },
+        { "id": "regular",   "label": "3 à 4 fois",      "effects": { "weightMul": { "control": 1.1, "stability": 1.1 } } },
+        { "id": "intensive", "label": "5 fois et plus",  "effects": { "weightMul": { "control": 1.2, "stability": 1.2, "precision": 1.1 } } }
+      ]
+    },
+    {
+      "id": "competition",
+      "section": "Fréquence de jeu",
+      "required": true,
+      "label": "Participes-tu à des compétitions ?",
+      "options": [
+        { "id": "no",           "label": "Non",              "effects": {} },
+        { "id": "occasional",   "label": "Occasionnellement","effects": { "weightMul": { "control": 1.1 } } },
+        { "id": "regular_comp", "label": "Régulièrement",    "effects": { "weightMul": { "control": 1.2, "precision": 1.2, "stability": 1.1 } } }
+      ]
+    },
+    {
+      "id": "play_style",
+      "section": "Style de jeu",
+      "required": true,
+      "label": "Te considères-tu comme :",
+      "options": [
+        { "id": "defensive",  "label": "Défensif",    "effects": { "targetDelta": { "maneuverability": 10, "comfort": 8 }, "weightMul": { "maneuverability": 1.3, "forgiveness": 1.2 } } },
+        { "id": "allround",   "label": "Polyvalent",  "effects": { "targetDelta": { "control": 5 }, "weightMul": { "stability": 1.1 } } },
+        { "id": "offensive",  "label": "Offensif",    "effects": { "targetDelta": { "power": 12, "spin": 8 }, "weightMul": { "power": 1.3, "stability": 1.2 } } }
+      ]
+    },
+    {
+      "id": "court_position",
+      "section": "Style de jeu",
+      "required": true,
+      "label": "Où joues-tu le plus souvent ?",
+      "options": [
+        { "id": "baseline", "label": "Fond de court", "effects": { "targetDelta": { "power": 8, "spin": 5 }, "weightMul": { "power": 1.2, "stability": 1.2 } } },
+        { "id": "midcourt", "label": "Mi-court",      "effects": { "targetDelta": { "control": 8 }, "weightMul": { "control": 1.2 } } },
+        { "id": "net",      "label": "Filet",         "effects": { "targetDelta": { "maneuverability": 10, "precision": 8 }, "weightMul": { "maneuverability": 1.3, "precision": 1.2 } } }
+      ]
+    },
+    {
+      "id": "priority",
+      "section": "Style de jeu",
+      "required": true,
+      "label": "Cherches-tu davantage :",
+      "options": [
+        { "id": "power",    "label": "Puissance",  "effects": { "targetDelta": { "power": 18 }, "weightMul": { "power": 1.8 } } },
+        { "id": "control",  "label": "Contrôle",   "effects": { "targetDelta": { "control": 18, "precision": 10 }, "weightMul": { "control": 1.8, "precision": 1.4 } } },
+        { "id": "balance",  "label": "Équilibre",  "effects": { "targetDelta": { "control": 8, "power": 8 }, "weightMul": { "stability": 1.3 } } }
+      ]
+    },
+    {
+      "id": "topspin",
+      "section": "Style de jeu",
+      "required": true,
+      "label": "Produis-tu beaucoup de lift ?",
+      "options": [
+        { "id": "little", "label": "Très peu", "effects": {} },
+        { "id": "medium", "label": "Moyen",    "effects": { "targetDelta": { "spin": 8 }, "weightMul": { "spin": 1.2 } } },
+        { "id": "heavy",  "label": "Beaucoup", "effects": { "targetDelta": { "spin": 18 }, "weightMul": { "spin": 1.6 }, "set": { "preferOpenPattern": true } } }
+      ]
+    },
+    {
+      "id": "flat_play",
+      "section": "Style de jeu",
+      "required": false,
+      "label": "Joues-tu souvent à plat ?",
+      "options": [
+        { "id": "yes", "label": "Oui", "effects": { "targetDelta": { "power": 8, "control": 5 }, "weightMul": { "stability": 1.2 } } },
+        { "id": "no",  "label": "Non", "effects": {} }
+      ]
+    },
+    {
+      "id": "slice",
+      "section": "Style de jeu",
+      "required": false,
+      "label": "Utilises-tu souvent le slice ?",
+      "options": [
+        { "id": "rarely",    "label": "Rarement", "effects": {} },
+        { "id": "sometimes", "label": "Parfois",  "effects": { "targetDelta": { "control": 5 } } },
+        { "id": "often",     "label": "Souvent",  "effects": { "targetDelta": { "control": 10, "precision": 8 }, "weightMul": { "control": 1.2, "precision": 1.2 } } }
+      ]
+    },
+    {
+      "id": "swing_speed",
+      "section": "Capacités physiques",
+      "required": true,
+      "label": "Quelle est la vitesse de ton swing ?",
+      "options": [
+        { "id": "slow",   "label": "Lente",  "effects": { "targetDelta": { "power": 15, "forgiveness": 12 }, "weightMul": { "power": 1.4, "forgiveness": 1.3 }, "set": { "preferLight": true } } },
+        { "id": "medium", "label": "Moyenne","effects": {} },
+        { "id": "fast",   "label": "Rapide", "effects": { "targetDelta": { "control": 10, "stability": 10 }, "weightMul": { "control": 1.3, "stability": 1.3 } } }
+      ]
+    },
+    {
+      "id": "pain",
+      "section": "Capacités physiques",
+      "required": true,
+      "label": "As-tu des douleurs ?",
+      "type": "multi",
+      "options": [
+        { "id": "elbow",    "label": "Coude",   "effects": { "targetDelta": { "comfort": 20 }, "weightMul": { "comfort": 2.0 }, "set": { "requireArmFriendly": true, "requireRaMax": 65 } } },
+        { "id": "shoulder", "label": "Épaule",  "effects": { "targetDelta": { "comfort": 15 }, "weightMul": { "comfort": 1.7 }, "set": { "requireArmFriendly": true } } },
+        { "id": "wrist",    "label": "Poignet", "effects": { "targetDelta": { "comfort": 15 }, "weightMul": { "comfort": 1.6 }, "set": { "requireArmFriendly": true } } },
+        { "id": "none",     "label": "Aucune",  "effects": {} }
+      ]
+    },
+    {
+      "id": "current_weight_feel",
+      "section": "Raquette actuelle",
+      "required": false,
+      "label": "Le poids de ta raquette actuelle te semble :",
+      "options": [
+        { "id": "too_light",  "label": "Trop léger",  "effects": { "weightMul": { "stability": 1.3 }, "set": { "preferHeavy": true } } },
+        { "id": "correct",    "label": "Correct",     "effects": {} },
+        { "id": "too_heavy",  "label": "Trop lourd",  "effects": { "weightMul": { "maneuverability": 1.4 }, "set": { "preferLight": true } } }
+      ]
+    },
+    {
+      "id": "current_power_feel",
+      "section": "Raquette actuelle",
+      "required": false,
+      "label": "Son niveau de puissance :",
+      "options": [
+        { "id": "too_weak",    "label": "Trop faible", "effects": { "targetDelta": { "power": 15 }, "weightMul": { "power": 1.5 } } },
+        { "id": "correct",     "label": "Correct",     "effects": {} },
+        { "id": "too_powerful","label": "Trop élevé",  "effects": { "targetDelta": { "control": 12 }, "weightMul": { "control": 1.4 } } }
+      ]
+    },
+    {
+      "id": "current_control_feel",
+      "section": "Raquette actuelle",
+      "required": false,
+      "label": "Son niveau de contrôle :",
+      "options": [
+        { "id": "insufficient","label": "Insuffisant",    "effects": { "targetDelta": { "control": 15 }, "weightMul": { "control": 1.5 } } },
+        { "id": "correct",     "label": "Correct",        "effects": {} },
+        { "id": "too_demanding","label": "Trop exigeant", "effects": { "targetDelta": { "forgiveness": 15 }, "weightMul": { "forgiveness": 1.4 } } }
+      ]
+    },
+    {
+      "id": "string_improve",
+      "section": "Cordage actuel",
+      "required": false,
+      "label": "Que souhaites-tu améliorer par rapport à ton cordage ?",
+      "options": [
+        { "id": "power",      "label": "Puissance",    "effects": { "targetDelta": { "power": 10 }, "weightMul": { "power": 1.3 } } },
+        { "id": "control",    "label": "Contrôle",     "effects": { "targetDelta": { "control": 10 }, "weightMul": { "control": 1.3 } } },
+        { "id": "comfort",    "label": "Confort",      "effects": { "targetDelta": { "comfort": 12 }, "weightMul": { "comfort": 1.4 } } },
+        { "id": "spin",       "label": "Spin",         "effects": { "targetDelta": { "spin": 10 }, "weightMul": { "spin": 1.3 } } },
+        { "id": "durability", "label": "Durabilité",   "effects": {} }
+      ]
+    },
+    {
+      "id": "pref_maneuver",
+      "section": "Préférences techniques",
+      "required": true,
+      "label": "Préfères-tu une raquette :",
+      "options": [
+        { "id": "maneuverable","label": "Maniable",        "effects": { "targetDelta": { "maneuverability": 15 }, "weightMul": { "maneuverability": 1.5 }, "set": { "preferLight": true } } },
+        { "id": "stable",      "label": "Stable",          "effects": { "targetDelta": { "stability": 15 }, "weightMul": { "stability": 1.5 } } },
+        { "id": "compromise",  "label": "Un compromis",    "effects": {} }
+      ]
+    },
+    {
+      "id": "pref_head_size",
+      "section": "Préférences techniques",
+      "required": true,
+      "label": "Quelle taille de tamis préfères-tu ?",
+      "options": [
+        { "id": "small",      "label": "97-98",        "effects": { "set": { "targetHeadCat": "small" }, "weightMul": { "precision": 1.3, "control": 1.2 } } },
+        { "id": "mid",        "label": "100",          "effects": { "set": { "targetHeadCat": "mid" } } },
+        { "id": "midplus",    "label": "102-105",      "effects": { "set": { "targetHeadCat": "midplus" }, "weightMul": { "forgiveness": 1.2 } } },
+        { "id": "dontknow",   "label": "Je ne sais pas","effects": {} }
+      ]
+    },
+    {
+      "id": "pref_weight",
+      "section": "Préférences techniques",
+      "required": true,
+      "label": "Quel poids souhaites-tu ?",
+      "options": [
+        { "id": "ultralight", "label": "< 280 g",        "effects": { "set": { "targetWeightCat": "ultralight", "preferLight": true }, "weightMul": { "maneuverability": 1.4 } } },
+        { "id": "light",      "label": "280-295 g",      "effects": { "set": { "targetWeightCat": "light" }, "weightMul": { "maneuverability": 1.2 } } },
+        { "id": "medium",     "label": "300-305 g",      "effects": { "set": { "targetWeightCat": "medium" } } },
+        { "id": "heavy",      "label": "310-320 g",      "effects": { "set": { "targetWeightCat": "heavy", "preferHeavy": true }, "weightMul": { "stability": 1.3 } } },
+        { "id": "veryheavy",  "label": "320 g+",         "effects": { "set": { "targetWeightCat": "heavy", "preferHeavy": true }, "weightMul": { "stability": 1.4 } } },
+        { "id": "dontknow",   "label": "Je ne sais pas", "effects": {} }
+      ]
+    },
+    {
+      "id": "pref_feel",
+      "section": "Préférences techniques",
+      "required": false,
+      "label": "Préfères-tu :",
+      "options": [
+        { "id": "feel",         "label": "Beaucoup de sensations", "effects": { "targetDelta": { "precision": 12, "control": 8 }, "weightMul": { "precision": 1.4 } } },
+        { "id": "some_feel",    "label": "Un peu de sensations",   "effects": { "targetDelta": { "control": 5 } } },
+        { "id": "dontcare",     "label": "Peu importe",            "effects": {} }
+      ]
+    },
+    {
+      "id": "goal",
+      "section": "Objectif principal",
+      "required": true,
+      "label": "Quel est ton objectif principal ?",
+      "options": [
+        { "id": "start_easy",   "label": "Débuter facilement",          "effects": { "targetDelta": { "forgiveness": 20, "power": 10, "comfort": 8 }, "weightMul": { "forgiveness": 2.0, "maneuverability": 1.4 }, "set": { "levelOrdinal": 0 } } },
+        { "id": "progress",     "label": "Progresser rapidement",       "effects": { "targetDelta": { "control": 10, "forgiveness": 8 }, "weightMul": { "control": 1.3, "forgiveness": 1.3 } } },
+        { "id": "endurance",    "label": "Jouer plus longtemps sans fatigue", "effects": { "targetDelta": { "comfort": 15, "maneuverability": 10 }, "weightMul": { "comfort": 1.5, "maneuverability": 1.3 }, "set": { "preferLight": true } } },
+        { "id": "more_power",   "label": "Gagner en puissance",         "effects": { "targetDelta": { "power": 20 }, "weightMul": { "power": 2.0 } } },
+        { "id": "more_control", "label": "Gagner en contrôle",          "effects": { "targetDelta": { "control": 20, "precision": 12 }, "weightMul": { "control": 2.0, "precision": 1.5 } } },
+        { "id": "more_spin",    "label": "Augmenter le spin",           "effects": { "targetDelta": { "spin": 20 }, "weightMul": { "spin": 2.0 }, "set": { "preferOpenPattern": true } } },
+        { "id": "more_comfort", "label": "Améliorer le confort",        "effects": { "targetDelta": { "comfort": 20 }, "weightMul": { "comfort": 2.0 }, "set": { "requireArmFriendly": false } } },
+        { "id": "competition",  "label": "Compétition",                 "effects": { "targetDelta": { "control": 15, "stability": 12, "precision": 12 }, "weightMul": { "control": 1.6, "stability": 1.4, "precision": 1.4 } } }
+      ]
+    },
+    {
+      "id": "budget",
+      "section": "Budget",
+      "required": true,
+      "label": "Quel est ton budget pour la raquette ?",
+      "options": [
+        { "id": "u100",    "label": "Moins de 100 €",   "effects": { "set": { "maxPrice": 100 } } },
+        { "id": "u150",    "label": "100 – 150 €",      "effects": { "set": { "maxPrice": 150 } } },
+        { "id": "u200",    "label": "150 – 200 €",      "effects": { "set": { "maxPrice": 200 } } },
+        { "id": "u250",    "label": "200 – 250 €",      "effects": { "set": { "maxPrice": 250 } } },
+        { "id": "u300",    "label": "250 – 300 €",      "effects": { "set": { "maxPrice": 300 } } },
+        { "id": "nolimit", "label": "Pas de limite",    "effects": {} }
+      ]
+    }
+  ]
+}

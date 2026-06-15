@@ -4,8 +4,18 @@ import { FAQ } from '@/src/lib/faq';
 
 const MODULES = [
   {
-    to: '/tennis',
+    to: '/tennis/raquette',
     emoji: '🎾',
+    name: 'Raquette Tennis',
+    tagline: 'La raquette faite pour toi',
+    desc: '20 questions, 222 raquettes analysées sur 8 dimensions : puissance, contrôle, spin, confort, maniabilité, stabilité, tolérance, précision.',
+    cta: 'Trouver ma raquette',
+    ready: true,
+    badge: 'NOUVEAU',
+  },
+  {
+    to: '/tennis',
+    emoji: '🧵',
     name: 'Cordage Tennis',
     tagline: 'Le bon cordage pour ton jeu',
     desc: 'Profil joueur + analyse IA de ton setup actuel → recommandations mono et hybrides personnalisées.',
