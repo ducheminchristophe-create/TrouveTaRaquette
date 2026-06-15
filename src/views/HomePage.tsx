@@ -69,7 +69,7 @@ const HomePage: React.FC = () => (
     </div>
 
     {/* Cards modules */}
-    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" role="list" aria-label="Modules disponibles">
+    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" role="list" aria-label="Modules disponibles">
       {MODULES.map((m) => (
         <li key={m.to}>
           <div className="bg-white rounded-2xl border-2 border-gray-100 hover:border-orange-300 transition-colors p-6 h-full flex flex-col gap-4 shadow-sm">
@@ -105,8 +105,8 @@ const HomePage: React.FC = () => (
         <p>explicable — chaque reco montre pourquoi</p>
       </div>
       <div>
-        <p className="text-2xl font-black text-black mb-1">4 sports</p>
-        <p>tennis · padel · badminton · ping-pong</p>
+        <p className="text-2xl font-black text-black mb-1">5 outils</p>
+        <p>raquette & cordage tennis · padel · badminton · ping-pong</p>
       </div>
       <div>
         <p className="text-2xl font-black text-black mb-1">0 inscription</p>
