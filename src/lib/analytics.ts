@@ -6,7 +6,7 @@
 import { track as vercelTrack } from '@vercel/analytics'
 import { analyticsConsentGiven } from './consent'
 
-export type TtrEvent = 'quiz_start' | 'quiz_complete' | 'affiliate_click'
+export type TtrEvent = 'quiz_start' | 'quiz_complete' | 'affiliate_click' | 'racket_search_click'
 
 export function track(event: TtrEvent, props?: Record<string, string | number | boolean>) {
   if (typeof window === 'undefined') return
