@@ -83,16 +83,24 @@ interface AIResponse {
 class AIStringService {
   private apiKey: string;
   private baseUrl: string;
+  private isDemoMode: boolean;
 
   constructor() {
     this.apiKey = process.env.NEXT_PUBLIC_AI_API_KEY || 'demo-key';
     this.baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'https://api.openai.com/v1';
+    // Mode démo activé explicitement via variable d'environnement
+    this.isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
   }
 
   async getStringRecommendations(request: StringingRequest): Promise<AIResponse> {
     try {
-      console.log('Raw Base URL from env:', process.env.NEXT_PUBLIC_AI_API_URL);
-      
+      // Mode démo forcé — aucun appel API
+      if (this.isDemoMode) {
+        const response = await this.simulateAICall(request);
+        response.isUsingRealAPI = false;
+        return response;
+      }
+
       // Vérifier si on a une vraie API configurée
       const hasRealAPI = this.apiKey &&
                         this.apiKey !== 'demo-key' &&
@@ -102,7 +110,6 @@ class AIStringService {
                         this.apiKey.startsWith('sk-') &&
                         this.baseUrl &&
                         this.baseUrl !== 'https://your-api-endpoint.com/v1';
-
 
       if (hasRealAPI) {
         try {
@@ -1524,6 +1531,12 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
 
   async analyzeSetup(request: SetupAnalysisRequest): Promise<SetupAnalysis> {
     try {
+      // Mode démo forcé — aucun appel API
+      if (this.isDemoMode) {
+        const analysis = this.simulateSetupAnalysis(request);
+        return { ...analysis, isUsingRealAPI: false };
+      }
+
       const hasRealAPI = this.apiKey &&
                         this.apiKey !== 'demo-key' &&
                         this.apiKey !== 'your_real_api_key_here' &&
