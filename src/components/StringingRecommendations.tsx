@@ -273,6 +273,7 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
   const [hybridRecommendations, setHybridRecommendations] = React.useState<HybridRec[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [isUsingRealAPI, setIsUsingRealAPI] = React.useState<boolean | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [setupAnalysis, setSetupAnalysis] = React.useState<any>(null);
 
@@ -282,6 +283,7 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
       const response = await aiStringService.getStringRecommendations({ playerData, forceUseRealAPI });
       setRecommendations(response.recommendations);
       setHybridRecommendations(response.hybridRecommendations || []);
+      setIsUsingRealAPI(response.isUsingRealAPI ?? false);
       if (response.errorMessage) setError(response.errorMessage);
       setIsLoading(false);
     };
@@ -364,6 +366,16 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
           <ArrowLeft className="h-4 w-4" /><span>Nouveau profil</span>
         </button>
         <div className="text-center">
+          {/* Badge mode démo / production */}
+          {isUsingRealAPI !== null && (
+            <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-bold mb-3 ${
+              isUsingRealAPI
+                ? 'bg-green-100 text-green-700 border border-green-300'
+                : 'bg-orange-100 text-orange-700 border border-orange-300'
+            }`}>
+              <span>{isUsingRealAPI ? '✅ IA réelle (production)' : '🧪 Mode démo (simulation)'}</span>
+            </div>
+          )}
           <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-4 mb-2 inline-block">
             <p className="text-gray-700"><strong>{playerData.racket.brand} {playerData.racket.model}</strong></p>
             <div className="flex items-center justify-center space-x-2 mt-2">
