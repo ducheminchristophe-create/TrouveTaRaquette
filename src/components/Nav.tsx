@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const TABS = [
-  { href: '/tennis', label: '🎾', short: 'Tennis',    full: 'Cordage Tennis' },
+  { href: '/tennis/raquette', label: '🎾', short: 'Raquette', full: 'Raquette Tennis' },
+  { href: '/tennis', label: '🧵', short: 'Cordage',   full: 'Cordage Tennis' },
   { href: '/padel',  label: '🟢', short: 'Padel',     full: 'Padel' },
   { href: '/badminton', label: '🏸', short: 'Badm.', full: 'Badminton' },
   { href: '/ping-pong', label: '🏓', short: 'Ping', full: 'Ping-Pong' },
@@ -55,7 +56,9 @@ export default function Nav() {
           {/* Onglets DESKTOP (≥ sm) */}
           <nav aria-label="Modules" className="hidden sm:flex gap-1 bg-gray-900 rounded-full p-1">
             {TABS.map(tab => {
-              const isActive = pathname?.startsWith(tab.href) ?? false
+              const isActive = tab.href === '/tennis'
+                ? pathname === '/tennis' || pathname?.startsWith('/tennis/')  && !pathname?.startsWith('/tennis/raquette')
+                : pathname?.startsWith(tab.href) ?? false
               return (
                 <Link
                   key={tab.href}
@@ -71,9 +74,11 @@ export default function Nav() {
         </div>
 
         {/* Onglets MOBILE (< sm) : grille 4 colonnes pleine largeur, tous visibles */}
-        <nav aria-label="Modules" className="sm:hidden mt-3 grid grid-cols-4 gap-1 bg-gray-900 rounded-2xl p-1">
+        <nav aria-label="Modules" className="sm:hidden mt-3 grid grid-cols-5 gap-1 bg-gray-900 rounded-2xl p-1">
           {TABS.map(tab => {
-            const isActive = pathname?.startsWith(tab.href) ?? false
+            const isActive = tab.href === '/tennis'
+              ? pathname === '/tennis' || (pathname?.startsWith('/tennis/') && !pathname?.startsWith('/tennis/raquette'))
+              : pathname?.startsWith(tab.href) ?? false
             return (
               <Link
                 key={tab.href}
