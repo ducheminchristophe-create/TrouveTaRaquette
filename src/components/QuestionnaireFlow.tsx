@@ -17,6 +17,8 @@ export interface Question {
   id: string;
   required: boolean;
   label: string;
+  type?: string;
+  placeholder?: string;
   options: Option[];
 }
 
@@ -65,8 +67,21 @@ const QuestionnaireFlow: React.FC<Props> = ({
     }, 180);
   }
 
+  const [textInput, setTextInput] = React.useState('');
+
+  // Reset text input on step change
+  React.useEffect(() => { setTextInput(''); }, [step]);
+
   function handleSelect(questionId: string, optionId: string) {
     const newAnswers = { ...answers, [questionId]: optionId };
+    setAnswers(newAnswers);
+    advance(newAnswers);
+  }
+
+  function handleTextSubmit(questionId: string, value: string) {
+    const newAnswers = value.trim()
+      ? { ...answers, [questionId]: value.trim() }
+      : answers;
     setAnswers(newAnswers);
     advance(newAnswers);
   }
@@ -114,21 +129,50 @@ const QuestionnaireFlow: React.FC<Props> = ({
         <p className="text-lg font-bold text-black mb-5" id={`question-${currentQ.id}`}>
           {currentQ.label}
         </p>
-        <div
-          role="group"
-          aria-labelledby={`question-${currentQ.id}`}
-          className="flex flex-col gap-3"
-        >
-          {currentQ.options.map(opt => (
+        {currentQ.type === 'text' ? (
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              value={textInput}
+              onChange={e => setTextInput(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') handleTextSubmit(currentQ.id, textInput); }}
+              placeholder={currentQ.placeholder ?? ''}
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:outline-none text-gray-700 font-medium"
+              autoFocus
+            />
             <button
-              key={opt.id}
-              onClick={() => handleSelect(currentQ.id, opt.id)}
-              className="w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 text-gray-700 font-medium transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1"
+              onClick={() => handleTextSubmit(currentQ.id, textInput)}
+              className={`w-full py-3 rounded-xl ${accentColor} text-white font-bold transition-colors`}
             >
-              {opt.label}
+              Confirmer →
             </button>
-          ))}
-        </div>
+            {currentQ.options.map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => handleSelect(currentQ.id, opt.id)}
+                className="w-full text-left px-4 py-3 rounded-xl border-2 border-gray-100 text-gray-400 font-medium text-sm hover:border-gray-300 transition-all cursor-pointer"
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div
+            role="group"
+            aria-labelledby={`question-${currentQ.id}`}
+            className="flex flex-col gap-3"
+          >
+            {currentQ.options.map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => handleSelect(currentQ.id, opt.id)}
+                className="w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 text-gray-700 font-medium transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1"
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {!currentQ.required && (
           <button

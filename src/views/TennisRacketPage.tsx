@@ -200,6 +200,11 @@ const ResultsView: React.FC<{ results: RecommendOutput; onRestart: () => void }>
         <p className="text-gray-500 mt-1 text-sm">
           Basé sur tes réponses parmi {rackets.length} modèles analysés
         </p>
+        {results.profile.filters.currentRacket && (
+          <p className="text-xs text-gray-400 mt-1">
+            Raquette actuelle : <span className="font-semibold text-gray-600">{results.profile.filters.currentRacket}</span>
+          </p>
+        )}
       </div>
 
       {/* Top fits */}

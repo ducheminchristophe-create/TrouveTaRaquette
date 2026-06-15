@@ -90,6 +90,7 @@ interface Filters {
   preferHeavy: boolean
   targetHeadCat: string
   targetWeightCat: string
+  currentRacket: string
   // Direct target overrides from questionnaire
   targetForgiveness: number
   targetManeuverability: number
@@ -157,6 +158,12 @@ export function buildProfile(
   for (const q of questionnaire.questions) {
     const chosen = answers[q.id]
     if (!chosen) continue
+
+    // Questions texte libre (ex: raquette actuelle) — pas d'effets à appliquer
+    if (q.type === 'text' && typeof chosen === 'string' && !q.options.find(o => o.id === chosen)) {
+      if (q.id === 'current_racket') filters.currentRacket = chosen as string
+      continue
+    }
 
     // Handle multi-answers (pain question)
     const chosenArr = Array.isArray(chosen) ? chosen : [chosen]
