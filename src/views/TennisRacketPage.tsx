@@ -220,7 +220,7 @@ const ResultsView: React.FC<{ results: RecommendOutput; onRestart: () => void }>
       )}
 
       {/* Email capture */}
-      <EmailCapture />
+      <EmailCapture sport="tennis-racket" />
 
       {/* Restart */}
       <div className="text-center pt-4">
