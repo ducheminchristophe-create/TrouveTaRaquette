@@ -11,7 +11,7 @@ const MODULES = [
     desc: '20 questions, 222 raquettes analysées sur 8 dimensions : puissance, contrôle, spin, confort, maniabilité, stabilité, tolérance, précision.',
     cta: 'Trouver ma raquette',
     ready: true,
-    badge: 'NOUVEAU',
+    badge: null,
   },
   {
     to: '/tennis',
@@ -21,7 +21,7 @@ const MODULES = [
     desc: 'Profil joueur + analyse IA de ton setup actuel → recommandations mono et hybrides personnalisées.',
     cta: 'Trouver mon cordage',
     ready: true,
-    badge: 'IA',
+    badge: null,
   },
   {
     to: '/padel',
