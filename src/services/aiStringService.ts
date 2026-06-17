@@ -84,12 +84,15 @@ class AIStringService {
   private apiKey: string;
   private baseUrl: string;
   private isDemoMode: boolean;
+  private aiModel: string;
 
   constructor() {
     this.apiKey = process.env.NEXT_PUBLIC_AI_API_KEY || 'demo-key';
     this.baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'https://api.openai.com/v1';
     // Mode démo activé explicitement via variable d'environnement
     this.isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+    // Modèle configurable — gpt-4o-mini par défaut (16x moins cher que gpt-4o)
+    this.aiModel = process.env.NEXT_PUBLIC_AI_MODEL || 'gpt-4o-mini';
   }
 
   async getStringRecommendations(request: StringingRequest): Promise<AIResponse> {
@@ -178,7 +181,7 @@ class AIStringService {
         'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: this.aiModel,
         messages: [
           {
             role: 'system',
@@ -1686,7 +1689,7 @@ CONTRAINTES:
         'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: this.aiModel,
         messages: [
           {
             role: 'system',
