@@ -119,6 +119,27 @@ class AIStringService {
           // Mode production - OpenAI API
           const response = await this.callOpenAIAPI(request);
           response.isUsingRealAPI = true;
+
+          // Garde-fou : si l'IA n'a pas respecté le nombre demandé de mono/hybrides
+          // (peut arriver avec des modèles plus légers comme gpt-4o-mini),
+          // on complète avec la simulation locale plutôt que de laisser une section vide.
+          const prefs = request.playerData.preferences;
+          const wantsMono = prefs.alternativeTypes.includes('mono');
+          const wantsHybrid = prefs.alternativeTypes.includes('hybrid');
+          const missingMono = wantsMono && response.recommendations.length < prefs.monoCount;
+          const missingHybrid = wantsHybrid && (response.hybridRecommendations?.length ?? 0) < prefs.hybridCount;
+
+          if (missingMono || missingHybrid) {
+            const fallback = await this.simulateAICall(request);
+            if (missingMono) {
+              response.recommendations = fallback.recommendations.slice(0, prefs.monoCount);
+            }
+            if (missingHybrid) {
+              response.hybridRecommendations = (fallback.hybridRecommendations ?? []).slice(0, prefs.hybridCount);
+            }
+            response.errorMessage = "L'IA n'a pas retourné le nombre exact de recommandations demandées — complété automatiquement.";
+          }
+
           return response;
         } catch (error) {
           // Fallback vers mode démo si l'API réelle échoue

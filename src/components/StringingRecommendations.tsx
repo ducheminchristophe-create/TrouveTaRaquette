@@ -14,6 +14,16 @@ interface StringingRecommendationsProps {
   forceUseRealAPI?: boolean;
 }
 
+/** Convertit l'index numérique de niveau (0-8, voir NiveauDeJeu.tsx) en label simplifié
+ *  compris par le moteur IA (aiStringService) : Débutant / Intermédiaire / Confirmé / Compétition */
+function mapLevelToAILabel(levelIndex: number): string {
+  if (levelIndex <= 1) return 'Débutant'
+  if (levelIndex <= 3) return 'Intermédiaire'
+  if (levelIndex <= 5) return 'Confirmé'
+  return 'Compétition'
+}
+
+
 interface AIStringRecommendation {
   id: string;
   name: string;
@@ -296,6 +306,10 @@ const StringingRecommendations: React.FC<StringingRecommendationsProps> = ({ pla
         const analysis = await aiStringService.analyzeSetup({
           racket: playerData.racket,
           currentStrings: playerData.currentStrings,
+          level: mapLevelToAILabel(playerData.playerProfile.level),
+          playStyle: playerData.playerProfile.playStyle,
+          priority: playerData.preferences.performancePriorities?.[0] ?? '',
+          injuries: playerData.playerProfile.injuries ?? '',
         });
         setSetupAnalysis(analysis);
       } catch {
