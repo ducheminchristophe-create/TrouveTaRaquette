@@ -710,7 +710,7 @@
     {
       "id": "current_racket",
       "section": "Raquette actuelle",
-      "required": false,
+      "required": true,
       "label": "Quelle raquette utilises-tu actuellement ?",
       "type": "text",
       "placeholder": "Ex: Babolat Pure Drive, Wilson Blade 100...",
