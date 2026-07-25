@@ -17,6 +17,7 @@ export interface Question {
   id: string;
   required: boolean;
   label: string;
+  hint?: string;
   type?: string;
   placeholder?: string;
   options: Option[];
@@ -126,9 +127,12 @@ const QuestionnaireFlow: React.FC<Props> = ({
           animating ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        <p className="text-lg font-bold text-black mb-5" id={`question-${currentQ.id}`}>
+        <p className="text-lg font-bold text-black mb-1" id={`question-${currentQ.id}`}>
           {currentQ.label}
         </p>
+        {currentQ.hint && (
+          <p className="text-sm text-gray-400 mb-4">({currentQ.hint})</p>
+        )}
         {currentQ.type === 'text' ? (
           <div className="flex flex-col gap-3">
             <input
