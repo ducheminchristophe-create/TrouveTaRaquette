@@ -20,6 +20,7 @@ export interface Question {
   hint?: string;
   type?: string;
   placeholder?: string;
+  skipIf?: { questionId: string; answerId: string }; // sauter si une réponse précise a été donnée
   options: Option[];
 }
 
@@ -55,15 +56,25 @@ const QuestionnaireFlow: React.FC<Props> = ({
   const currentQ = questions[step];
   const progress = Math.round(((step + 1) / questions.length) * 100);
 
+  function shouldSkip(q: Question, currentAnswers: Answers): boolean {
+    if (!q.skipIf) return false;
+    return currentAnswers[q.skipIf.questionId] === q.skipIf.answerId;
+  }
+
   function advance(currentAnswers: Answers) {
     setAnimating(true);
     setTimeout(() => {
       setAnimating(false);
-      if (step === questions.length - 1) {
+      // Cherche la prochaine question à afficher (en sautant celles qui ont skipIf satisfait)
+      let nextStep = step + 1;
+      while (nextStep < questions.length && shouldSkip(questions[nextStep], currentAnswers)) {
+        nextStep++;
+      }
+      if (nextStep >= questions.length) {
         track('quiz_complete', { sport });
         onComplete(currentAnswers);
       } else {
-        setStep(s => s + 1);
+        setStep(nextStep);
       }
     }, 180);
   }

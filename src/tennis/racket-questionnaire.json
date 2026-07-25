@@ -757,7 +757,11 @@
             }
           }
         }
-      ]
+      ],
+      "skipIf": {
+        "questionId": "current_racket",
+        "answerId": "none"
+      }
     },
     {
       "id": "current_power_feel",
@@ -794,7 +798,11 @@
             }
           }
         }
-      ]
+      ],
+      "skipIf": {
+        "questionId": "current_racket",
+        "answerId": "none"
+      }
     },
     {
       "id": "current_control_feel",
@@ -831,7 +839,11 @@
             }
           }
         }
-      ]
+      ],
+      "skipIf": {
+        "questionId": "current_racket",
+        "answerId": "none"
+      }
     },
     {
       "id": "pref_maneuver",
