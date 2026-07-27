@@ -18,6 +18,6 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Comment fonctionne le moteur de recommandation ?',
-    a: "C'est un moteur à règles, 100 % explicable (pas de boîte noire) : chaque raquette est notée sur des dimensions normalisées, comparées à ton profil cible. Chaque recommandation affiche les raisons précises de son classement.",
+    a: "À partir de tes réponses, on construit ton profil idéal (puissance, confort, maniabilité...) et on le compare à chaque raquette de la base. Les meilleures correspondances remontent en tête, avec les raisons précises pour chacune.",
   },
 ]
