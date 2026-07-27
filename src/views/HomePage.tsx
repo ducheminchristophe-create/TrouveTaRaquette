@@ -18,7 +18,7 @@ const MODULES = [
     emoji: '🧵',
     name: 'Cordage Tennis',
     tagline: 'Le bon cordage pour ton jeu',
-    desc: 'Profil joueur + analyse IA de ton setup actuel → recommandations mono et hybrides personnalisées.',
+    desc: 'Profil du joueur et analyse de ton setup actuel → recommandations mono et hybrides personnalisées.',
     cta: 'Trouver mon cordage',
     ready: true,
     badge: null,
