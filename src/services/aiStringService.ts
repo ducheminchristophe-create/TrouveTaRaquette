@@ -235,7 +235,7 @@ class AIStringService {
           }
         ],
         temperature: 0.3,
-        max_tokens: 2000
+        max_tokens: 4000
       })
     });
 
@@ -257,6 +257,7 @@ class AIStringService {
         .trim();                     // Supprimer les espaces en début/fin
       
       const parsedResponse = JSON.parse(cleanedResponse);
+      console.log('[AI] mono reçus:', parsedResponse.recommendations?.length, '| hybrides reçus:', parsedResponse.hybrid_recommendations?.length);
       return this.adaptOpenAIResponse(parsedResponse, playerData.preferences);
     } catch (parseError) {
       throw new Error('Format de réponse OpenAI invalide');
