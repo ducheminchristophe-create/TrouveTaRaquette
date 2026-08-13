@@ -45,7 +45,7 @@ export function usePlayerProfile(onSubmit: (data: PlayerData) => void) {
     playerProfile: { level: 2, playStyle: '', grip: '', courtHabits: [], injuries: '' },
     preferences: {
       alternativeTypes: ['mono', 'hybrid'],
-      monoCount: 3, hybridCount: 3,
+      monoCount: 2, hybridCount: 1,
       preferredBrands: [],
       performancePriorities: [],
       priceRange: [10, 20] as [number, number],

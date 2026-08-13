@@ -77,8 +77,8 @@ const StepPreferences: React.FC<Props> = ({
       {alternativeTypes.includes('mono') && (
         <div>
           <p className={LABEL}>Nombre d&apos;alternatives mono-cordages</p>
-          <div className="grid grid-cols-3 gap-3" role="group" aria-label="Nombre de mono-cordages">
-            {[1, 2, 3].map(num => (
+          <div className="grid grid-cols-2 gap-3" role="group" aria-label="Nombre de mono-cordages">
+            {[1, 2].map(num => (
               <button key={num} type="button"
                 aria-pressed={monoCount === num}
                 className={pill(monoCount === num, 'text-lg font-bold')}
@@ -95,16 +95,13 @@ const StepPreferences: React.FC<Props> = ({
       {alternativeTypes.includes('hybrid') && (
         <div>
           <p className={LABEL}>Nombre d&apos;alternatives hybrides</p>
-          <div className="grid grid-cols-3 gap-3" role="group" aria-label="Nombre d'hybrides">
-            {[1, 2, 3].map(num => (
-              <button key={num} type="button"
-                aria-pressed={hybridCount === num}
-                className={pill(hybridCount === num, 'text-lg font-bold')}
-                onClick={() => handleChange('preferences.hybridCount', num)}
-              >
-                {num}
-              </button>
-            ))}
+          <div className="grid grid-cols-1 gap-3" role="group" aria-label="Nombre d'hybrides">
+            <button type="button"
+              aria-pressed={true}
+              className={pill(true, 'text-lg font-bold')}
+            >
+              1
+            </button>
           </div>
         </div>
       )}
