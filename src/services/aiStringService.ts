@@ -120,36 +120,45 @@ class AIStringService {
           const response = await this.callOpenAIAPI(request);
           response.isUsingRealAPI = true;
 
-          // Garde-fou : si l'IA n'a pas respecté le nombre demandé de mono/hybrides
-          // (peut arriver avec des modèles plus légers comme gpt-4o-mini),
-          // on complète avec la simulation locale plutôt que de laisser une section vide.
+          // Garde-fou robuste : garantit le nombre exact de mono/hybrides demandé
+          // peu importe ce que gpt-4o-mini renvoie (trop peu, trop, ou mal catégorisé)
           const prefs = request.playerData.preferences;
           const wantsMono = prefs.alternativeTypes.includes('mono');
           const wantsHybrid = prefs.alternativeTypes.includes('hybrid');
-          const missingMono = wantsMono && response.recommendations.length < prefs.monoCount;
-          const missingHybrid = wantsHybrid && (response.hybridRecommendations?.length ?? 0) < prefs.hybridCount;
 
-          if (missingMono || missingHybrid) {
+          const monoOk = !wantsMono || response.recommendations.length === prefs.monoCount;
+          const hybridOk = !wantsHybrid || (response.hybridRecommendations?.length ?? 0) === prefs.hybridCount;
+
+          if (!monoOk || !hybridOk) {
             const fallback = await this.simulateAICall(request);
-            if (missingMono) {
-              // Compléter les mono manquants avec ceux du fallback (sans doublons)
-              const existingIds = new Set(response.recommendations.map((r: any) => r.id ?? r.name));
-              const extras = (fallback.recommendations ?? []).filter((r: any) => !existingIds.has(r.id ?? r.name));
-              response.recommendations = [
-                ...response.recommendations,
-                ...extras,
-              ].slice(0, prefs.monoCount);
+
+            if (!monoOk) {
+              const current = response.recommendations ?? [];
+              if (current.length > prefs.monoCount) {
+                // Trop de mono → couper
+                response.recommendations = current.slice(0, prefs.monoCount);
+              } else {
+                // Pas assez de mono → compléter avec fallback sans doublons
+                const existingNames = new Set(current.map((r: any) => (r.name ?? '').toLowerCase()));
+                const extras = (fallback.recommendations ?? [])
+                  .filter((r: any) => !existingNames.has((r.name ?? '').toLowerCase()));
+                response.recommendations = [...current, ...extras].slice(0, prefs.monoCount);
+              }
             }
-            if (missingHybrid) {
-              // Compléter les hybrides manquants avec ceux du fallback (sans doublons)
-              const existingKeys = new Set((response.hybridRecommendations ?? []).map((h: any) => h.id ?? h.name));
-              const extras = (fallback.hybridRecommendations ?? []).filter((h: any) => !existingKeys.has(h.id ?? h.name));
-              response.hybridRecommendations = [
-                ...(response.hybridRecommendations ?? []),
-                ...extras,
-              ].slice(0, prefs.hybridCount);
+
+            if (!hybridOk) {
+              const current = response.hybridRecommendations ?? [];
+              if (current.length > prefs.hybridCount) {
+                // Trop d'hybrides → couper
+                response.hybridRecommendations = current.slice(0, prefs.hybridCount);
+              } else {
+                // Pas assez d'hybrides → compléter avec fallback sans doublons
+                const existingNames = new Set(current.map((h: any) => (h.mainString ?? h.name ?? '').toLowerCase()));
+                const extras = (fallback.hybridRecommendations ?? [])
+                  .filter((h: any) => !existingNames.has((h.mainString ?? h.name ?? '').toLowerCase()));
+                response.hybridRecommendations = [...current, ...extras].slice(0, prefs.hybridCount);
+              }
             }
-            response.errorMessage = "L'IA n'a pas retourné le nombre exact de recommandations demandées — complété automatiquement.";
           }
 
           return response;
