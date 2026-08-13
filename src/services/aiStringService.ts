@@ -132,10 +132,22 @@ class AIStringService {
           if (missingMono || missingHybrid) {
             const fallback = await this.simulateAICall(request);
             if (missingMono) {
-              response.recommendations = fallback.recommendations.slice(0, prefs.monoCount);
+              // Compléter les mono manquants avec ceux du fallback (sans doublons)
+              const existingIds = new Set(response.recommendations.map((r: any) => r.id ?? r.name));
+              const extras = (fallback.recommendations ?? []).filter((r: any) => !existingIds.has(r.id ?? r.name));
+              response.recommendations = [
+                ...response.recommendations,
+                ...extras,
+              ].slice(0, prefs.monoCount);
             }
             if (missingHybrid) {
-              response.hybridRecommendations = (fallback.hybridRecommendations ?? []).slice(0, prefs.hybridCount);
+              // Compléter les hybrides manquants avec ceux du fallback (sans doublons)
+              const existingKeys = new Set((response.hybridRecommendations ?? []).map((h: any) => h.id ?? h.name));
+              const extras = (fallback.hybridRecommendations ?? []).filter((h: any) => !existingKeys.has(h.id ?? h.name));
+              response.hybridRecommendations = [
+                ...(response.hybridRecommendations ?? []),
+                ...extras,
+              ].slice(0, prefs.hybridCount);
             }
             response.errorMessage = "L'IA n'a pas retourné le nombre exact de recommandations demandées — complété automatiquement.";
           }
@@ -545,8 +557,8 @@ EXEMPLE DE BON REASONING:
 "Par rapport à votre polyester actuel (Luxilon ALU Power), ce multifilament va considérablement améliorer le confort (de 5/10 à 9/10) et réduire les vibrations tout en augmentant la puissance (de 6/10 à 8/10), ce qui compensera la perte de contrôle minime."
 
 VÉRIFICATION FINALE AVANT ENVOI:
-✓ Respectes-tu le nombre exact de mono-filaments demandés (${playerData.preferences.monoCount}) ?
-✓ Respectes-tu le nombre exact d'hybrides demandés (${playerData.preferences.hybridCount}) ?
+✓ Respectes-tu le nombre exact de mono-filaments demandés (${playerData.preferences.monoCount}) ? Tu DOIS fournir EXACTEMENT ${playerData.preferences.monoCount} mono-filament(s) dans "recommendations".
+✓ Respectes-tu le nombre exact d'hybrides demandés (${playerData.preferences.hybridCount}) ? Tu DOIS fournir EXACTEMENT ${playerData.preferences.hybridCount} hybride(s) dans "hybrid_recommendations".
 ${!playerData.preferences.alternativeTypes.includes('mono') ? '✓ Tu ne dois PAS inclure de mono-filaments dans "recommendations" !' : ''}
 ${!playerData.preferences.alternativeTypes.includes('hybrid') ? '✓ Tu ne dois PAS inclure d\'hybrides dans "hybrid_recommendations" !' : ''}
 ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les marques préférées: ${playerData.preferences.preferredBrands.join(', ')} ?` : ''}
