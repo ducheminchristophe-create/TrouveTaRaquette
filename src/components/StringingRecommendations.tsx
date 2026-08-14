@@ -41,6 +41,8 @@ interface AIStringRecommendation {
   marketPrice: number;
   availability: 'high' | 'medium' | 'low';
   professionalRating: number;
+  lifespanHours?: number | null;
+  armFriendly?: boolean | null;
   power?: number;
   control?: number;
   spin?: number;
