@@ -292,6 +292,7 @@ PRÉFÉRENCES DU JOUEUR:
 - Types d'alternatives souhaités: ${playerData.preferences.alternativeTypes.join(', ')}
 - Nombre de mono-cordages: ${playerData.preferences.monoCount}
 - Nombre d'hybrides: ${playerData.preferences.hybridCount}
+- Budget par cordage: entre ${playerData.preferences.priceRange[0]}€ et ${playerData.preferences.priceRange[1]}€ (prix pour UNE raquette entière)
 ${playerData.preferences.preferredBrands.length > 0 ? `- Marques préférées: ${playerData.preferences.preferredBrands.join(', ')}` : '- Aucune préférence de marque'}
 
 ANALYSE CRITIQUE DU SETUP ACTUEL:
@@ -313,6 +314,7 @@ CONNAISSANCES MÉTIER ESSENTIELLES:
    - Tu DOIS choisir UNIQUEMENT parmi les cordages listés ci-dessus
    - Utilise les noms EXACTS (marque + nom) des cordages disponibles
    - Respecte les prix indiqués dans la base de données
+   - Pour les HYBRIDES : le prix indiqué est déjà le prix pour corder UNE raquette entière (moitié de chaque cordage, car chaque set est coupé en 2)
    - Utilise les caractéristiques réelles (power, control, spin, etc.) fournies
 
 2. RÈGLES DE COHÉRENCE RAQUETTE-CORDAGE:

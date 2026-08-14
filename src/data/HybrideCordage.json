@@ -11,7 +11,7 @@
     "spin": 10,
     "comfort": 8,
     "durability": 8,
-    "price": 40,
+    "price": 33.5,
     "player_profile": "Lifteur cherchant spin + toucher (setup Nadal)"
   },
   {
@@ -26,7 +26,7 @@
     "spin": 9,
     "comfort": 8,
     "durability": 7,
-    "price": 35,
+    "price": 24.0,
     "player_profile": "Spin + confort sans perte de contrôle"
   },
   {
@@ -41,7 +41,7 @@
     "spin": 9,
     "comfort": 7,
     "durability": 8,
-    "price": 38,
+    "price": 25.0,
     "player_profile": "Plus de tolérance et de réactivité"
   },
   {
@@ -56,7 +56,7 @@
     "spin": 9,
     "comfort": 8,
     "durability": 7,
-    "price": 38,
+    "price": 26.0,
     "player_profile": "Lift + élasticité, confort amélioré"
   },
   {
@@ -71,7 +71,7 @@
     "spin": 9,
     "comfort": 8,
     "durability": 7,
-    "price": 25,
+    "price": 12.5,
     "player_profile": "Excellent spin + confort à petit prix"
   },
   {
@@ -86,7 +86,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 35,
+    "price": 19.5,
     "player_profile": "Stabilité et toucher équilibré"
   },
   {
@@ -101,7 +101,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 30,
+    "price": 20.0,
     "player_profile": "Contrôle + confort, très constant"
   },
   {
@@ -116,7 +116,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 28,
+    "price": 20.0,
     "player_profile": "Sensation ferme mais amortie"
   },
   {
@@ -131,7 +131,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 25,
+    "price": 20.0,
     "player_profile": "Budget modéré, bon contrôle global"
   },
   {
@@ -146,7 +146,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 20,
+    "price": 12.5,
     "player_profile": "Excellent rapport qualité/prix pour contrôle et confort"
   },
   {
@@ -161,7 +161,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 30,
+    "price": 21.0,
     "player_profile": "Setup souple et réactif"
   },
   {
@@ -176,7 +176,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 28,
+    "price": 19.0,
     "player_profile": "Bon équilibre global"
   },
   {
@@ -191,7 +191,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 35,
+    "price": 24.0,
     "player_profile": "Équilibre puissance + toucher"
   },
   {
@@ -206,7 +206,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 8,
-    "price": 25,
+    "price": 20.0,
     "player_profile": "Confort et durée excellents"
   },
   {
@@ -221,7 +221,7 @@
     "spin": 7,
     "comfort": 9,
     "durability": 7,
-    "price": 18,
+    "price": 12.5,
     "player_profile": "Sensation douce, très tolérante"
   },
   {
@@ -236,7 +236,7 @@
     "spin": 6,
     "comfort": 10,
     "durability": 6,
-    "price": 35,
+    "price": 24.5,
     "player_profile": "Toucher haut de gamme, bras sensibles"
   },
   {
@@ -251,7 +251,7 @@
     "spin": 6,
     "comfort": 9,
     "durability": 9,
-    "price": 28,
+    "price": 20.0,
     "player_profile": "Stabilité + confort durable"
   },
   {
@@ -266,7 +266,7 @@
     "spin": 6,
     "comfort": 10,
     "durability": 6,
-    "price": 25,
+    "price": 22.0,
     "player_profile": "Excellent confort, puissance maîtrisée"
   },
   {
@@ -281,7 +281,7 @@
     "spin": 5,
     "comfort": 9,
     "durability": 6,
-    "price": 15,
+    "price": 7.5,
     "player_profile": "Très bon confort à petit prix"
   },
   {
@@ -296,7 +296,7 @@
     "spin": 5,
     "comfort": 10,
     "durability": 6,
-    "price": 25,
+    "price": 20.0,
     "player_profile": "Douceur, idéal après blessure"
   },
   {
@@ -311,7 +311,7 @@
     "spin": 8,
     "comfort": 7,
     "durability": 9,
-    "price": 35,
+    "price": 25.0,
     "player_profile": "Maintien tension longue durée"
   },
   {
@@ -326,7 +326,7 @@
     "spin": 8,
     "comfort": 8,
     "durability": 9,
-    "price": 30,
+    "price": 20.0,
     "player_profile": "Fermeté + contrôle, setup durable"
   },
   {
@@ -341,7 +341,7 @@
     "spin": 9,
     "comfort": 6,
     "durability": 9,
-    "price": 30,
+    "price": 24.0,
     "player_profile": "Full-poly souple, contrôle précis"
   },
   {
@@ -356,7 +356,7 @@
     "spin": 8,
     "comfort": 6,
     "durability": 9,
-    "price": 30,
+    "price": 23.0,
     "player_profile": "Précision + toucher plus doux"
   },
   {
@@ -371,7 +371,7 @@
     "spin": 9,
     "comfort": 6,
     "durability": 9,
-    "price": 18,
+    "price": 17.0,
     "player_profile": "Setup Decathlon performant et durable"
   }
 ]
