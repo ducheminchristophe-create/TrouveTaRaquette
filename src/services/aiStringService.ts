@@ -59,6 +59,8 @@ interface AIStringRecommendation {
   marketPrice: number;
   availability: 'high' | 'medium' | 'low';
   professionalRating: number;
+  lifespanHours?: number | null;
+  armFriendly?: boolean | null;
   // Caractéristiques pour le tableau d'analyse
   power?: number;
   control?: number;
