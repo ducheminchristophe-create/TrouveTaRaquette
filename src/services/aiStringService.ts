@@ -213,6 +213,18 @@ class AIStringService {
       }
     }
 
+    // Filtre budget — on n'envoie à l'IA QUE les cordages dans le budget du joueur
+    // Mono : prix direct
+    const maxPrice = prefs.priceRange?.[1] ?? 999;
+    const minPrice = prefs.priceRange?.[0] ?? 0;
+
+    const monoInBudget = monoStrings.filter(s => s.price >= minPrice && s.price <= maxPrice);
+    if (monoInBudget.length >= 2) monoStrings = monoInBudget;
+
+    // Hybride : le prix est déjà calculé pour 1 raquette (moitié de chaque)
+    const hybridInBudget = hybridStrings.filter(h => h.price >= minPrice && h.price <= maxPrice);
+    if (hybridInBudget.length >= 1) hybridStrings = hybridInBudget;
+
     const prompt = this.buildTennisStringPrompt(playerData, monoStrings, hybridStrings);
 
 
@@ -760,10 +772,16 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
     const prefs = playerData.preferences;
     if (prefs && prefs.preferredBrands && prefs.preferredBrands.length > 0) {
       const filteredStrings = dbStrings.filter(s => prefs.preferredBrands.includes(s.brand));
-      // N'utiliser le filtre que s'il laisse assez de cordages (minimum 5)
       if (filteredStrings.length >= 5) {
         dbStrings = filteredStrings;
       }
+    }
+
+    // Filtre budget mono
+    if (prefs?.priceRange) {
+      const [minP, maxP] = prefs.priceRange;
+      const inBudget = dbStrings.filter(s => s.price >= minP && s.price <= maxP);
+      if (inBudget.length >= 2) dbStrings = inBudget;
     }
 
     // Si on a des données de la DB, les utiliser
@@ -1279,17 +1297,20 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
     const prefs = playerData.preferences;
     if (prefs && prefs.preferredBrands && prefs.preferredBrands.length > 0) {
       const filteredHybrids = dbHybrids.filter(h => {
-        // Extraire les marques des cordages principaux et croisés
-        // Format typique: "Marque Nom (Type)"
         const mainBrand = h.main_string.split(' ')[0];
         const crossBrand = h.cross_string.split(' ')[0];
-        // Un hybride est accepté si au moins un des cordages est d'une marque préférée
         return prefs.preferredBrands.includes(mainBrand) || prefs.preferredBrands.includes(crossBrand);
       });
-      // N'utiliser le filtre que s'il laisse assez d'hybrides (minimum 3)
       if (filteredHybrids.length >= 3) {
         dbHybrids = filteredHybrids;
       }
+    }
+
+    // Filtre budget hybride (prix déjà calculé pour 1 raquette)
+    if (prefs?.priceRange) {
+      const [minP, maxP] = prefs.priceRange;
+      const inBudget = dbHybrids.filter(h => h.price >= minP && h.price <= maxP);
+      if (inBudget.length >= 1) dbHybrids = inBudget;
     }
 
     // Si on a des données de la DB, les utiliser
