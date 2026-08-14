@@ -138,25 +138,49 @@ const StepProfile: React.FC<Props> = ({
           Blessures ou douleurs{' '}
           <span className="text-gray-400 font-normal text-xs">(optionnel)</span>
         </p>
-        <div className="relative">
-          <textarea
-            value={injuriesText}
-            onChange={e => {
-              const words = e.target.value.trim() === '' ? [] : e.target.value.trim().split(/\s+/);
-              if (words.length <= 15) {
-                setFormData(prev => ({
-                  ...prev,
-                  playerProfile: { ...prev.playerProfile, injuries: e.target.value },
-                }));
-              }
-            }}
-            placeholder="ex : tennis elbow droit, douleur épaule..."
-            rows={3}
-            className={`w-full rounded-xl border-2 border-gray-200 p-3 text-sm resize-none transition-colors ${FOCUS} hover:border-orange-400 focus:border-orange-500 placeholder-gray-400`}
-          />
-          <span className="absolute bottom-2 right-3 text-xs text-gray-400 select-none">
-            {injuriesText.trim() === '' ? 0 : injuriesText.trim().split(/\s+/).length}/15 mots
-          </span>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { id: 'elbow',    label: '💪 Tennis elbow / coude' },
+            { id: 'shoulder', label: '🦾 Épaule'               },
+            { id: 'wrist',    label: '🤝 Poignet'              },
+            { id: 'none',     label: '✅ Aucune douleur'       },
+          ].map(opt => {
+            const selected = injuriesText.includes(opt.id);
+            const isNone = opt.id === 'none';
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => {
+                  if (isNone) {
+                    // "Aucune" désélectionne tout le reste
+                    setFormData(prev => ({
+                      ...prev,
+                      playerProfile: { ...prev.playerProfile, injuries: 'none' },
+                    }));
+                  } else {
+                    // Toggle de la blessure, retire "none" si présent
+                    const current = injuriesText === 'none' ? [] : injuriesText.split(',').filter(Boolean);
+                    const next = current.includes(opt.id)
+                      ? current.filter(v => v !== opt.id)
+                      : [...current, opt.id];
+                    setFormData(prev => ({
+                      ...prev,
+                      playerProfile: { ...prev.playerProfile, injuries: next.join(',') },
+                    }));
+                  }
+                }}
+                className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all text-left ${
+                  selected
+                    ? 'border-orange-500 bg-orange-50 text-orange-700'
+                    : 'border-gray-200 text-gray-700 hover:border-orange-400 hover:bg-orange-50'
+                }`}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       </div>
     </fieldset>

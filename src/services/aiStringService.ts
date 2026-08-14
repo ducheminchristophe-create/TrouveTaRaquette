@@ -213,9 +213,10 @@ class AIStringService {
       }
     }
 
-    // Filtre arm_friendly — si le joueur mentionne des douleurs au bras/épaule/poignet
+    // Filtre arm_friendly — valeurs standardisées : 'elbow', 'shoulder', 'wrist'
     const injuriesText = (playerData.injuries ?? '').toLowerCase();
-    const hasArmIssue = ['elbow', 'épaule', 'poignet', 'bras', 'tennis elbow', 'coude'].some(k => injuriesText.includes(k));
+    const hasArmIssue = injuriesText !== 'none' && injuriesText !== '' &&
+      ['elbow', 'shoulder', 'wrist'].some(k => injuriesText.includes(k));
     if (hasArmIssue) {
       const armFriendlyMono = monoStrings.filter((s: any) => s.arm_friendly === true);
       if (armFriendlyMono.length >= 2) monoStrings = armFriendlyMono;
@@ -321,6 +322,14 @@ PRÉFÉRENCES DU JOUEUR:
 - Nombre d'hybrides: ${playerData.preferences.hybridCount}
 - Budget par cordage: entre ${playerData.preferences.priceRange[0]}€ et ${playerData.preferences.priceRange[1]}€ (prix pour UNE raquette entière)
 ${playerData.preferences.preferredBrands.length > 0 ? `- Marques préférées: ${playerData.preferences.preferredBrands.join(', ')}` : '- Aucune préférence de marque'}
+- Blessures/douleurs: ${
+  !playerData.injuries || playerData.injuries === 'none' ? 'Aucune' :
+  playerData.injuries.split(',').map((v: string) => ({
+    elbow: '🚨 Tennis elbow / coude (cordages ARM-FRIENDLY OBLIGATOIRES, polyester interdit)',
+    shoulder: '🚨 Épaule (cordages ARM-FRIENDLY OBLIGATOIRES, tension basse)',
+    wrist: '🚨 Poignet (cordages ARM-FRIENDLY OBLIGATOIRES)'
+  })[v.trim()] ?? v).join(', ')
+}
 
 ANALYSE CRITIQUE DU SETUP ACTUEL:
 ${this.generateSetupCritique(playerData, currentSetupType, setupWeaknesses)}
