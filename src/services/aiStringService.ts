@@ -213,6 +213,19 @@ class AIStringService {
       }
     }
 
+    // Filtre arm_friendly — si le joueur mentionne des douleurs au bras/épaule/poignet
+    const injuriesText = (playerData.injuries ?? '').toLowerCase();
+    const hasArmIssue = ['elbow', 'épaule', 'poignet', 'bras', 'tennis elbow', 'coude'].some(k => injuriesText.includes(k));
+    if (hasArmIssue) {
+      const armFriendlyMono = monoStrings.filter((s: any) => s.arm_friendly === true);
+      if (armFriendlyMono.length >= 2) monoStrings = armFriendlyMono;
+      const armFriendlyHybrid = hybridStrings.filter((h: any) => {
+        // Pour les hybrides, on garde ceux dont au moins un des cordages est arm_friendly
+        return true; // les hybrides sont généralement arm_friendly par nature (poly+multi)
+      });
+      hybridStrings = armFriendlyHybrid;
+    }
+
     // Filtre budget — on n'envoie à l'IA QUE les cordages dans le budget du joueur
     // Mono : prix direct
     const maxPrice = prefs.priceRange?.[1] ?? 999;
@@ -281,12 +294,14 @@ class AIStringService {
     const currentTension = playerData.currentStrings.monoTension || playerData.currentStrings.hybridMainTension || 'Non spécifiée';
 
     // Formater les cordages de la base de données pour le prompt
-    const monoStringsFormatted = monoStrings.slice(0, 15).map((s, i) =>
-      `${i+1}. ${s.brand} ${s.name} (${s.type}) - Prix: ${s.price}€ | Power: ${s.power}/10, Control: ${s.control}/10, Spin: ${s.spin}/10, Comfort: ${s.comfort}/10, Durability: ${s.durability}/10 | Tension: ${s.tension_min}-${s.tension_max}kg | Profil: ${s.player_profile}`
-    ).join('\n');
+    const monoStringsFormatted = monoStrings.slice(0, 15).map((s: any, i: number) => {
+      const costPerHour = s.lifespan_hours ? `${(s.price / s.lifespan_hours).toFixed(2)}€/h` : '';
+      const armTag = s.arm_friendly ? ' | ✅ ARM-FRIENDLY' : '';
+      return `${i+1}. ${s.brand} ${s.name} (${s.type}) - Jauge: ${s.gauge_mm ?? '?'}mm - Prix: ${s.price}€${s.lifespan_hours ? ` (${s.lifespan_hours}h ≈ ${costPerHour})` : ''} | Power: ${s.power}/10, Control: ${s.control}/10, Spin: ${s.spin}/10, Comfort: ${s.comfort}/10, Durability: ${s.durability}/10 | Tension: ${s.tension_min}-${s.tension_max}kg | Profil: ${s.player_profile}${armTag}`;
+    }).join('\n');
 
-    const hybridStringsFormatted = hybridStrings.slice(0, 10).map((h, i) =>
-      `${i+1}. ${h.main_string} / ${h.cross_string} (${h.setup_type}) - Prix: ${h.price}€ | Power: ${h.power}/10, Control: ${h.control}/10, Spin: ${h.spin}/10, Comfort: ${h.comfort}/10, Durability: ${h.durability}/10 | Tensions: ${h.tension_main}kg / ${h.tension_cross}kg | Profil: ${h.player_profile}`
+    const hybridStringsFormatted = hybridStrings.slice(0, 10).map((h: any, i: number) =>
+      `${i+1}. ${h.main_string} / ${h.cross_string} (${h.setup_type}) - Prix: ${h.price}€ (${h.price * 2}€ pour 2 raquettes) | Power: ${h.power}/10, Control: ${h.control}/10, Spin: ${h.spin}/10, Comfort: ${h.comfort}/10, Durability: ${h.durability}/10 | Tensions: ${h.tension_main}kg / ${h.tension_cross}kg | Profil: ${h.player_profile}`
     ).join('\n');
 
     return `
@@ -595,28 +610,45 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
   }
 
   private adaptOpenAIResponse(openAIData: any, preferences?: any): AIResponse {
+    // Index DB pour enrichissement local (lifespan, arm_friendly, gauge)
+    const dbIndex: Record<string, any> = {};
+    try {
+      const dbStrings = require('../data/MonoCordage.json');
+      for (const s of dbStrings) {
+        dbIndex[`${s.brand} ${s.name}`.toLowerCase()] = s;
+      }
+    } catch { /* silencieux */ }
+
     let recommendations = openAIData.recommendations?.map((rec: any, index: number) => {
         const tension = parseFloat((rec.tension || '22kg').replace('kg', ''));
         const chars = this.calculateStringCharacteristics(rec.type || 'Multifilament', tension);
+
+        // Récupérer les données enrichies depuis la DB locale
+        const dbEntry = dbIndex[(rec.name || '').toLowerCase()] ??
+                        dbIndex[(`${rec.brand} ${rec.name}`).toLowerCase()];
+        const lifespan = dbEntry?.lifespan_hours ?? null;
+        const armFriendly = dbEntry?.arm_friendly ?? null;
+        const gaugeFromDb = dbEntry?.gauge_mm ? `${dbEntry.gauge_mm}mm` : null;
 
         return {
           id: rec.id || `openai-${index + 1}`,
           name: rec.name || 'Cordage recommandé',
           brand: rec.brand || 'Marque',
           type: rec.type || 'Type',
-          gauge: rec.gauge || '1.25mm',
+          gauge: gaugeFromDb || rec.gauge || '1.25mm',
           tension: rec.tension || '22kg',
           description: rec.description || 'Recommandation OpenAI',
           pros: rec.pros || ['Recommandé par IA'],
           cons: rec.cons || ['À tester'],
-          duration: rec.duration || '20-30h',
+          duration: lifespan ? `~${lifespan}h de jeu` : (rec.duration || '20-30h'),
           budget: rec.budget || '20-30€',
           confidence: rec.confidence || 0.85,
           reasoning: rec.reasoning || 'Analyse OpenAI personnalisée',
           marketPrice: rec.marketPrice || 25,
+          lifespanHours: lifespan,
+          armFriendly,
           availability: rec.availability || 'medium',
           professionalRating: rec.professionalRating || 4.0,
-          // Forcer les caractéristiques en nombres entiers
           power: parseInt(rec.power) || chars.power,
           control: parseInt(rec.control) || chars.control,
           spin: parseInt(rec.spin) || chars.spin,

@@ -125,8 +125,17 @@ const MonoCard: React.FC<{ setup: AIStringRecommendation; index: number; badge?:
           </div>
           <div className="flex items-center space-x-2 bg-green-50 rounded px-3 py-1 text-xs">
             <DollarSign className="h-3 w-3 text-green-600" />
-            <span className="font-semibold text-gray-600">Prix:</span><span className="text-gray-800">{setup.marketPrice}€</span>
+            <span className="font-semibold text-gray-600">Prix:</span>
+            <span className="text-gray-800">{setup.marketPrice}€</span>
+            {setup.lifespanHours && (
+              <span className="text-gray-400 ml-1">≈ {(setup.marketPrice / setup.lifespanHours).toFixed(2)}€/h</span>
+            )}
           </div>
+          {setup.armFriendly === true && (
+            <div className="flex items-center space-x-1 bg-green-50 rounded px-3 py-1 text-xs">
+              <span className="text-green-600 font-semibold">✅ Adapté blessures bras</span>
+            </div>
+          )}
           <div className="flex items-center space-x-2 bg-yellow-50 rounded px-3 py-1 text-xs">
             <Star className="h-3 w-3 text-yellow-500" /><span className="font-bold">{setup.professionalRating}/5</span>
           </div>
