@@ -252,7 +252,7 @@ const HybridCard: React.FC<{ hybrid: HybridRec; index: number; badge?: string }>
         <div className="flex items-center space-x-2">
           <DollarSign className="h-4 w-4 text-green-600" />
           <span className="font-semibold text-gray-600">Budget total :</span>
-          <p className="text-gray-800">{hybrid.marketPrice ? `${(hybrid.marketPrice * 2).toFixed(0)}€` : hybrid.budget} <span className="text-xs text-gray-500">(quantité suffisante pour 2 raquettes)</span></p>
+          <p className="text-gray-800">{hybrid.marketPrice && !isNaN(hybrid.marketPrice) ? `${(hybrid.marketPrice * 2).toFixed(0)}€` : hybrid.budget} <span className="text-xs text-gray-500">(quantité suffisante pour 2 raquettes)</span></p>
         </div>
       </div>
 

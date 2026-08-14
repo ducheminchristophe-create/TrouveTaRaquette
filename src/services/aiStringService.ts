@@ -625,7 +625,15 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
         };
       }) || [];
 
-    let hybridRecommendations = openAIData.hybrid_recommendations?.map((hybrid: any, index: number) => ({
+    let hybridRecommendations = openAIData.hybrid_recommendations?.map((hybrid: any, index: number) => {
+      // Parsing robuste du prix — l'IA peut renvoyer un nombre, une chaîne "20", "20€", ou null
+      const rawPrice = hybrid.marketPrice ?? hybrid.price ?? hybrid.budget;
+      const parsedPrice = typeof rawPrice === 'number'
+        ? rawPrice
+        : parseFloat(String(rawPrice).replace(/[^0-9.]/g, ''));
+      const marketPrice = isNaN(parsedPrice) || parsedPrice <= 0 ? 20 : parsedPrice;
+
+      return {
         id: hybrid.id || `hybrid-${index + 1}`,
         name: hybrid.name || 'Configuration Hybride',
         mainString: hybrid.main_string || 'Cordage principal',
@@ -639,7 +647,7 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
         budget: hybrid.budget || '30-45€',
         confidence: hybrid.confidence || 0.85,
         reasoning: hybrid.reasoning || 'Hybride optimisé par IA',
-        marketPrice: hybrid.marketPrice || 35,
+        marketPrice,
         availability: hybrid.availability || 'medium',
         professionalRating: hybrid.professionalRating || 4.3,
         power: parseInt(hybrid.power) || 7,
@@ -647,7 +655,8 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
         spin: parseInt(hybrid.spin) || 7,
         comfort: parseInt(hybrid.comfort) || 7,
         durability: parseInt(hybrid.durability) || 7
-      })) || [];
+      };
+    }) || [];
 
     // Appliquer les préférences si disponibles
     if (preferences) {
