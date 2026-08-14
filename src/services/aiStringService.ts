@@ -216,7 +216,7 @@ class AIStringService {
     }
 
     // Filtre arm_friendly — valeurs standardisées : 'elbow', 'shoulder', 'wrist'
-    const injuriesText = (playerData.injuries ?? '').toLowerCase();
+    const injuriesText = (playerData.playerProfile?.injuries ?? '').toLowerCase();
     const hasArmIssue = injuriesText !== 'none' && injuriesText !== '' &&
       ['elbow', 'shoulder', 'wrist'].some(k => injuriesText.includes(k));
     if (hasArmIssue) {
@@ -325,8 +325,8 @@ PRÉFÉRENCES DU JOUEUR:
 - Budget par cordage: entre ${playerData.preferences.priceRange[0]}€ et ${playerData.preferences.priceRange[1]}€ (prix pour UNE raquette entière)
 ${playerData.preferences.preferredBrands.length > 0 ? `- Marques préférées: ${playerData.preferences.preferredBrands.join(', ')}` : '- Aucune préférence de marque'}
 - Blessures/douleurs: ${
-  !playerData.injuries || playerData.injuries === 'none' ? 'Aucune' :
-  playerData.injuries.split(',').map((v: string) => ({
+  !playerData.playerProfile?.injuries || playerData.playerProfile?.injuries === 'none' ? 'Aucune' :
+  playerData.playerProfile?.injuries.split(',').map((v: string) => ({
     elbow: '🚨 Tennis elbow / coude (cordages ARM-FRIENDLY OBLIGATOIRES, polyester interdit)',
     shoulder: '🚨 Épaule (cordages ARM-FRIENDLY OBLIGATOIRES, tension basse)',
     wrist: '🚨 Poignet (cordages ARM-FRIENDLY OBLIGATOIRES)'
@@ -906,7 +906,7 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
         duration: '18-25h de jeu',
         budget: '20-30€',
         confidence: 0.84,
-        reasoning: `Option économique par rapport à votre ${currentSetupType}. Apporte le confort recherché à un prix plus accessible tout en offrant de bonnes performances générales. ${playerData.injuries ? 'Adapté à votre historique de blessures.' : ''}`,
+        reasoning: `Option économique par rapport à votre ${currentSetupType}. Apporte le confort recherché à un prix plus accessible tout en offrant de bonnes performances générales. ${playerData.playerProfile?.injuries ? 'Adapté à votre historique de blessures.' : ''}`,
         marketPrice: 24,
         availability: 'high',
         professionalRating: 4.4,
@@ -1039,7 +1039,7 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
       });
 
       // ÉCONOMIQUE: Polyester entrée de gamme
-      if (playerData.injuries || playerData.level === 'Débutant') {
+      if (playerData.playerProfile?.injuries || playerData.level === 'Débutant') {
         const tensionC3a = parseFloat(this.calculateOptimalTension(baseTensionControl - 2, playerData).replace('kg', ''));
         const charsC3a = this.calculateStringCharacteristics('Co-polyester confortable', tensionC3a);
         recommendations.push({
@@ -1055,7 +1055,7 @@ ${playerData.preferences.preferredBrands.length > 0 ? `✓ Privilégies-tu les m
           duration: '25-35h de jeu',
           budget: '14-22€',
           confidence: 0.87,
-          reasoning: `Par rapport à votre ${currentSetupType}, le Black Code offre le contrôle recherché avec un confort nettement supérieur aux polyesters classiques. ${playerData.injuries ? 'Meilleur choix avec vos blessures.' : 'Plus tolérant pour votre niveau.'}`,
+          reasoning: `Par rapport à votre ${currentSetupType}, le Black Code offre le contrôle recherché avec un confort nettement supérieur aux polyesters classiques. ${playerData.playerProfile?.injuries ? 'Meilleur choix avec vos blessures.' : 'Plus tolérant pour votre niveau.'}`,
           marketPrice: 18,
           availability: 'high',
           professionalRating: 4.5,
